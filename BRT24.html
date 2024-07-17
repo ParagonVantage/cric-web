@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: bisque;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Player Statistics</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/1.4.0/css/searchPanes.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.4/css/select.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/searchpanes/1.4.0/js/dataTables.searchPanes.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.3.4/js/dataTables.select.min.js"></script>
+    <style>
+        body {
+        font-family: 'Arial', sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background-color: #00796b;
+        color: white;
+        padding: 10px 0;
+        text-align: center;
+    }
+    header h1 {
+        margin: 0;
+    }
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+    }
+    nav ul li {
+        margin: 0 15px;
+    }
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    nav ul li a:hover {
+        text-decoration: underline;
+    }
+    .video-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding: 20px;
+        margin: 20px 0;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .video-wrapper {
+        flex: 1 1 60%;
+        position: relative;
+        padding-bottom: 33.75%; /* 16:9 aspect ratio */
+        height: 0;
+        border: 5px solid #00796b;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    .video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+    .text-container {
+        flex: 1 1 35%;
+        padding: 20px;
+        margin-left: 20px;
+        background-color: #fff;
+        border: 2px solid #00796b;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .text-container h3 {
+        margin-top: 0;
+    }
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+        margin-bottom: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    table caption {
+        text-align: center;
+        color: crimson;
+        font-weight: bold;
+        font-size: x-large;
+        background-color: antiquewhite;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    table th, table td {
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+    table th {
+        background-color: #00796b;
+        color: white;
+    }
+    table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    footer {
+        text-align: center;
+        padding: 10px 0;
+        background-color: #00796b;
+        color: white;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
+    footer a {
+        color: red;
+        text-decoration: none;
+    }
+    footer a:hover {
+        text-decoration: underline;
+    }
+    </style>
+    <script>
+        $(document).ready(function() {
+            function initializeDataTable(tableId, filterColumns) {
+                $(tableId).DataTable({
+                    dom: 'Pfrtip',
+                    searchPanes: {
+                        cascadePanes: true,
+                        columns: filterColumns
+                    },
+                    columnDefs: [
+                        { searchPanes: { show: true }, targets: filterColumns },
+                        { type: 'num', targets: Array.from({length: 15}, (_, i) => i + 2), render: function(data, type) {
+                            return type === 'sort' && data === '#DIV/0!' ? -Infinity : data;
+                        }}
+                    ]
+                });
+            }
+            initializeDataTable('#myTable1', [0, 1]);
+            initializeDataTable('#myTable2', [0, 1]);
+            initializeDataTable('#myTable3', [0, 1]);
+            initializeDataTable('#myTable4', [0, 1]);
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Cricket Player Statistics</h1>
+        <nav>
+            <ul>
+                <li><a href="index_c.html" class="animated-button">Home</a></li>
+                <li><a href="MLC24.html" class="animated-button">MLC 24</a></li>
+                <li><a href="BRT24.html" class="animated-button">WI v ENG</a></li>
+                <li><a href="IVZ24.HTML" class="animated-button">IND v ZIM</a></li>
+                <li><a href="ZVIRINF.html" class="animated-button">ZIM v IRE</a></li>
+                <li><a href="contact.html" class="animated-button">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main style="background-color: bisque;">
+        <!-- Tribute Video Section -->
+        <section class="video-container">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/cRJErP9YEL8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="text-container">
+                <h3>About James Anderson</h3>
+                <p>James Anderson, born on July 30, 1982, in Burnley, Lancashire, is one of the greatest fast bowlers in the history of cricket. Making his debut for England in 2003, Anderson quickly established himself as a key player with his exceptional swing bowling and control. Over his illustrious career, he has achieved numerous milestones and set records that may never be broken.</p>
+                <p>Anderson is the highest wicket-taker among fast bowlers in Test cricket, with 704 wickets, the highest by an English player and the third highest in history after Shane Warne with 708, to his name. He is renowned for his ability to move the ball both ways, making him a formidable opponent in any condition. His remarkable feats include multiple five-wicket hauls and match-winning performances across the globe.</p>
+                <p>In addition to his Test success, Anderson has been a valuable player in One Day Internationals and T20s, contributing significantly to England's successes over the years. His dedication, skill, and sportsmanship have earned him respect and admiration from teammates, opponents, and cricket fans worldwide.</p>
+            </div>
+        </section>
+
+        <div class="table-container">
+            <table id="myTable1">
+                <caption>Test Career Batting Stats</caption>
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th>Player</th>
+                        <th>MATCHES</th>
+                        <th>INNINGS</th>
+                        <th>NOT OUTS</th>
+                        <th>RUNS</th>
+                        <th>HIGHEST</th>
+                        <th>BATTING AVERAGE</th>
+                        <th>BALLS</th>
+                        <th>STRIKE RATE</th>
+                        <th>100S</th>
+                        <th>50S</th>
+                        <th>4S</th>
+                        <th>6S</th>
+                        <th>CATCHES</th>
+                        <th>STUMPING</th>
+                        <th>BATTING INDEX</th>
+                        <th>AVG RUNS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>HARRY BROOK</td>
+                        <td>73</td>
+                        <td>117</td>
+                        <td>8</td>
+                        <td>4636</td>
+                        <td>194</td>
+                        <td>42.53</td>
+                        <td>6432</td>
+                        <td>72.08</td>
+                        <td>13</td>
+                        <td>26</td>
+                        <td>595</td>
+                        <td>57</td>
+                        <td>58</td>
+                        <td>0</td>
+                        <td>50.81</td>
+                        <td>39.62</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>ZAK CRAWLEY</td>
+                        <td>115</td>
+                        <td>208</td>
+                        <td>5</td>
+                        <td>6643</td>
+                        <td>267</td>
+                        <td>32.72</td>
+                        <td>10675</td>
+                        <td>62.23</td>
+                        <td>11</td>
+                        <td>37</td>
+                        <td>944</td>
+                        <td>27</td>
+                        <td>110</td>
+                        <td>0</td>
+                        <td>41.42</td>
+                        <td>31.94</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>BEN DUCKETT</td>
+                        <td>142</td>
+                        <td>245</td>
+                        <td>12</td>
+                        <td>9935</td>
+                        <td>282</td>
+                        <td>42.63</td>
+                        <td>13386</td>
+                        <td>74.22</td>
+                        <td>27</td>
+                        <td>44</td>
+                        <td>1381</td>
+                        <td>43</td>
+                        <td>126</td>
+                        <td>3</td>
+                        <td>51.69</td>
+                        <td>40.55</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>DAN LAWRENCE</td>
+                        <td>127</td>
+                        <td>203</td>
+                        <td>17</td>
+                        <td>6944</td>
+                        <td>175</td>
+                        <td>37.33</td>
+                        <td>12599</td>
+                        <td>55.12</td>
+                        <td>17</td>
+                        <td>32</td>
+                        <td>836</td>
+                        <td>59</td>
+                        <td>91</td>
+                        <td>0</td>
+                        <td>42.04</td>
+                        <td>34.21</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>OLLIE POPE</td>
+                        <td>102</td>
+                        <td>163</td>
+                        <td>17</td>
+                        <td>6924</td>
+                        <td>274</td>
+                        <td>47.42</td>
+                        <td>10650</td>
+                        <td>65.01</td>
+                        <td>17</td>
+                        <td>25</td>
+                        <td>846</td>
+                        <td>41</td>
+                        <td>132</td>
+                        <td>1</td>
+                        <td>51.71</td>
+                        <td>42.48</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>JOE ROOT</td>
+                        <td>213</td>
+                        <td>373</td>
+                        <td>32</td>
+                        <td>16791</td>
+                        <td>254</td>
+                        <td>49.24</td>
+                        <td>29352</td>
+                        <td>57.21</td>
+                        <td>45</td>
+                        <td>82</td>
+                        <td>1873</td>
+                        <td>57</td>
+                        <td>242</td>
+                        <td>0</td>
+                        <td>50.78</td>
+                        <td>45.02</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>JAMIE SMITH</td>
+                        <td>59</td>
+                        <td>89</td>
+                        <td>7</td>
+                        <td>3434</td>
+                        <td>234</td>
+                        <td>41.87</td>
+                        <td>5795</td>
+                        <td>59.26</td>
+                        <td>10</td>
+                        <td>14</td>
+                        <td>463</td>
+                        <td>45</td>
+                        <td>68</td>
+                        <td>4</td>
+                        <td>46.43</td>
+                        <td>38.58</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>BEN STOKES</td>
+                        <td>185</td>
+                        <td>316</td>
+                        <td>15</td>
+                        <td>10495</td>
+                        <td>258</td>
+                        <td>34.86</td>
+                        <td>17702</td>
+                        <td>59.29</td>
+                        <td>22</td>
+                        <td>52</td>
+                        <td>735</td>
+                        <td>128</td>
+                        <td>106</td>
+                        <td>0</td>
+                        <td>41.86</td>
+                        <td>33.21</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>CHRIS WOAKES</td>
+                        <td>169</td>
+                        <td>253</td>
+                        <td>53</td>
+                        <td>6469</td>
+                        <td>152</td>
+                        <td>32.34</td>
+                        <td>12206</td>
+                        <td>53.00</td>
+                        <td>10</td>
+                        <td>25</td>
+                        <td>225</td>
+                        <td>7</td>
+                        <td>68</td>
+                        <td>0</td>
+                        <td>37.18</td>
+                        <td>25.57</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>KRAIGG BRAITHWAITE</td>
+                        <td>210</td>
+                        <td>380</td>
+                        <td>27</td>
+                        <td>13664</td>
+                        <td>276</td>
+                        <td>38.7</td>
+                        <td>33807</td>
+                        <td>40.42</td>
+                        <td>32</td>
+                        <td>65</td>
+                        <td>550</td>
+                        <td>13</td>
+                        <td>42</td>
+                        <td>0</td>
+                        <td>38.67</td>
+                        <td>35.96</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>JOSHUA de SILVA</td>
+                        <td>66</td>
+                        <td>114</td>
+                        <td>15</td>
+                        <td>3295</td>
+                        <td>136</td>
+                        <td>33.28</td>
+                        <td>6979</td>
+                        <td>47.21</td>
+                        <td>5</td>
+                        <td>16</td>
+                        <td>368</td>
+                        <td>18</td>
+                        <td>182</td>
+                        <td>9</td>
+                        <td>36.58</td>
+                        <td>28.90</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>TEVIN IMLACH</td>
+                        <td>22</td>
+                        <td>38</td>
+                        <td>4</td>
+                        <td>1097</td>
+                        <td>136</td>
+                        <td>32.26</td>
+                        <td>2387</td>
+                        <td>45.95</td>
+                        <td>3</td>
+                        <td>6</td>
+                        <td>118</td>
+                        <td>7</td>
+                        <td>36</td>
+                        <td>2</td>
+                        <td>35.69</td>
+                        <td>28.87</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>MIKYLE LOUIS</td>
+                        <td>7</td>
+                        <td>14</td>
+                        <td>0</td>
+                        <td>682</td>
+                        <td>130</td>
+                        <td>48.71</td>
+                        <td>1388</td>
+                        <td>49.14</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>70</td>
+                        <td>15</td>
+                        <td>8</td>
+                        <td>0</td>
+                        <td>48.84</td>
+                        <td>48.71</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>ZACHARY McCASKIE</td>
+                        <td>18</td>
+                        <td>36</td>
+                        <td>3</td>
+                        <td>994</td>
+                        <td>101</td>
+                        <td>30.12</td>
+                        <td>1822</td>
+                        <td>54.56</td>
+                        <td>1</td>
+                        <td>6</td>
+                        <td>133</td>
+                        <td>6</td>
+                        <td>19</td>
+                        <td>0</td>
+                        <td>36.95</td>
+                        <td>27.61</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>KIRK McKENZIE</td>
+                        <td>22</td>
+                        <td>40</td>
+                        <td>0</td>
+                        <td>1231</td>
+                        <td>221</td>
+                        <td>30.77</td>
+                        <td>2235</td>
+                        <td>55.08</td>
+                        <td>1</td>
+                        <td>7</td>
+                        <td>158</td>
+                        <td>20</td>
+                        <td>13</td>
+                        <td>0</td>
+                        <td>38.06</td>
+                        <td>30.78</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>ALICK ATHANAZE</td>
+                        <td>39</td>
+                        <td>72</td>
+                        <td>6</td>
+                        <td>2297</td>
+                        <td>141</td>
+                        <td>34.8</td>
+                        <td>4053</td>
+                        <td>56.67</td>
+                        <td>2</td>
+                        <td>15</td>
+                        <td>268</td>
+                        <td>21</td>
+                        <td>46</td>
+                        <td>0</td>
+                        <td>40.78</td>
+                        <td>31.90</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>KAVEM HODGE</td>
+                        <td>63</td>
+                        <td>113</td>
+                        <td>5</td>
+                        <td>3211</td>
+                        <td>158</td>
+                        <td>29.73</td>
+                        <td>7179</td>
+                        <td>44.73</td>
+                        <td>5</td>
+                        <td>18</td>
+                        <td>357</td>
+                        <td>9</td>
+                        <td>60</td>
+                        <td>0</td>
+                        <td>33.97</td>
+                        <td>28.42</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>JASON HOLDER</td>
+                        <td>103</td>
+                        <td>165</td>
+                        <td>19</td>
+                        <td>3836</td>
+                        <td>202</td>
+                        <td>26.27</td>
+                        <td>6951</td>
+                        <td>55.19</td>
+                        <td>4</td>
+                        <td>15</td>
+                        <td>330</td>
+                        <td>50</td>
+                        <td>62</td>
+                        <td>0</td>
+                        <td>34.34</td>
+                        <td>23.25</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            <div class="table-container">
+            <table id="myTable2">
+                <caption style="text-align: center; color: crimson; font-weight: 700; font-size: x-large; background-color: antiquewhite;">Test Career Bowling Stats</caption>
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th>Player</th>
+                        <th>MATCHES</th>
+                        <th>INNINGS</th>
+                        <th>BALLS</th>
+                        <th>RUNS</th>
+                        <th>WICKETS</th>
+                        <th>BBI</th>
+                        <th>BBM</th>
+                        <th>BWL AVERAGE</th>
+                        <th>ECONOMY</th>
+                        <th>SR</th>
+                        <th>4WI</th>
+                        <th>5WI</th>
+                        <th>10W</th>
+                        <th>BOWLING INDEX</th>
+                        <th>RUNS PER MATCH</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>ENGLAND</th>
+                    <td>BEN STOKES</td>
+                    <td>185</td>
+                    <td>270</td>
+                    <td>20405</td>
+                    <td>11704</td>
+                    <td>395</td>
+                    <td>7/67</td>
+                    <td>10/121</td>
+                    <td>29.63</td>
+                    <td>3.44</td>
+                    <td>51.66</td>
+                    <td>20</td>
+                    <td>8</td>
+                    <td>1</td>
+                    <td>7.50</td>
+                    <td>43.35</td>
+                </tr>
+                <tr>
+                    <th>ENGLAND</th>
+                    <td>CHRIS WOAKES</td>
+                    <td>169</td>
+                    <td>301</td>
+                    <td>28937</td>
+                    <td>14774</td>
+                    <td>574</td>
+                    <td>9/36</td>
+                    <td>11/97</td>
+                    <td>25.74</td>
+                    <td>3.06</td>
+                    <td>50.41</td>
+                    <td>22</td>
+                    <td>22</td>
+                    <td>4</td>
+                    <td>14.44</td>
+                    <td>49.08</td>
+                </tr>
+                <tr>
+                    <th>ENGLAND</th>
+                    <td>JAMES ANDERSON</td>
+                    <td>297</td>
+                    <td>348</td>
+                    <td>59061</td>
+                    <td>27558</td>
+                    <td>1122</td>
+                    <td>7/19</td>
+                    <td>11/71</td>
+                    <td>24.56</td>
+                    <td>2.80</td>
+                    <td>52.64</td>
+                    <td>48</td>
+                    <td>55</td>
+                    <td>6</td>
+                    <td>31.00</td>
+                    <td>79.19</td>
+                </tr>
+                <tr>
+                    <th>ENGLAND</th>
+                    <td>GUS ATKINSON</td>
+                    <td>19</td>
+                    <td>36</td>
+                    <td>2851</td>
+                    <td>1616</td>
+                    <td>59</td>
+                    <td>6/68</td>
+                    <td>8/105</td>
+                    <td>27.39</td>
+                    <td>3.40</td>
+                    <td>48.32</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1.31</td>
+                    <td>44.89</td>
+                </tr>
+                <tr>
+                    <th>ENGLAND</th>
+                    <td>DILLON PENNINGTON</td>
+                    <td>53</td>
+                    <td>93</td>
+                    <td>8553</td>
+                    <td>4677</td>
+                    <td>171</td>
+                    <td>5/32</td>
+                    <td>9/76</td>
+                    <td>27.35</td>
+                    <td>3.28</td>
+                    <td>50.02</td>
+                    <td>9</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>3.81</td>
+                    <td>50.29</td>
+                </tr>
+                <tr>
+                    <th>ENGLAND</th>
+                    <td>MATTHEW POTTS</td>
+                    <td>55</td>
+                    <td>96</td>
+                    <td>10545</td>
+                    <td>5383</td>
+                    <td>218</td>
+                    <td>7/40</td>
+                    <td>13/101</td>
+                    <td>24.69</td>
+                    <td>3.06</td>
+                    <td>48.37</td>
+                    <td>13</td>
+                    <td>9</td>
+                    <td>2</td>
+                    <td>5.96</td>
+                    <td>56.07</td>
+                </tr>
+                <tr>
+                    <th>ENGLAND</th>
+                    <td>SHOAIB BASHIR</td>
+                    <td>13</td>
+                    <td>20</td>
+                    <td>3037</td>
+                    <td>1698</td>
+                    <td>33</td>
+                    <td>5/119</td>
+                    <td>8/198</td>
+                    <td>51.45</td>
+                    <td>3.35</td>
+                    <td>92.03</td>
+                    <td>0</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>0.21</td>
+                    <td>84.90</td>
+                </tr>
+                <tr>
+                    <th>WEST INDIES</th>
+                    <td>ALICK ATHANAZE</td>
+                    <td>39</td>
+                    <td>25</td>
+                    <td>700</td>
+                    <td>337</td>
+                    <td>8</td>
+                    <td>3/37</td>
+                    <td>3/37</td>
+                    <td>42.13</td>
+                    <td>2.89</td>
+                    <td>87.50</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0.08</td>
+                    <td>13.48</td>
+                </tr>
+                <tr>
+                    <th>WEST INDIES</th>
+                    <td>KAVEM HODGE</td>
+                    <td>63</td>
+                    <td>77</td>
+                    <td>4920</td>
+                    <td>2283</td>
+                    <td>62</td>
+                    <td>6/68</td>
+                    <td>7/108</td>
+                    <td>36.82</td>
+                    <td>2.78</td>
+                    <td>79.35</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0.76</td>
+                    <td>29.65</td>
+                </tr>
+                <tr>
+                    <th>WEST INDIES</th>
+                    <td>JASON HOLDER</td>
+                    <td>103</td>
+                    <td>181</td>
+                    <td>15706</td>
+                    <td>6948</td>
+                    <td>258</td>
+                    <td>6/42</td>
+                    <td>11/103</td>
+                    <td>26.93</td>
+                    <td>2.65</td>
+                    <td>60.88</td>
+                    <td>8</td>
+                    <td>11</td>
+                    <td>1</td>
+                    <td>5.93</td>
+                    <td>38.39</td>
+                </tr>
+                <tr>
+                    <th>WEST INDIES</th>
+                    <td>ALZARRI JOSEPH</td>
+                    <td>66</td>
+                    <td>112</td>
+                    <td>10357</td>
+                    <td>5957</td>
+                    <td>206</td>
+                    <td>7/46</td>
+                    <td>8/62</td>
+                    <td>28.92</td>
+                    <td>3.45</td>
+                    <td>50.28</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>0</td>
+                    <td>4.11</td>
+                    <td>53.19</td>
+                </tr>
+                <tr>
+                    <th>WEST INDIES</th>
+                    <td>SHAMAR JOSEPH</td>
+                    <td>7</td>
+                    <td>14</td>
+                    <td>1053</td>
+                    <td>683</td>
+                    <td>34</td>
+                    <td>7/68</td>
+                    <td>8/124</td>
+                    <td>20.09</td>
+                    <td>3.89</td>
+                    <td>30.97</td>
+                    <td>0</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>1.40</td>
+                    <td>48.79</td>
+                </tr>
+                <tr>
+                    <th>WEST INDIES</th>
+                    <td>JEREMIAH LOUIS</td>
+                    <td>57</td>
+                    <td>100</td>
+                    <td>7529</td>
+                    <td>3841</td>
+                    <td>151</td>
+                    <td>6/69</td>
+                    <td>9/112</td>
+                    <td>25.44</td>
+                    <td>3.06</td>
+                    <td>49.86</td>
+                    <td>8</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>3.89</td>
+                    <td>38.41</td>
+                </tr>
+                <tr>
+                    <th>WEST INDIES</th>
+                    <td>GUDAKESH MOTIE</td>
+                    <td>46</td>
+                    <td>81</td>
+                    <td>7943</td>
+                    <td>3403</td>
+                    <td>160</td>
+                    <td>7/37</td>
+                    <td>13/99</td>
+                    <td>21.27</td>
+                    <td>2.57</td>
+                    <td>49.64</td>
+                    <td>9</td>
+                    <td>6</td>
+                    <td>2</td>
+                    <td>5.90</td>
+                    <td>42.01</td>
+                </tr>
+                <tr>
+                    <th>WEST INDIES</th>
+                    <td>JAYDEN SEALES</td>
+                    <td>28</td>
+                    <td>51</td>
+                    <td>4043</td>
+                    <td>2188</td>
+                    <td>91</td>
+                    <td>5/29</td>
+                    <td>8/125</td>
+                    <td>24.04</td>
+                    <td>3.25</td>
+                    <td>44.43</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>2.62</td>
+                    <td>42.90</td>
+                </tr>
+                <tr>
+                    <th>WEST INDIES</th>
+                    <td>KEVIN SINCLAIR</td>
+                    <td>29</td>
+                    <td>51</td>
+                    <td>4123</td>
+                    <td>2065</td>
+                    <td>80</td>
+                    <td>6/33</td>
+                    <td>8/81</td>
+                    <td>25.81</td>
+                    <td>3.01</td>
+                    <td>51.54</td>
+                    <td>2</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>2.00</td>
+                    <td>40.49</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <div class="table-container">
+        <table id="myTable3">
+            <caption style="text-align: center; color: crimson; font-weight: 700; font-size: x-large; background-color: antiquewhite;">Series Batting Stats</caption>
+                <thead>
+                    <tr>
+                        <th>TEAM</th>
+                        <th>Player</th>
+                        <th>MATCHES</th>
+                        <th>INNINGS</th>
+                        <th>Got Out</th>
+                        <th>T1IN1</th>
+                        <th>T1IN2</th>
+                        <th>BALLS</th>
+                        <th>RUNS</th>
+                        <th>100S</th>
+                        <th>50S</th>
+                        <th>4s</th>
+                        <th>6s</th>
+                        <th>STRIKE RATE</th>
+                        <th>BAT AVG</th>
+                        <th>AVG RUNS</th>
+                        <th>STDEV</th>
+                        <th>BAT INDEX</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>BEN DUCKETT</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>3</td>
+                        <td>-</td>
+                        <td>13</td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>23.08</td>
+                        <td>3.00</td>
+                        <td>3.00</td>
+                        <td>0.00</td>
+                        <td>9.02</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>BEN STOKES</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>4</td>
+                        <td>-</td>
+                        <td>11</td>
+                        <td>4</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>36.36</td>
+                        <td>4.00</td>
+                        <td>4.00</td>
+                        <td>0.00</td>
+                        <td>13.71</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>CHRIS WOAKES</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>23</td>
+                        <td>-</td>
+                        <td>43</td>
+                        <td>23</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>4</td>
+                        <td>0</td>
+                        <td>53.49</td>
+                        <td>23.00</td>
+                        <td>23.00</td>
+                        <td>0.00</td>
+                        <td>32.15</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>GUS ATKINSON</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>-</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0.00</td>
+                        <td>0.00</td>
+                        <td>0.00</td>
+                        <td>0.00</td>
+                        <td>0.00</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>HARRY BROOK</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>50</td>
+                        <td>-</td>
+                        <td>64</td>
+                        <td>50</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>5</td>
+                        <td>1</td>
+                        <td>78.13</td>
+                        <td>50.00</td>
+                        <td>50.00</td>
+                        <td>0.00</td>
+                        <td>58.44</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>JAMES ANDERSON</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>-</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>#DIV/0!</td>
+                        <td>#DIV/0!</td>
+                        <td>0.00</td>
+                        <td>0.00</td>
+                        <td>#DIV/0!</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>JAMIE SMITH</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>70</td>
+                        <td>-</td>
+                        <td>119</td>
+                        <td>70</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>8</td>
+                        <td>2</td>
+                        <td>58.82</td>
+                        <td>70.00</td>
+                        <td>70.00</td>
+                        <td>0.00</td>
+                        <td>66.65</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>JOE ROOT</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>68</td>
+                        <td>-</td>
+                        <td>114</td>
+                        <td>68</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>7</td>
+                        <td>0</td>
+                        <td>59.65</td>
+                        <td>68.00</td>
+                        <td>68.00</td>
+                        <td>0.00</td>
+                        <td>65.49</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>OLLIE POPE</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>57</td>
+                        <td>-</td>
+                        <td>74</td>
+                        <td>57</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>11</td>
+                        <td>0</td>
+                        <td>77.03</td>
+                        <td>57.00</td>
+                        <td>57.00</td>
+                        <td>0.00</td>
+                        <td>63.01</td>
+                    </tr>
+                    <tr>
+                        <th>ENGLAND</th>
+                        <td>ZAK CRAWLEY</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>76</td>
+                        <td>-</td>
+                        <td>89</td>
+                        <td>76</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>14</td>
+                        <td>0</td>
+                        <td>85.39</td>
+                        <td>76.00</td>
+                        <td>76.00</td>
+                        <td>0.00</td>
+                        <td>78.82</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>ALICK ATHANAZE</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>23</td>
+                        <td>22</td>
+                        <td>103</td>
+                        <td>45</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>7</td>
+                        <td>0</td>
+                        <td>43.69</td>
+                        <td>22.50</td>
+                        <td>22.50</td>
+                        <td>0.50</td>
+                        <td>28.86</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>ALZARRI JOSEPH</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>17</td>
+                        <td>8</td>
+                        <td>18</td>
+                        <td>25</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>5</td>
+                        <td>0</td>
+                        <td>138.89</td>
+                        <td>12.50</td>
+                        <td>12.50</td>
+                        <td>4.50</td>
+                        <td>50.42</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>GUDAKESH MOTIE</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>14</td>
+                        <td>31</td>
+                        <td>54</td>
+                        <td>45</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>8</td>
+                        <td>0</td>
+                        <td>83.33</td>
+                        <td>#DIV/0!</td>
+                        <td>22.50</td>
+                        <td>8.50</td>
+                        <td>#DIV/0!</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>JASON HOLDER</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>20</td>
+                        <td>59</td>
+                        <td>21</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>35.59</td>
+                        <td>10.50</td>
+                        <td>10.50</td>
+                        <td>9.50</td>
+                        <td>18.03</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>JAYDEN SEALES</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>8</td>
+                        <td>20</td>
+                        <td>10</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>50.00</td>
+                        <td>5.00</td>
+                        <td>5.00</td>
+                        <td>3.00</td>
+                        <td>18.50</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>JOSHUA de SILVA</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>9</td>
+                        <td>28</td>
+                        <td>9</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>32.14</td>
+                        <td>4.50</td>
+                        <td>4.50</td>
+                        <td>4.50</td>
+                        <td>12.79</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>KAVEM HODGE</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>24</td>
+                        <td>4</td>
+                        <td>53</td>
+                        <td>28</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>4</td>
+                        <td>1</td>
+                        <td>52.83</td>
+                        <td>14.00</td>
+                        <td>14.00</td>
+                        <td>10.00</td>
+                        <td>25.65</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>KIRK McKENZIE</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>23</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>4.35</td>
+                        <td>0.50</td>
+                        <td>0.50</td>
+                        <td>0.50</td>
+                        <td>1.65</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>KRAIGG BRAITHWAITE</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>6</td>
+                        <td>4</td>
+                        <td>59</td>
+                        <td>10</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>16.95</td>
+                        <td>5.00</td>
+                        <td>5.00</td>
+                        <td>1.00</td>
+                        <td>8.58</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>MIKYLE LOUIS</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>27</td>
+                        <td>14</td>
+                        <td>107</td>
+                        <td>41</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>6</td>
+                        <td>1</td>
+                        <td>38.32</td>
+                        <td>20.50</td>
+                        <td>20.50</td>
+                        <td>6.50</td>
+                        <td>25.85</td>
+                    </tr>
+                    <tr>
+                        <th>WEST INDIES</th>
+                        <td>SHAMAR JOSEPH</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>3</td>
+                        <td>11</td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>27.27</td>
+                        <td>1.50</td>
+                        <td>1.50</td>
+                        <td>1.50</td>
+                        <td>9.23</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            <div class="table-container">
+            <table id="myTable4">
+                <caption style="text-align: center; color: crimson; font-weight: 700; font-size: x-large; background-color: antiquewhite;">Series Bowling Stats</caption>
+                    <thead>
+                        <tr>
+                            <th>Team</th>
+                            <th>Player</th>
+                            <th>MATCHES</th>
+                            <th>INNINGS</th>
+                            <th>OVERS</th>
+                            <th>MAIDENS</th>
+                            <th>RUNS GIVEN</th>
+                            <th>WICKETS TAKEN</th>
+                            <th>ECON</th>
+                            <th>WD</th>
+                            <th>NB</th>
+                            <th>BALLS</th>
+                            <th>BBI</th>
+                            <th>BBM</th>
+                            <th>STRIKE RATE</th>
+                            <th>BOWLING AVERAGE</th>
+                            <th>AVG RUNS</th>
+                            <th>BOWLING INDEX</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>ENGLAND</th>
+                            <td>BEN STOKES</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>18</td>
+                            <td>6</td>
+                            <td>39</td>
+                            <td>3</td>
+                            <td>2.17</td>
+                            <td>0</td>
+                            <td>2</td>
+                            <td>108</td>
+                            <td>2/25</td>
+                            <td>3/39</td>
+                            <td>36.00</td>
+                            <td>13.00</td>
+                            <td>19.50</td>
+                            <td>17.75</td>
+                        </tr>
+                        <tr>
+                            <th>ENGLAND</th>
+                            <td>CHRIS WOAKES</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>18</td>
+                            <td>5</td>
+                            <td>40</td>
+                            <td>1</td>
+                            <td>2.22</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>108</td>
+                            <td>1/29</td>
+                            <td>1/40</td>
+                            <td>108.00</td>
+                            <td>40.00</td>
+                            <td>20.00</td>
+                            <td>0.52</td>
+                        </tr>
+                        <tr>
+                            <th>ENGLAND</th>
+                            <td>GUS ATKINSON</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>26</td>
+                            <td>7</td>
+                            <td>106</td>
+                            <td>12</td>
+                            <td>4.08</td>
+                            <td>0</td>
+                            <td>2</td>
+                            <td>156</td>
+                            <td>7/45</td>
+                            <td>12/106</td>
+                            <td>13.00</td>
+                            <td>8.83</td>
+                            <td>53.00</td>
+                            <td>179.42</td>
+                        </tr>
+                        <tr>
+                            <th>ENGLAND</th>
+                            <td>JAMES ANDERSON</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>16.4</td>
+                            <td>10</td>
+                            <td>58</td>
+                            <td>4</td>
+                            <td>3.54</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>98.4</td>
+                            <td>3/32</td>
+                            <td>4/58</td>
+                            <td>24.60</td>
+                            <td>14.50</td>
+                            <td>29.00</td>
+                            <td>31.71</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JASON HOLDER</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>18</td>
+                            <td>2</td>
+                            <td>58</td>
+                            <td>2</td>
+                            <td>3.22</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>108</td>
+                            <td>2/58</td>
+                            <td>2/58</td>
+                            <td>54.00</td>
+                            <td>29.00</td>
+                            <td>58.00</td>
+                            <td>0.79</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>ALZARRI JOSEPH</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>18</td>
+                            <td>1</td>
+                            <td>106</td>
+                            <td>1</td>
+                            <td>5.89</td>
+                            <td>0</td>
+                            <td>4</td>
+                            <td>108</td>
+                            <td>1/106</td>
+                            <td>1/106</td>
+                            <td>108.00</td>
+                            <td>106.00</td>
+                            <td>106.00</td>
+                            <td>0.01</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>SHAMAR JOSEPH</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>15.4</td>
+                            <td>1</td>
+                            <td>68</td>
+                            <td>0</td>
+                            <td>4.42</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>92.4</td>
+                            <td>0/68</td>
+                            <td>0/68</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>68.00</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>GUDAKESH MOTIE</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>16</td>
+                            <td>3</td>
+                            <td>41</td>
+                            <td>2</td>
+                            <td>2.56</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>96</td>
+                            <td>2/41</td>
+                            <td>2/41</td>
+                            <td>48.00</td>
+                            <td>20.50</td>
+                            <td>41.00</td>
+                            <td>2.38</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JAYDEN SEALES</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>20</td>
+                            <td>5</td>
+                            <td>77</td>
+                            <td>4</td>
+                            <td>3.85</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>120</td>
+                            <td>4/77</td>
+                            <td>4/77</td>
+                            <td>30.00</td>
+                            <td>19.25</td>
+                            <td>77.00</td>
+                            <td>9.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+</main>
+<footer>
+    <div id="GC" style="border: yellow solid 2px; height: 50px;">
+        <a href="graphs-charts-BRT24.html" style="color: rgb(255, 0, 0); position: relative; top: 7.5px;">Top Players Of the Series</a>
+    </div>
+</footer>
+</body>
+</html>
