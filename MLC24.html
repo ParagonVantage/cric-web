@@ -1,0 +1,2569 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: bisque;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Player Statistics</title>
+    <link rel="stylesheet" href="tablestyles_c.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchpanes/1.4.0/css/searchPanes.dataTables.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/searchpanes/1.4.0/js/dataTables.searchPanes.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/select/1.3.4/js/dataTables.select.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function initializeDataTable(tableId, filterColumns) {
+                $(tableId).DataTable({
+                    dom: 'Pfrtip',
+                    searchPanes: {
+                        cascadePanes: true,
+                        columns: filterColumns
+                    },
+                    columnDefs: [
+                        { searchPanes: { show: true }, targets: filterColumns },
+                        { type: 'num', targets: Array.from({length: 15}, (_, i) => i + 2), render: function(data, type) {
+                            return type === 'sort' && data === '#DIV/0!' ? -Infinity : data;
+                        }}
+                    ]
+                });
+            }
+            initializeDataTable('#myTable1', [0, 1]);
+            initializeDataTable('#myTable2', [0, 1]);
+        });
+    </script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #00796b;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .video-wrapper {
+            flex: 1 1 60%;
+            position: relative;
+            padding-bottom: 33.75%; /* 16:9 aspect ratio */
+            height: 0;
+            border: 5px solid #00796b;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .text-container {
+            flex: 1 1 35%;
+            padding: 20px;
+            margin-left: 20px;
+            background-color: #fff;
+            border: 2px solid #00796b;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .text-container h3 {
+            margin-top: 0;
+        }
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+        margin-bottom: 20px;
+    }
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+        table caption {
+            text-align: center;
+            color: crimson;
+            font-weight: bold;
+            font-size: x-large;
+            background-color: antiquewhite;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        table th, table td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        table th {
+            background-color: #00796b;
+            color: white;
+        }
+        table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #00796b;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        footer a {
+            color: red;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .image-container {
+        display: flex;
+        justify-content: space-around;
+        margin: 20px 0;
+        flex-wrap: wrap; /* Make the images wrap on smaller screens */
+    }
+    .image-box {
+        position: relative; /* Needed for the overlay */
+        border: 2px solid #00796b;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 10px; /* Space between images */
+        flex: 1 1 calc(33.333% - 20px); /* Responsive design */
+        box-sizing: border-box;
+    }
+    .image-box img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    .overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 20%; /* Covers only a small percentage of the image */
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .image-box:hover .overlay {
+        opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .image-box {
+            flex: 1 1 calc(50% - 20px);
+        }
+    }
+    @media (max-width: 480px) {
+        .image-box {
+            flex: 1 1 100%;
+        }
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cricket Player Statistics</h1>
+        <nav>
+            <ul>
+                <li><a href="index_c.html" class="animated-button">Home</a></li>
+                <li><a href="MLC24.html" class="animated-button">MLC 24</a></li>
+                <li><a href="BRT24.html" class="animated-button">WI v ENG</a></li>
+                <li><a href="IVZ24.HTML" class="animated-button">IND v ZIM</a></li>
+                <li><a href="ZVIRINF.html" class="animated-button">ZIM v IRE</a></li>
+                <li><a href="contact.html" class="animated-button">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="image-container">
+        <div class="image-box">
+            <img src="C:\Users\agney\OneDrive\Desktop\gg\cric\mlc1.webp" alt="Image 1">
+            <div class="overlay">Faf du Plesis Celebrates his maiden MLC ton</div>
+        </div>
+        <div class="image-box">
+            <img src="C:\Users\agney\OneDrive\Desktop\gg\cric\mlc2.webp" alt="Image 2">
+            <div class="overlay">Ryan Rickelton shows he's here with 103 not out to chase a win</div>
+        </div>
+        <div class="image-box">
+            <img src="C:\Users\agney\OneDrive\Desktop\gg\cric\mlc3.webp" alt="Image 3">
+            <div class="overlay">Obus & Milantha's 63 run partnership puts Washington on top</div>
+        </div>
+    <div style="background-color: bisque;" class="table-container">
+    <table id="myTable1" >
+        <caption style="text-align: center;color: crimson;font-weight: 700;font-size: x-large;background-color: antiquewhite;">Batting Stats</caption>
+            <thead>
+                <tr>
+                    <th>Team</th>
+                    <th>Player</th>
+                    <th>MATCHES</th>
+                    <th>INNINGS</th>
+                    <th>Got Out</th>
+                    <th>M1</th>
+                    <th>M2</th>
+                    <th>M3</th>
+                    <th>BALLS</th>
+                    <th>RUNS</th>
+                    <th>100S</th>
+                    <th>50S</th>
+                    <th>4s</th>
+                    <th>6s</th>
+                    <th>STRIKE RATE</th>
+                    <th>BAT AVG</th>
+                    <th>AVG RUNS</th>
+                    <th>STDEV</th>
+                    <th>BAT INDEX</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>ALI KHAN</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>0.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>ANDRE RUSSELL</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>10</td>
+                    <td>40</td>
+                    <td>14</td>
+                    <td>40</td>
+                    <td>64</td>
+                    <td></td>
+                    <td></td>
+                    <td>3</td>
+                    <td>5</td>
+                    <td>160.00</td>
+                    <td>21.33</td>
+                    <td>21.33</td>
+                    <td>13.30</td>
+                    <td>118.40</td>
+                </tr>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>CORNE&#39; DRY</td>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>12</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>4</td>
+                    <td>12</td>
+                    <td></td>
+                    <td></td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>300.00</td>
+                    <td>#DIV/0!</td>
+                    <td>12.00</td>
+                    <td>5.66</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>DAVID MILLER</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>4</td>
+                    <td>24</td>
+                    <td>44</td>
+                    <td>55</td>
+                    <td>72</td>
+                    <td></td>
+                    <td></td>
+                    <td>6</td>
+                    <td>3</td>
+                    <td>130.91</td>
+                    <td>36.00</td>
+                    <td>24.00</td>
+                    <td>16.33</td>
+                    <td>102.44</td>
+                </tr>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>DERONE DAVIS</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>13</td>
+                    <td>2</td>
+                    <td></td>
+                    <td>13</td>
+                    <td>15</td>
+                    <td></td>
+                    <td></td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>115.38</td>
+                    <td>#DIV/0!</td>
+                    <td>7.50</td>
+                    <td>5.50</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>JASON ROY</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>26</td>
+                    <td>69</td>
+                    <td>81</td>
+                    <td>97</td>
+                    <td></td>
+                    <td>1</td>
+                    <td>9</td>
+                    <td>4</td>
+                    <td>119.75</td>
+                    <td>32.33</td>
+                    <td>32.33</td>
+                    <td>27.72</td>
+                    <td>93.53</td>
+                </tr>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>NITISH KUMAR</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>26</td>
+                    <td>20</td>
+                    <td>0</td>
+                    <td>36</td>
+                    <td>46</td>
+                    <td></td>
+                    <td></td>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>127.78</td>
+                    <td>23.00</td>
+                    <td>23.00</td>
+                    <td>11.12</td>
+                    <td>96.34</td>
+                </tr>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>SAIF BADAR</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>100.00</td>
+                    <td>#DIV/0!</td>
+                    <td>2.00</td>
+                    <td>0.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>SHAKIB AL HASAN</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>18</td>
+                    <td>35</td>
+                    <td>7</td>
+                    <td>46</td>
+                    <td>60</td>
+                    <td></td>
+                    <td></td>
+                    <td>10</td>
+                    <td>0</td>
+                    <td>130.43</td>
+                    <td>20.00</td>
+                    <td>20.00</td>
+                    <td>11.52</td>
+                    <td>97.30</td>
+                </tr>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>SPENCER JOHNSON</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>0.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>SUNIL NARINE</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>6</td>
+                    <td>5</td>
+                    <td>15</td>
+                    <td>13</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>86.67</td>
+                    <td>4.33</td>
+                    <td>4.33</td>
+                    <td>1.70</td>
+                    <td>61.97</td>
+                </tr>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>UNMUKT CHAND</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>68</td>
+                    <td>0</td>
+                    <td>18</td>
+                    <td>71</td>
+                    <td>86</td>
+                    <td></td>
+                    <td>1</td>
+                    <td>8</td>
+                    <td>3</td>
+                    <td>121.13</td>
+                    <td>28.67</td>
+                    <td>28.67</td>
+                    <td>28.77</td>
+                    <td>93.39</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>ANRICH NORTJE</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>14</td>
+                    <td></td>
+                    <td>9</td>
+                    <td>14</td>
+                    <td></td>
+                    <td></td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>155.56</td>
+                    <td>14.00</td>
+                    <td>14.00</td>
+                    <td>7.00</td>
+                    <td>113.09</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>EHSAN ADIL</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td></td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td></td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>100.00</td>
+                    <td>#DIV/0!</td>
+                    <td>1.00</td>
+                    <td>0.50</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>KIERON POLLARD</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>8</td>
+                    <td>3</td>
+                    <td></td>
+                    <td>15</td>
+                    <td>11</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>73.33</td>
+                    <td>11.00</td>
+                    <td>5.50</td>
+                    <td>2.50</td>
+                    <td>54.63</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>MONANK PATEL</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>8</td>
+                    <td>5</td>
+                    <td></td>
+                    <td>18</td>
+                    <td>13</td>
+                    <td></td>
+                    <td></td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>72.22</td>
+                    <td>6.50</td>
+                    <td>6.50</td>
+                    <td>1.50</td>
+                    <td>52.51</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>NICHOLAS POORAN</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>62</td>
+                    <td>44</td>
+                    <td></td>
+                    <td>67</td>
+                    <td>106</td>
+                    <td></td>
+                    <td>1</td>
+                    <td>12</td>
+                    <td>3</td>
+                    <td>158.21</td>
+                    <td>106.00</td>
+                    <td>53.00</td>
+                    <td>9.00</td>
+                    <td>142.55</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>NOSHTUSH KENJIGE</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td></td>
+                    <td>5</td>
+                    <td></td>
+                    <td>2</td>
+                    <td>5</td>
+                    <td></td>
+                    <td></td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>250.00</td>
+                    <td>#DIV/0!</td>
+                    <td>5.00</td>
+                    <td>0.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>RASHID KHAN</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>31</td>
+                    <td></td>
+                    <td>15</td>
+                    <td>31</td>
+                    <td></td>
+                    <td></td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>206.67</td>
+                    <td>31.00</td>
+                    <td>31.00</td>
+                    <td>15.50</td>
+                    <td>153.97</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>RUBEN CLINTON</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>6</td>
+                    <td>28</td>
+                    <td></td>
+                    <td>27</td>
+                    <td>34</td>
+                    <td></td>
+                    <td></td>
+                    <td>4</td>
+                    <td>1</td>
+                    <td>125.93</td>
+                    <td>17.00</td>
+                    <td>17.00</td>
+                    <td>11.00</td>
+                    <td>93.25</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>SHAYAN JAHANGIR</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>6</td>
+                    <td></td>
+                    <td>18</td>
+                    <td>9</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>50.00</td>
+                    <td>4.50</td>
+                    <td>4.50</td>
+                    <td>1.50</td>
+                    <td>36.35</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>STEVEN TAYLOR</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>0.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>TIM DAVID</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>12</td>
+                    <td>9</td>
+                    <td></td>
+                    <td>27</td>
+                    <td>21</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>77.78</td>
+                    <td>10.50</td>
+                    <td>10.50</td>
+                    <td>1.50</td>
+                    <td>57.59</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>TRENT BOULT</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>5</td>
+                    <td></td>
+                    <td>7</td>
+                    <td>5</td>
+                    <td></td>
+                    <td></td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>71.43</td>
+                    <td>5.00</td>
+                    <td>5.00</td>
+                    <td>2.50</td>
+                    <td>51.50</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>ABRAR AHMED</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>6</td>
+                    <td></td>
+                    <td>7</td>
+                    <td>6</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>85.71</td>
+                    <td>6.00</td>
+                    <td>6.00</td>
+                    <td>3.00</td>
+                    <td>61.80</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>BRODY COUCH</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>13</td>
+                    <td></td>
+                    <td>20</td>
+                    <td>13</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>65.00</td>
+                    <td>#DIV/0!</td>
+                    <td>13.00</td>
+                    <td>6.50</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>COREY ANDERSON</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>11</td>
+                    <td>3</td>
+                    <td></td>
+                    <td>13</td>
+                    <td>14</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>107.69</td>
+                    <td>14.00</td>
+                    <td>7.00</td>
+                    <td>4.00</td>
+                    <td>79.58</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>FINN ALLEN</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>63</td>
+                    <td>10</td>
+                    <td></td>
+                    <td>41</td>
+                    <td>73</td>
+                    <td></td>
+                    <td>1</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>178.05</td>
+                    <td>36.50</td>
+                    <td>36.50</td>
+                    <td>26.50</td>
+                    <td>135.58</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>HARIS RAUF</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>13</td>
+                    <td></td>
+                    <td>20</td>
+                    <td>13</td>
+                    <td></td>
+                    <td></td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>65.00</td>
+                    <td>13.00</td>
+                    <td>13.00</td>
+                    <td>6.50</td>
+                    <td>49.40</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>HASSAN KHAN</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>19</td>
+                    <td></td>
+                    <td>26</td>
+                    <td>21</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>80.77</td>
+                    <td>21.00</td>
+                    <td>10.50</td>
+                    <td>8.50</td>
+                    <td>62.84</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>JAKE FRASER-McGURK</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>9</td>
+                    <td>11</td>
+                    <td></td>
+                    <td>14</td>
+                    <td>20</td>
+                    <td></td>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>142.86</td>
+                    <td>10.00</td>
+                    <td>10.00</td>
+                    <td>1.00</td>
+                    <td>103.00</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>JOSH INGLIS</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>15</td>
+                    <td>1</td>
+                    <td></td>
+                    <td>13</td>
+                    <td>16</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>123.08</td>
+                    <td>8.00</td>
+                    <td>8.00</td>
+                    <td>7.00</td>
+                    <td>88.55</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>LIAM PLUNKETT</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>MATTHEW SHORT</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>58</td>
+                    <td>33</td>
+                    <td></td>
+                    <td>41</td>
+                    <td>91</td>
+                    <td></td>
+                    <td>1</td>
+                    <td>5</td>
+                    <td>8</td>
+                    <td>221.95</td>
+                    <td>45.50</td>
+                    <td>45.50</td>
+                    <td>12.50</td>
+                    <td>169.02</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>SANJAY KRISHNAMURTHI</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>17</td>
+                    <td></td>
+                    <td>12</td>
+                    <td>17</td>
+                    <td></td>
+                    <td></td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>141.67</td>
+                    <td>17.00</td>
+                    <td>17.00</td>
+                    <td>8.50</td>
+                    <td>104.27</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>AARON JONES</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>12</td>
+                    <td></td>
+                    <td></td>
+                    <td>16</td>
+                    <td>12</td>
+                    <td></td>
+                    <td></td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>75.00</td>
+                    <td>12.00</td>
+                    <td>12.00</td>
+                    <td>0.00</td>
+                    <td>56.10</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>CAMERON GANNON</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>7</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>7</td>
+                    <td>7</td>
+                    <td></td>
+                    <td></td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>100.00</td>
+                    <td>7.00</td>
+                    <td>7.00</td>
+                    <td>3.50</td>
+                    <td>72.10</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>HAMMAD AZAM</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>HARMEET SINGH</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>20</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>14</td>
+                    <td>20</td>
+                    <td></td>
+                    <td></td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>142.86</td>
+                    <td>20.00</td>
+                    <td>20.00</td>
+                    <td>10.00</td>
+                    <td>106.00</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>HEINRICH KLASSEN</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>5</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>5</td>
+                    <td>5</td>
+                    <td></td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>100.00</td>
+                    <td>5.00</td>
+                    <td>5.00</td>
+                    <td>2.50</td>
+                    <td>71.50</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>IMAD WASIM</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>3</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>10</td>
+                    <td>3</td>
+                    <td></td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>30.00</td>
+                    <td>3.00</td>
+                    <td>3.00</td>
+                    <td>1.50</td>
+                    <td>21.90</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>MICHAEL BRACEWELL</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>5</td>
+                    <td></td>
+                    <td></td>
+                    <td>5</td>
+                    <td>5</td>
+                    <td></td>
+                    <td></td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>100.00</td>
+                    <td>5.00</td>
+                    <td>5.00</td>
+                    <td>0.00</td>
+                    <td>71.50</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>NANDRE BURGER</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>4</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>9</td>
+                    <td>4</td>
+                    <td></td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>44.44</td>
+                    <td>4.00</td>
+                    <td>4.00</td>
+                    <td>2.00</td>
+                    <td>32.31</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>NAUMAN ANWAR</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td></td>
+                    <td>9</td>
+                    <td>11</td>
+                    <td>9</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>81.82</td>
+                    <td>4.50</td>
+                    <td>4.50</td>
+                    <td>4.50</td>
+                    <td>58.62</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>QUINTON de KOCK</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>5</td>
+                    <td></td>
+                    <td>51</td>
+                    <td>56</td>
+                    <td>56</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>100.00</td>
+                    <td>56.00</td>
+                    <td>28.00</td>
+                    <td>23.00</td>
+                    <td>86.80</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>RYAN RICKELTON</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td>103</td>
+                    <td>66</td>
+                    <td>103</td>
+                    <td>1</td>
+                    <td></td>
+                    <td>9</td>
+                    <td>5</td>
+                    <td>156.06</td>
+                    <td>#DIV/0!</td>
+                    <td>103.00</td>
+                    <td>0.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>SHUBHAM RANJANE</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>35</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>31</td>
+                    <td>35</td>
+                    <td></td>
+                    <td></td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>112.90</td>
+                    <td>35.00</td>
+                    <td>35.00</td>
+                    <td>17.50</td>
+                    <td>89.53</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>ZAMAN KHAN</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>7</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>4</td>
+                    <td>7</td>
+                    <td></td>
+                    <td></td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>175.00</td>
+                    <td>#DIV/0!</td>
+                    <td>7.00</td>
+                    <td>3.50</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>AARON HARDIE</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>11</td>
+                    <td>2</td>
+                    <td>34</td>
+                    <td>42</td>
+                    <td>47</td>
+                    <td></td>
+                    <td></td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>111.90</td>
+                    <td>15.67</td>
+                    <td>15.67</td>
+                    <td>13.47</td>
+                    <td>83.03</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>CALVIN SAVAGE</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>29</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>20</td>
+                    <td>30</td>
+                    <td></td>
+                    <td></td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>150.00</td>
+                    <td>30.00</td>
+                    <td>15.00</td>
+                    <td>13.44</td>
+                    <td>114.00</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>DEVON CONWAY</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>53</td>
+                    <td>39</td>
+                    <td>32</td>
+                    <td>84</td>
+                    <td>124</td>
+                    <td></td>
+                    <td>1</td>
+                    <td>12</td>
+                    <td>3</td>
+                    <td>147.62</td>
+                    <td>41.33</td>
+                    <td>41.33</td>
+                    <td>8.73</td>
+                    <td>115.73</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>DWAYNE BRAVO</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td></td>
+                    <td>5</td>
+                    <td>0</td>
+                    <td>2</td>
+                    <td>5</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>250.00</td>
+                    <td>#DIV/0!</td>
+                    <td>5.00</td>
+                    <td>2.50</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>FAF du PLESIS</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>14</td>
+                    <td>100</td>
+                    <td>34</td>
+                    <td>89</td>
+                    <td>148</td>
+                    <td>1</td>
+                    <td></td>
+                    <td>13</td>
+                    <td>10</td>
+                    <td>166.29</td>
+                    <td>49.33</td>
+                    <td>49.33</td>
+                    <td>36.75</td>
+                    <td>131.20</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>GERALD COETZEE</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>4</td>
+                    <td></td>
+                    <td></td>
+                    <td>5</td>
+                    <td>4</td>
+                    <td></td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>80.00</td>
+                    <td>4.00</td>
+                    <td>4.00</td>
+                    <td>0.00</td>
+                    <td>57.20</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>JOSHUA TROMP</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>18</td>
+                    <td>0</td>
+                    <td>9</td>
+                    <td>23</td>
+                    <td>27</td>
+                    <td></td>
+                    <td></td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>117.39</td>
+                    <td>13.50</td>
+                    <td>13.50</td>
+                    <td>7.35</td>
+                    <td>86.22</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>MARCUS STOINIS</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>29</td>
+                    <td></td>
+                    <td>24</td>
+                    <td>31</td>
+                    <td></td>
+                    <td></td>
+                    <td>4</td>
+                    <td>1</td>
+                    <td>129.17</td>
+                    <td>15.50</td>
+                    <td>15.50</td>
+                    <td>13.50</td>
+                    <td>95.07</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>MILIND KUMAR</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>11</td>
+                    <td>4</td>
+                    <td>25</td>
+                    <td>15</td>
+                    <td></td>
+                    <td></td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>60.00</td>
+                    <td>15.00</td>
+                    <td>5.00</td>
+                    <td>4.55</td>
+                    <td>46.50</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>MITCHELL SANTNER</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td>9</td>
+                    <td>4</td>
+                    <td>9</td>
+                    <td></td>
+                    <td></td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>225.00</td>
+                    <td>#DIV/0!</td>
+                    <td>9.00</td>
+                    <td>0.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>MOHAMMAD MOHSIN</td>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td></td>
+                    <td></td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>133.33</td>
+                    <td>4.00</td>
+                    <td>4.00</td>
+                    <td>1.89</td>
+                    <td>94.53</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>NAVEEN-UL-HAQ</td>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>6</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>7</td>
+                    <td>6</td>
+                    <td></td>
+                    <td></td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>85.71</td>
+                    <td>#DIV/0!</td>
+                    <td>6.00</td>
+                    <td>2.83</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>ZIA-UL-HAQ</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>0.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>AKEAL HOSSEIN</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>0.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>ANDRIES GOUS</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>5</td>
+                    <td>0</td>
+                    <td></td>
+                    <td>11</td>
+                    <td>5</td>
+                    <td></td>
+                    <td></td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>45.45</td>
+                    <td>#DIV/0!</td>
+                    <td>5.00</td>
+                    <td>2.50</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>GLENN MAXWELL</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>0.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>JUSTIN DILL</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>0.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>LOCKIE FURGUSON</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>0.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>MARCO JANSEN</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>0.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>MUKHTAR AHMED</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>0.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>OBUS PIENAAR</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>0.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>SAURABH NETRAVALKAR</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>0.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>STEVEN SMITH</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>46</td>
+                    <td>26</td>
+                    <td></td>
+                    <td>41</td>
+                    <td>72</td>
+                    <td></td>
+                    <td></td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>175.61</td>
+                    <td>#DIV/0!</td>
+                    <td>36.00</td>
+                    <td>10.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>TRAVIS HEAD</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>32</td>
+                    <td></td>
+                    <td>19</td>
+                    <td>33</td>
+                    <td></td>
+                    <td></td>
+                    <td>4</td>
+                    <td>2</td>
+                    <td>173.68</td>
+                    <td>33.00</td>
+                    <td>16.50</td>
+                    <td>15.50</td>
+                    <td>131.48</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="background-color: bisque;" class="table-container">
+    <table id="myTable2">
+        <caption style="text-align: center;color: crimson;font-weight: 700;font-size: x-large;background-color: antiquewhite;">Bowling Stats</caption>
+            <thead>
+                <tr>
+                    <th>Team</th>
+                    <th>Player</th>
+                    <th>Matches Bowled</th>
+                    <th>OVERS</th>
+                    <th>MAIDENS</th>
+                    <th>RUNS GIVEN</th>
+                    <th>WICKETS TAKEN</th>
+                    <th>ECON</th>
+                    <th>WD</th>
+                    <th>NB</th>
+                    <th>BALLS</th>
+                    <th>4W</th>
+                    <th>5W</th>
+                    <th>BOWLING AVERAGE</th>
+                    <th>STRIKE RATE</th>
+                    <th>AVERAGE RUNS</th>
+                    <th>BOWLING INDEX</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>ALI KHAN</td>
+                    <td>3</td>
+                    <td>10.1</td>
+                    <td>0</td>
+                    <td>87</td>
+                    <td>4</td>
+                    <td>8.61</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>60.6</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>21.75</td>
+                    <td>15.15</td>
+                    <td>29.00</td>
+                    <td>1.41</td>
+                </tr>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>ANDRE RUSSELL</td>
+                    <td>3</td>
+                    <td>7</td>
+                    <td>0</td>
+                    <td>75</td>
+                    <td>0</td>
+                    <td>10.71</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>42</td>
+                    <td></td>
+                    <td></td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>25.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>CORNE&#39; DRY</td>
+                    <td>3</td>
+                    <td>7</td>
+                    <td>0</td>
+                    <td>65</td>
+                    <td>0</td>
+                    <td>9.29</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>42</td>
+                    <td></td>
+                    <td></td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>21.67</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>SHAKIB AL HASAN</td>
+                    <td>3</td>
+                    <td>7</td>
+                    <td>0</td>
+                    <td>82</td>
+                    <td>1</td>
+                    <td>11.71</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>42</td>
+                    <td></td>
+                    <td></td>
+                    <td>82.00</td>
+                    <td>42.00</td>
+                    <td>27.33</td>
+                    <td>0.02</td>
+                </tr>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>SPENCER JOHNSON</td>
+                    <td>3</td>
+                    <td>12</td>
+                    <td>0</td>
+                    <td>82</td>
+                    <td>6</td>
+                    <td>6.83</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>72</td>
+                    <td></td>
+                    <td></td>
+                    <td>13.67</td>
+                    <td>12.00</td>
+                    <td>27.33</td>
+                    <td>5.35</td>
+                </tr>
+                <tr>
+                    <th>LOS ANGELES KNIGHT RIDERS</th>
+                    <td>SUNIL NARINE</td>
+                    <td>3</td>
+                    <td>12</td>
+                    <td>0</td>
+                    <td>87</td>
+                    <td>2</td>
+                    <td>7.25</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>72</td>
+                    <td></td>
+                    <td></td>
+                    <td>43.50</td>
+                    <td>36.00</td>
+                    <td>29.00</td>
+                    <td>0.18</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>ANRICH NORTJE</td>
+                    <td>2</td>
+                    <td>5</td>
+                    <td>0</td>
+                    <td>42</td>
+                    <td>1</td>
+                    <td>8.40</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>30</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>42.00</td>
+                    <td>30.00</td>
+                    <td>21.00</td>
+                    <td>0.09</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>EHSAN ADIL</td>
+                    <td>2</td>
+                    <td>6</td>
+                    <td>1</td>
+                    <td>30</td>
+                    <td>2</td>
+                    <td>5.00</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>36</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>15.00</td>
+                    <td>18.00</td>
+                    <td>15.00</td>
+                    <td>1.48</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>KIERON POLLARD</td>
+                    <td>1</td>
+                    <td>2.1</td>
+                    <td>0</td>
+                    <td>11</td>
+                    <td>2</td>
+                    <td>5.24</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>12.6</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>5.50</td>
+                    <td>6.30</td>
+                    <td>11.00</td>
+                    <td>11.02</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>NOSHTUSH KENJIGE</td>
+                    <td>1</td>
+                    <td>0.4</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>7.50</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>2.4</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>3.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>RASHID KHAN</td>
+                    <td>2</td>
+                    <td>6</td>
+                    <td>0</td>
+                    <td>34</td>
+                    <td>3</td>
+                    <td>5.67</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>36</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>11.33</td>
+                    <td>12.00</td>
+                    <td>17.00</td>
+                    <td>3.89</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>STEVEN TAYLOR</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>13</td>
+                    <td>0</td>
+                    <td>13.00</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>6</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>13.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>MI NEW YORK</th>
+                    <td>TRENT BOULT</td>
+                    <td>2</td>
+                    <td>6</td>
+                    <td>0</td>
+                    <td>28</td>
+                    <td>3</td>
+                    <td>4.67</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>36</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>9.33</td>
+                    <td>12.00</td>
+                    <td>14.00</td>
+                    <td>5.74</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>ABRAR AHMED</td>
+                    <td>2</td>
+                    <td>7</td>
+                    <td>0</td>
+                    <td>59</td>
+                    <td>1</td>
+                    <td>8.43</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>42</td>
+                    <td></td>
+                    <td></td>
+                    <td>59.00</td>
+                    <td>42.00</td>
+                    <td>29.50</td>
+                    <td>0.05</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>BRODY COUCH</td>
+                    <td>2</td>
+                    <td>6</td>
+                    <td>0</td>
+                    <td>49</td>
+                    <td>2</td>
+                    <td>8.17</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>36</td>
+                    <td></td>
+                    <td></td>
+                    <td>24.50</td>
+                    <td>18.00</td>
+                    <td>24.50</td>
+                    <td>0.56</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>HARIS RAUF</td>
+                    <td>2</td>
+                    <td>7.5</td>
+                    <td>0</td>
+                    <td>62</td>
+                    <td>2</td>
+                    <td>8.27</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>45</td>
+                    <td></td>
+                    <td></td>
+                    <td>31.00</td>
+                    <td>22.50</td>
+                    <td>31.00</td>
+                    <td>0.35</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>HASSAN KHAN</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>16</td>
+                    <td>2</td>
+                    <td>8.00</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>12</td>
+                    <td></td>
+                    <td></td>
+                    <td>8.00</td>
+                    <td>6.00</td>
+                    <td>16.00</td>
+                    <td>5.21</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>LIAM PLUNKETT</td>
+                    <td>2</td>
+                    <td>6</td>
+                    <td>0</td>
+                    <td>64</td>
+                    <td>2</td>
+                    <td>10.67</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>36</td>
+                    <td></td>
+                    <td></td>
+                    <td>32.00</td>
+                    <td>18.00</td>
+                    <td>32.00</td>
+                    <td>0.33</td>
+                </tr>
+                <tr>
+                    <th>SAN FRANCISCO UNICORNS</th>
+                    <td>MATTHEW SHORT</td>
+                    <td>1</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>38</td>
+                    <td>0</td>
+                    <td>9.50</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>24</td>
+                    <td></td>
+                    <td></td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>38.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>CAMERON GANNON</td>
+                    <td>2</td>
+                    <td>7</td>
+                    <td>0</td>
+                    <td>66</td>
+                    <td>3</td>
+                    <td>9.43</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>42</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>22.00</td>
+                    <td>14.00</td>
+                    <td>33.00</td>
+                    <td>1.03</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>HARMEET SINGH</td>
+                    <td>1</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>34</td>
+                    <td>2</td>
+                    <td>8.50</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>24</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>17.00</td>
+                    <td>12.00</td>
+                    <td>34.00</td>
+                    <td>1.15</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>IMAD WASIM</td>
+                    <td>2</td>
+                    <td>5</td>
+                    <td>0</td>
+                    <td>32</td>
+                    <td>0</td>
+                    <td>6.40</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>30</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>16.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>MICHAEL BRACEWELL</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>14</td>
+                    <td>0</td>
+                    <td>7.00</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>12</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>14.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>NANDRE BURGER</td>
+                    <td>2</td>
+                    <td>8</td>
+                    <td>0</td>
+                    <td>79</td>
+                    <td>1</td>
+                    <td>9.88</td>
+                    <td>6</td>
+                    <td>0</td>
+                    <td>48</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>79.00</td>
+                    <td>48.00</td>
+                    <td>39.50</td>
+                    <td>0.03</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>SHUBHAM RANJANE</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>6</td>
+                    <td>0</td>
+                    <td>6.00</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>6</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>#DIV/0!</td>
+                    <td>#DIV/0!</td>
+                    <td>6.00</td>
+                    <td>#DIV/0!</td>
+                </tr>
+                <tr>
+                    <th>SEATTLE ORCAS</th>
+                    <td>ZAMAN KHAN</td>
+                    <td>2</td>
+                    <td>7.2</td>
+                    <td>0</td>
+                    <td>41</td>
+                    <td>3</td>
+                    <td>5.69</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>43.2</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>13.67</td>
+                    <td>14.40</td>
+                    <td>20.50</td>
+                    <td>2.68</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>AARON HARDIE</td>
+                    <td>3</td>
+                    <td>6</td>
+                    <td>0</td>
+                    <td>65</td>
+                    <td>2</td>
+                    <td>10.83</td>
+                    <td>5</td>
+                    <td>0</td>
+                    <td>36</td>
+                    <td></td>
+                    <td></td>
+                    <td>32.50</td>
+                    <td>18.00</td>
+                    <td>21.67</td>
+                    <td>0.32</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>DWAYNE BRAVO</td>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>20</td>
+                    <td>2</td>
+                    <td>6.67</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>18</td>
+                    <td></td>
+                    <td></td>
+                    <td>10.00</td>
+                    <td>9.00</td>
+                    <td>20.00</td>
+                    <td>3.33</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>GERALD COETZEE</td>
+                    <td>1</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>28</td>
+                    <td>1</td>
+                    <td>7.00</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>24</td>
+                    <td></td>
+                    <td></td>
+                    <td>28.00</td>
+                    <td>24.00</td>
+                    <td>28.00</td>
+                    <td>0.21</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>MARCUS STOINIS</td>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>37</td>
+                    <td>2</td>
+                    <td>12.33</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>18</td>
+                    <td></td>
+                    <td></td>
+                    <td>18.50</td>
+                    <td>9.00</td>
+                    <td>37.00</td>
+                    <td>0.97</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>MITCHELL SANTNER</td>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>15</td>
+                    <td>1</td>
+                    <td>5.00</td>
+                    <td></td>
+                    <td></td>
+                    <td>18</td>
+                    <td></td>
+                    <td></td>
+                    <td>15.00</td>
+                    <td>18.00</td>
+                    <td>15.00</td>
+                    <td>0.74</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>MOHAMMAD MOHSIN</td>
+                    <td>2</td>
+                    <td>6.5</td>
+                    <td>0</td>
+                    <td>35</td>
+                    <td>4</td>
+                    <td>5.38</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>39</td>
+                    <td></td>
+                    <td></td>
+                    <td>8.75</td>
+                    <td>9.75</td>
+                    <td>17.50</td>
+                    <td>8.71</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>NAVEEN-UL-HAQ</td>
+                    <td>3</td>
+                    <td>8</td>
+                    <td>0</td>
+                    <td>70</td>
+                    <td>1</td>
+                    <td>8.75</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>48</td>
+                    <td></td>
+                    <td></td>
+                    <td>70.00</td>
+                    <td>48.00</td>
+                    <td>23.33</td>
+                    <td>0.03</td>
+                </tr>
+                <tr>
+                    <th>TEXAS SUPER KINGS</th>
+                    <td>ZIA-UL-HAQ</td>
+                    <td>3</td>
+                    <td>8</td>
+                    <td>0</td>
+                    <td>76</td>
+                    <td>4</td>
+                    <td>9.50</td>
+                    <td>5</td>
+                    <td>0</td>
+                    <td>48</td>
+                    <td></td>
+                    <td></td>
+                    <td>19.00</td>
+                    <td>12.00</td>
+                    <td>25.33</td>
+                    <td>1.85</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>AKEAL HOSSEIN</td>
+                    <td>2</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>41</td>
+                    <td>1</td>
+                    <td>10.25</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>24</td>
+                    <td></td>
+                    <td></td>
+                    <td>41.00</td>
+                    <td>24.00</td>
+                    <td>20.50</td>
+                    <td>0.10</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>GLENN MAXWELL</td>
+                    <td>2</td>
+                    <td>5</td>
+                    <td>0</td>
+                    <td>36</td>
+                    <td>1</td>
+                    <td>7.20</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>30</td>
+                    <td></td>
+                    <td></td>
+                    <td>36.00</td>
+                    <td>30.00</td>
+                    <td>18.00</td>
+                    <td>0.13</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>JUSTIN DILL</td>
+                    <td>2</td>
+                    <td>7</td>
+                    <td>0</td>
+                    <td>68</td>
+                    <td>4</td>
+                    <td>9.71</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>42</td>
+                    <td></td>
+                    <td></td>
+                    <td>17.00</td>
+                    <td>10.50</td>
+                    <td>34.00</td>
+                    <td>2.31</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>LOCKIE FURGUSON</td>
+                    <td>2</td>
+                    <td>8</td>
+                    <td>0</td>
+                    <td>62</td>
+                    <td>1</td>
+                    <td>7.75</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>48</td>
+                    <td></td>
+                    <td></td>
+                    <td>62.00</td>
+                    <td>48.00</td>
+                    <td>31.00</td>
+                    <td>0.04</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>MARCO JANSEN</td>
+                    <td>2</td>
+                    <td>8</td>
+                    <td>0</td>
+                    <td>90</td>
+                    <td>2</td>
+                    <td>11.25</td>
+                    <td>6</td>
+                    <td>0</td>
+                    <td>48</td>
+                    <td></td>
+                    <td></td>
+                    <td>45.00</td>
+                    <td>24.00</td>
+                    <td>45.00</td>
+                    <td>0.16</td>
+                </tr>
+                <tr>
+                    <th>WASHINGTON FREEDOM</th>
+                    <td>SAURABH NETRAVALKAR</td>
+                    <td>2</td>
+                    <td>8</td>
+                    <td>0</td>
+                    <td>57</td>
+                    <td>5</td>
+                    <td>7.13</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>48</td>
+                    <td></td>
+                    <td></td>
+                    <td>11.40</td>
+                    <td>9.60</td>
+                    <td>28.50</td>
+                    <td>6.41</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="GC" style="border: yellow solid 2px;height:50px">
+        <a href="graphs-charts-MLC24.html" style="color: rgb(255, 0, 0);position: relative;top:7.5px">Top Players Of the Series</a>
+    </div>
+    </body>
+    </html>

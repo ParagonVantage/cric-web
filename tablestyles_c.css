@@ -1,0 +1,228 @@
+body {
+    background-color: #e3f2fd;
+    color: #212529;
+    font-family: 'Arial', sans-serif;
+}
+header {
+    background-color: #00796b;
+    color: white;
+    padding: 10px 0;
+    transition: background-color 0.3s ease;
+}
+header:hover {
+    background-color: #004d40;
+}
+header h1 {
+    margin: 0;
+}
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+nav ul li {
+    margin: 0 15px;
+    transition: transform 0.3s ease;
+}
+nav ul li:hover {
+    transform: scale(1.1);
+}
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+nav ul li a:hover, nav ul li a:focus {
+    color: #ffeb3b;
+}
+.container {
+    padding: 20px;
+}
+.chart-container {
+    margin: 20px 0;
+}
+.chart-description {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.content-box {
+    background-color: #ffffff;
+    border: 2px solid #00796b;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+}
+.content-box:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+footer {
+    background-color: #00796b;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+/* Applying animations to elements */
+.animated-header {
+    animation: example 5s infinite;
+}
+
+.animated-button:hover {
+    animation: buttonHover 0.5s forwards;
+}
+
+@keyframes buttonHover {
+    to {
+        background-color: #ffeb3b;
+        color: #00796b;
+        transform: scale(1.1);
+    }
+}
+
+.bounce-text {
+    display: inline-block;
+    animation: bounce 2s infinite;
+}
+#GC{color:red;background-color: black;text-align: center;}
+#GC a:link{text-decoration: underline;color: red;}
+#GC a:hover{text-decoration: underline;color: rgb(4, 0, 255);}
+#GC a:active{text-decoration: underline;color: red;}
+#GC a:visited{text-decoration: none;color: rgb(217, 217, 217);}
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+}
+
+th, td {
+    padding: 12px 15px;
+}
+
+thead th {
+    background-color: #009879;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+tbody tr:nth-of-type(odd) {
+    background-color: #e9f7f6;
+}
+
+tbody tr:hover {
+    background-color: #d1e7dd;
+}
+
+th, td {
+    border: 1px solid #dddddd;
+}
+
+table {
+    margin-top: 20px;
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.container {
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px;
+}
+
+canvas {
+    display: block;
+    margin: 20px auto;
+    max-width: 800px;
+    max-height: 400px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.video-wrapper {
+    position: relative;
+    width: 60%;
+    padding-bottom: 33.75%; /* Aspect ratio 16:9 */
+    height: 0;
+    overflow: hidden;
+    border: 5px solid #00796b;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #000;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.text-container {
+    width: 35%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f1f1f1;
+    border: 2px solid #00796b;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-left: 20px;
+}
+
+.text-container h3 {
+    margin-top: 0;
+}
