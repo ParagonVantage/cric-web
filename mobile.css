@@ -1,0 +1,130 @@
+/* Define the viewport */
+@media screen and (max-width: 480px) {
+    /* Basic reset */
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+    }
+    
+    /* Make images responsive */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Container for fluid layout */
+    .container {
+        width: 100%;
+        padding: 0 15px;
+        margin: 0 auto;
+    }
+
+    /* Responsive text */
+    h1, h2, h3, h4, h5, h6, p {
+        line-height: 1.4;
+        margin-bottom: 20px;
+    }
+
+    /* Navigation styling */
+    nav ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    nav ul li {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    /* Ensure links are accessible */
+    a {
+        color: #000;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    /* Make tables responsive */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    /* Forms */
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        box-sizing: border-box;
+    }
+
+    /* Responsive grid */
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .col {
+        flex: 1;
+        padding: 15px;
+    }
+    
+    /* Media queries for additional control */
+    @media (max-width: 768px) {
+        .col {
+            flex: 1 100%;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .col {
+            flex: 1 100%;
+        }
+    }
+}
+
+/* Additional mobile-friendly styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+footer {
+    background: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
