@@ -1,130 +1,79 @@
-/* Define the viewport */
-@media screen and (max-width: 480px) {
-    /* Basic reset */
-    html, body, div, span, applet, object, iframe,
-    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-    a, abbr, acronym, address, big, cite, code,
-    del, dfn, em, img, ins, kbd, q, s, samp,
-    small, strike, strong, sub, sup, tt, var,
-    b, u, i, center,
-    dl, dt, dd, ol, ul, li,
-    fieldset, form, label, legend,
-    table, caption, tbody, tfoot, thead, tr, th, td,
-    article, aside, canvas, details, embed,
-    figure, figcaption, footer, header, hgroup,
-    menu, nav, output, ruby, section, summary,
-    time, mark, audio, video {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        font-size: 100%;
-        font: inherit;
-        vertical-align: baseline;
-    }
-    
-    /* Container for fluid layout */
-    .container {
-        width: 100%;
-        padding: 0 15px;
-        margin: 0 auto;
-    }
-
-    /* Responsive images */
-    img {
-        max-width: 100%;
-        height: auto;
-    }
-
-    /* Responsive video */
-    .video-container {
-        position: relative;
-        padding-bottom: 56.25%; /* 16:9 aspect ratio */
-        padding-top: 25px;
-        height: 0;
-    }
-
-    .video-container iframe,
-    .video-container object,
-    .video-container embed {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    /* Responsive text */
-    h1, h2, h3, h4, h5, h6, p {
-        line-height: 1.4;
-        margin-bottom: 20px;
-    }
-
-    /* Navigation styling */
-    nav ul {
-        list-style: none;
-        padding: 0;
-    }
-
-    nav ul li {
-        display: inline-block;
-        margin-right: 10px;
-    }
-
-    /* Ensure links are accessible */
-    a {
-        color: #000;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    /* Make tables responsive */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    th, td {
-        padding: 10px;
-        text-align: left;
-    }
-
-    /* Forms */
-    input, select, textarea {
-        width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-        box-sizing: border-box;
-    }
-
-    /* Responsive grid */
-    .row {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .col {
-        flex: 1;
-        padding: 15px;
-    }
-    
-    /* Media queries for additional control */
-    @media (max-width: 768px) {
-        .col {
-            flex: 1 100%;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .col {
-            flex: 1 100%;
-        }
-    }
+/* Basic reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
 
-/* Additional mobile-friendly styles */
+/* Container for fluid layout */
+.container {
+    width: 100%;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+
+/* Responsive text */
+h1, h2, h3, h4, h5, h6, p {
+    line-height: 1.4;
+    margin-bottom: 20px;
+}
+
+/* Ensure links are accessible */
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Make tables responsive */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+/* Forms */
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+}
+
+/* Responsive grid */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col {
+    flex: 1;
+    padding: 15px;
+}
+
+/* Mobile-friendly styles */
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
@@ -145,4 +94,198 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 480px) {
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 20px;
+        background-color: #00796b;
+        border-radius: 5px;
+        transition: color 0.3s ease, background-color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+        color: #00796b; /* Slightly lighter shade for links */
+        background-color: #b2dfdb; /* Light background color for links */
+    }
+
+    .image-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .image-box {
+        width: 90%; /* Adjust width as needed */
+        height: auto; /* Let height adjust automatically */
+        margin-bottom: 20px; /* Space between images */
+    }
+
+    .image-box img {
+        width: 100%;
+        height: auto;
+    }
+
+    .highlights-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .highlight-box {
+        width: 90%; /* Adjust width as needed */
+        height: auto; /* Let height adjust automatically */
+        margin-bottom: 20px; /* Space between videos */
+    }
+
+    .highlight-box iframe {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* Tablet styles */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    nav ul li {
+        margin: 0 15px;
+    }
+
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 15px;
+        transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+        color: #b2dfdb; /* Slightly lighter shade for links */
+        text-decoration: underline;
+    }
+
+    .image-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .image-box {
+        width: 45%; /* Adjust width as needed */
+        height: auto; /* Let height adjust automatically */
+        margin-bottom: 20px; /* Space between images */
+    }
+
+    .image-box img {
+        width: 100%;
+        height: auto;
+    }
+
+    .highlights-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .highlight-box {
+        width: 45%; /* Adjust width as needed */
+        height: auto; /* Let height adjust automatically */
+        margin-bottom: 20px; /* Space between videos */
+    }
+
+    .highlight-box iframe {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* Desktop styles */
+@media screen and (min-width: 769px) {
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    nav ul li {
+        margin: 0 15px;
+    }
+
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 20px;
+        transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+        color: #b2dfdb; /* Slightly lighter shade for links */
+        text-decoration: underline;
+    }
+
+    .image-container {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        justify-items: center;
+        margin: 20px 0;
+        max-width: 1500px; /* Adjust the section width */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .image-box {
+        width: 350px; /* Adjust width as needed */
+        height: 300px; /* Adjust height as needed */
+        margin-bottom: 20px; /* Space between images */
+    }
+
+    .image-box img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .highlights-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .highlight-box {
+        width: 45%; /* Adjust width as needed */
+        height: auto; /* Let height adjust automatically */
+        margin-bottom: 20px; /* Space between videos */
+    }
+
+    .highlight-box iframe {
+        width: 100%;
+        height: 550px; /* Fixed height for videos */
+    }
 }
