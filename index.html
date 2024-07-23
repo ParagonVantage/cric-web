@@ -12,20 +12,7 @@
     <meta property="og:description" content="Get the latest cricket player statistics, match fixtures, and highlights from recent games. Stay updated with your favorite teams and players.">
     <meta property="og:url" content="https://cricketscoresnap.com">
     <meta property="og:type" content="website">
-    
-    <!-- Meta tags for related pages -->
-    <meta property="og:title" content="WI vs ENG Series - Cricket Player Statistics">
-    <meta property="og:description" content="Detailed statistics and highlights of the WI vs ENG cricket series.">
-    <meta property="og:url" content="https://cricketscoresnap.com/BRT24.html">
-    
-    <meta property="og:title" content="IND vs ZIM Series - Cricket Player Statistics">
-    <meta property="og:description" content="Detailed statistics and highlights of the IND vs ZIM cricket series.">
-    <meta property="og:url" content="https://cricketscoresnap.com/IVZ24.HTML">
-    
-    <meta property="og:title" content="MLC 24 Series - Cricket Player Statistics">
-    <meta property="og:description" content="Detailed statistics and highlights of the MLC 24 cricket series.">
-    <meta property="og:url" content="https://cricketscoresnap.com/MLC24.html">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="mobile.css">
     <link rel="stylesheet" href="tablestyles_c.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -35,17 +22,17 @@
             color: #333;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5; /* Light background color for the body */
+            background-color: #f5f5f5;
         }
         header {
             background-color: #00796b;
             color: white;
             padding: 10px 0;
             text-align: center;
-            transition: transform 0.3s ease; /* Add transition for transform */
+            transition: transform 0.3s ease;
         }
         header:hover {
-            transform: scale(1.02); /* Slight scaling effect */
+            transform: scale(1.02);
         }
         header h1 {
             margin: 0;
@@ -64,49 +51,52 @@
             color: white;
             text-decoration: none;
             font-weight: bold;
-            transition: color 0.3s ease; /* Add transition for link color */
+            transition: color 0.3s ease;
         }
         nav ul li a:hover {
-            color: #b2dfdb; /* Slightly lighter shade for links */
+            color: #b2dfdb;
             text-decoration: underline;
         }
         .image-container {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            justify-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             margin: 20px 0;
-            max-width: 1500px; /* Adjust the section width */
+            max-width: 1500px;
             margin-left: auto;
             margin-right: auto;
         }
         .image-box {
-            position: relative; /* Needed for the overlay */
+            position: relative;
             border: 2px solid #00796b;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 350px; /* Increased width for all images */
-            height: 300px; /* Increased height for all images */
-            transition: transform 0.3s ease; /* Add transition for transform */
+            width: 100%;
+            padding-top: 75%;
+            transition: transform 0.3s ease;
+            margin: 10px;
         }
         .image-box img {
             display: block;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease; /* Add transition for image transform */
+            transition: transform 0.3s ease;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
         .image-box:hover {
-            transform: scale(1.05); /* Slight zoom effect on hover */
+            transform: scale(1.05);
         }
         .overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 20%; /* Covers only a small percentage of the image */
-            background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            height: 20%;
+            background: rgba(0, 0, 0, 0.5);
             color: white;
             display: flex;
             justify-content: center;
@@ -117,48 +107,68 @@
         .image-box:hover .overlay {
             opacity: 1;
         }
-        .row-1, .row-2 {
-            grid-column: 1 / span 5;
-            display: flex;
-            justify-content: space-around;
-        }
-        .row-1 .image-box, .row-2 .image-box {
-            flex: 1;
-            margin: 0 10px;
-        }
-        .highlights-container {
-            display: block;
-            gap: 20px;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        .highlight-box {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-        .highlight-box iframe {
-            width: 93%;
-            height: 550px;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            position: relative;left:40px
-        }
         .content-box {
-            background-color: #ffffff; /* White background color for sections */
+            background-color: #ffffff;
             padding: 20px;
             margin: 20px 0;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .bg-light {
-            background-color: #f8f9fa !important; /* Light gray background for cards */
+            background-color: #f8f9fa !important;
         }
         .bg-primary {
-            background-color: #007bff !important; /* Blue background for primary sections */
+            background-color: #007bff !important;
         }
         .bg-primary.text-white {
             color: white;
+        }
+        @keyframes borderLoop {
+            0% { border-color: #007bff; }
+            25% { border-color: #28a745; }
+            50% { border-color: #ffc107; }
+            75% { border-color: #dc3545; }
+            100% { border-color: #007bff; }
+        }
+        .featured-player-box {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            border: 5px solid;
+            animation: borderLoop 5s infinite;
+            margin: 10px;
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+        }
+        .featured-players-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .formats h3 {
+            margin-top: 20px;
+        }
+        .formats ul {
+            list-style: none;
+            padding: 0;
+        }
+        .formats ul li {
+            background: #007bff;
+            color: white;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .formats ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        .formats ul li:hover {
+            background: #0056b3;
         }
     </style>
     <script>
@@ -193,29 +203,41 @@
     <section class="container">
         <div class="content-box">
             <h2 class="text-center">Shots from Latest Fixtures</h2>
-            <div class="image-container">
-                <div class="row-1">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
                     <div class="image-box">
                         <img src="images/ewi4.webp" alt="Image 1">
                         <div class="overlay">Kavem Hodge celebrates his maiden Test Ton</div>
                     </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
                     <div class="image-box">
                         <img src="images/ewi5.webp" alt="Image 2">
                         <div class="overlay">An impressive but a rough wicketless day for Mark Wood</div>
                     </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
                     <div class="image-box">
                         <img src="images/ewi6.webp" alt="Image 3">
                         <div class="overlay">Mark Wood reaches 96.5 mph - highest by any English Bowler</div>
                     </div>
                 </div>
-                <div class="row-2">
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
                     <div class="image-box">
                         <img src="images/mlc10.webp" alt="Image 4">
                         <div class="overlay">Rachin Ravindra Takes his first 4-fer to stop Texas Kings</div>
                     </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
                     <div class="image-box">
                         <img src="images/mlc11.webp" alt="Image 5">
-                        <div class="overlay">Faf continues power-hittning excellence with 19 ball 50</div>
+                        <div class="overlay">Faf continues power-hitting excellence with 19 ball 50</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <div class="image-box">
+                        <img src="images/new-image.webp" alt="Image 6">
+                        <div class="overlay">Caption for Image 6</div>
                     </div>
                 </div>
             </div>
@@ -234,18 +256,18 @@
                 <li>Latest match statistics</li>
             </ul>
             <h3 class="text-info">Featured Players</h3>
-            <div class="d-flex flex-row gap-3">
-                <div class="p-3 bg-light rounded">
+            <div class="featured-players-container">
+                <div class="featured-player-box">
                     <h4 class="text-center">MLC 24</h4>
-                    <p class="text-center"><a href="graphs-charts-MLC24.html">Key statistics of Top Players</a></p>
+                    <p class="text-center"><a href="graphs-charts-MLC24.html" class="text-white">Key statistics of Top Players</a></p>
                 </div>
-                <div class="p-3 bg-light rounded">
+                <div class="featured-player-box">
                     <h4 class="text-center">India V Zimbabwe T20I Series</h4>
-                    <p class="text-center"><a href="graphs-charts-INDVZIM24.html">Key statistics of Top Players</a></p>
+                    <p class="text-center"><a href="graphs-charts-INDVZIM24.html" class="text-white">Key statistics of Top Players</a></p>
                 </div>
-                <div class="p-3 bg-light rounded">
+                <div class="featured-player-box">
                     <h4 class="text-center">Botham-Richards Trophy Test Series ENG V WI</h4>
-                    <p class="text-center"><a href="graphs-charts-BRT24.html">Key statistics of Top Players</a></p>
+                    <p class="text-center"><a href="graphs-charts-BRT24.html" class="text-white">Key statistics of Top Players</a></p>
                 </div>
             </div>
         </div>
@@ -254,55 +276,63 @@
     <section class="container">
         <div class="content-box">
             <h2 class="text-center">Recent Match Highlights</h2>
-            <div class="highlights-container">
-                <div class="highlight-box">
-                    <iframe src="https://www.youtube.com/embed/7ziF1xWosWY" allowfullscreen></iframe>
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item d-block w-100" src="https://www.youtube.com/embed/7ziF1xWosWY" allowfullscreen style="height: 250px;width:400px;padding-right: 10px;position: relative;left:10px"></iframe>
+                    </div>
                 </div>
-                <div class="highlight-box">
-                    <iframe src="https://www.youtube.com/embed/Dq0euMPpJzI" allowfullscreen></iframe>
+                <div class="col-12 mb-4">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item d-block w-100" src="https://www.youtube.com/embed/Dq0euMPpJzI" allowfullscreen style="height: 250px;width:400px;padding-right: 10px;position: relative;left:10px"></iframe>
+                    </div>
                 </div>
-                <div class="highlight-box">
-                    <iframe src="https://www.youtube.com/embed/gcjJnUhWNPg" allowfullscreen></iframe>
+                <div class="col-12 mb-4">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item d-block w-100" src="https://www.youtube.com/embed/gcjJnUhWNPg" allowfullscreen style="height: 250px;width:400px;padding-right: 10px;position: relative;left:10px"></iframe>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-
+    
     <section class="container">
         <div class="content-box bg-primary text-white">
             <h1 id="year"></h1>
             <h2 id="month"></h2>
-            <div class="formats">
-                <h3>TESTS</h3>
-                <ul>
-                    <li><a href="BRT24.html" class="text-warning">Botham-Richards Trophy (WI VS ENG)</a> - 3 Tests JUL10 - JUL30</li>
-                    <li><a href="ZVIR24.html" class="text-warning">Zimbabwe vs Ireland</a> - 1 Test JUL25 - JUL29 - COMING SOON</li>
-                    <li><a href="SVR24.html" class="text-warning">Sir Vivian Richard Trophy (SA VS WI)</a> - 2 Tests AUG7 - AUG19 - COMING SOON</li>
-                    <li><a href="BVP24.html" class="text-warning">Bangladesh in Pakistan Test Series</a> - 2 Tests AUG21 - SEP3 - COMING SOON</li>
-                    <li><a href="SLVE24.html" class="text-warning">Sri Lanka in England Test Series</a> - 3 Tests AUG21 - SEP10 - COMING SOON</li>
-                </ul>
-            </div>
-            <div class="formats">
-                <h3>ODIS</h3>
-                <ul>
-                    <li><a href="IVSL24 - ODI.HTML" class="text-warning">India in Sri Lanka ODI Series</a> - 3 ODIs AUG1 - AUG7 - COMING SOON</li>
-                    <li><a href="AUSVENG24.html" class="text-warning">Australia in England ODI Series</a> - 5 ODIs SEP19 - SEP29 - COMING SOON</li>
-                </ul>
-            </div>
-            <div class="formats">
-                <h3>T20IS</h3>
-                <ul>
-                    <li><a href="MLC24.html" class="text-warning">Major League Cricket 2024</a> - T20 Franchise Tournament JUL5 - JUL28</li>
-                    <li><a href="IVZ24.html" class="text-warning">India in Zimbabwe T20Is Series</a> - 5 T20Is JUL6 - JUL14</li>
-                    <li><a href="IVSL24 - T20.HTML" class="text-warning">India in Sri Lanka T20Is Series</a> - 3 T20Is JUL26 - JUL29 - COMING SOON</li>
-                    <li><a href="SAVWI20.html" class="text-warning">South Africa in West Indies T20Is Series</a> - 3 T20Is AUG23 - AUG27 - COMING SOON</li>
-                    <li><a href="AUSVSCT20.html" class="text-warning">Australia in Scotland T20I Series</a> - 3 T20Is SEP4 - SEP7 - COMING SOON</li>
-                    <li><a href="AUSVENG20.html" class="text-warning">Australia in England T20I Series</a> - 3 T20Is SEP11 - SEP15 - COMING SOON</li>
-                </ul>
+            <div class="formats row">
+                <div class="col-12 col-md-4">
+                    <h3>TESTS</h3>
+                    <ul>
+                        <li><a href="BRT24.html" class="text-warning">Botham-Richards Trophy (WI VS ENG)</a> - 3 Tests JUL10 - JUL30</li>
+                        <li><a href="ZVIR24.html" class="text-warning">Zimbabwe vs Ireland</a> - 1 Test JUL25 - JUL29 - COMING SOON</li>
+                        <li><a href="SVR24.html" class="text-warning">Sir Vivian Richard Trophy (SA VS WI)</a> - 2 Tests AUG7 - AUG19 - COMING SOON</li>
+                        <li><a href="BVP24.html" class="text-warning">Bangladesh in Pakistan Test Series</a> - 2 Tests AUG21 - SEP3 - COMING SOON</li>
+                        <li><a href="SLVE24.html" class="text-warning">Sri Lanka in England Test Series</a> - 3 Tests AUG21 - SEP10 - COMING SOON</li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4">
+                    <h3>ODIS</h3>
+                    <ul>
+                        <li><a href="IVSL24 - ODI.HTML" class="text-warning">India in Sri Lanka ODI Series</a> - 3 ODIs AUG1 - AUG7 - COMING SOON</li>
+                        <li><a href="AUSVENG24.html" class="text-warning">Australia in England ODI Series</a> - 5 ODIs SEP19 - SEP29 - COMING SOON</li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4">
+                    <h3>T20IS</h3>
+                    <ul>
+                        <li><a href="MLC24.html" class="text-warning">Major League Cricket 2024</a> - T20 Franchise Tournament JUL5 - JUL28</li>
+                        <li><a href="IVZ24.html" class="text-warning">India in Zimbabwe T20Is Series</a> - 5 T20Is JUL6 - JUL14</li>
+                        <li><a href="IVSL24 - T20.HTML" class="text-warning">India in Sri Lanka T20Is Series</a> - 3 T20Is JUL26 - JUL29 - COMING SOON</li>
+                        <li><a href="SAVWI20.html" class="text-warning">South Africa in West Indies T20Is Series</a> - 3 T20Is AUG23 - AUG27 - COMING SOON</li>
+                        <li><a href="AUSVSCT20.html" class="text-warning">Australia in Scotland T20I Series</a> - 3 T20Is SEP4 - SEP7 - COMING SOON</li>
+                        <li><a href="AUSVENG20.html" class="text-warning">Australia in England T20I Series</a> - 3 T20Is SEP11 - SEP15 - COMING SOON</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
-
+    
     <footer>
         <p>&copy; 2024 CricketScoreSnap. All rights reserved.</p>
     </footer>
