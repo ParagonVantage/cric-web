@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cricket Score Snap</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <link rel="stylesheet" href="mobile.css">
     <style>
@@ -57,53 +57,55 @@
     <header>
         <h1 class="text-center">Cricket Score Snap</h1>
         <nav>
-            <ul>
-                <li><a href="index.html" class="animated-button">Home</a></li>
-                <li><a href="MLC24.html" class="animated-button">MLC 24</a></li>
-                <li><a href="BRT24.html" class="animated-button">WI v ENG</a></li>
-                <li><a href="IVZ24.HTML" class="animated-button">IND v ZIM</a></li>
-                <li><a href="ZVIRINF.html" class="animated-button">ZIM v IRE</a></li>
-                <li><a href="mailto:agneya2208@gmail.com" class="animated-button">Contact</a></li>
+            <ul class="nav">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="MLC24.html" class="nav-link">MLC 24</a></li>
+                <li class="nav-item"><a href="BRT24.html" class="nav-link">WI v ENG</a></li>
+                <li class="nav-item"><a href="IVZ24.HTML" class="nav-link">IND v ZIM</a></li>
+                <li class="nav-item"><a href="ZVIRINF.html" class="nav-link">ZIM v IRE</a></li>
+                <li class="nav-item"><a href="mailto:agneya2208@gmail.com" class="nav-link">Contact</a></li>
             </ul>
         </nav>
     </header>
 
     <div class="container">
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="barChart1"></canvas>
-        </div>
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="barChart2"></canvas>
-        </div>
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="barChart3"></canvas>
-        </div>
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="barChart4"></canvas>
-        </div>
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="lineChart1"></canvas>
-        </div>
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="lineChart2"></canvas>
-        </div>
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="lineChart3"></canvas>
-        </div>
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="lineChart4"></canvas>
-        </div>
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="lineChart5"></canvas>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="barChart1"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="barChart2"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="barChart3"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="barChart4"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart1"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart2"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart3"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart4"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart5"></canvas>
+            </div>
         </div>
     </div>
 
@@ -163,7 +165,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Runs Scored by Batsmen'
+                        text: ''
                     }
                 }
             },
@@ -180,7 +182,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Strike Rates of Batsmen'
+                        text: ''
                     }
                 }
             },
@@ -197,7 +199,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Wickets Taken by Bowlers'
+                        text: ''
                     }
                 }
             },
@@ -214,7 +216,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Economy of Bowlers'
+                        text: ''
                     }
                 }
             },
