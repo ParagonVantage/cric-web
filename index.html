@@ -34,9 +34,6 @@
         header:hover {
             transform: scale(1.02);
         }
-        header h1 {
-            margin: 0;
-        }
         nav ul {
             list-style: none;
             padding: 0;
@@ -72,18 +69,15 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 330px;
-            height: 200px;
-            padding-top: 75%;
-            position: relative;
-            left:20px;
+            width: 300px;
+            height: 300px;
             transition: transform 0.3s ease;
             margin: 10px;
         }
         .image-box img {
             display: block;
             width: 100%;
-            height: auto;
+            height: 100%;
             object-fit: cover;
             transition: transform 0.3s ease;
         }
@@ -203,42 +197,71 @@
     <section class="container">
         <div class="content-box">
             <h2 class="text-center">Shots from Latest Fixtures</h2>
-            <div class="row">
-                <div class="col-12 col-md-6 col-lg-4 mb-4 p-2">
+            <div class="row image-container justify-content-center">
+                <div class="col-12 col-md-4 col-lg-4 mb-4 d-flex justify-content-center">
                     <div class="image-box">
                         <img src="images/ewi4.webp" alt="Image 1" class="img-fluid">
                         <div class="overlay">Kavem Hodge celebrates his maiden Test Ton</div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4 mb-4 p-2">
+                <div class="col-12 col-md-4 col-lg-4 mb-4 d-flex justify-content-center">
                     <div class="image-box">
                         <img src="images/ewi5.webp" alt="Image 2" class="img-fluid">
                         <div class="overlay">An impressive but a rough wicketless day for Mark Wood</div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4 mb-4 p-2">
+                <div class="col-12 col-md-4 col-lg-4 mb-4 d-flex justify-content-center">
                     <div class="image-box">
                         <img src="images/ewi6.webp" alt="Image 3" class="img-fluid">
                         <div class="overlay">Mark Wood reaches 96.5 mph - highest by any English Bowler</div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4 mb-4 p-2">
+                <div class="col-12 col-md-4 col-lg-4 mb-4 d-flex justify-content-center">
                     <div class="image-box">
                         <img src="images/mlc10.webp" alt="Image 4" class="img-fluid">
                         <div class="overlay">Rachin Ravindra Takes his first 4-fer to stop Texas Kings</div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4 mb-4 p-2">
+                <div class="col-12 col-md-4 col-lg-4 mb-4 d-flex justify-content-center">
                     <div class="image-box">
                         <img src="images/mlc11.webp" alt="Image 5" class="img-fluid">
                         <div class="overlay">Faf continues power-hitting excellence with 19 ball 50</div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4 mb-4 p-2">
+                <div class="col-12 col-md-4 col-lg-4 mb-4 d-flex justify-content-center">
                     <div class="image-box">
-                        <img src="images/new-image.webp" alt="Image 6" class="img-fluid">
+                        <img src="images/mlc3.webp" alt="Image 6" class="img-fluid">
                         <div class="overlay">Caption for Image 6</div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="content-box">
+            <h2 class="text-success bounce-text">Welcome to Cricket Player Statistics</h2>
+            <p>Explore detailed statistics, interactive charts, and comparative analysis of your favorite cricket players.</p>
+            <h3 class="text-info">Key Features</h3>
+            <ul>
+                <li>Interactive charts and graphs</li>
+                <li>Player comparison tools</li>
+                <li>Historical data and trends</li>
+                <li>Latest match statistics</li>
+            </ul>
+            <h3 class="text-info">Featured Players</h3>
+            <div class="featured-players-container">
+                <div class="featured-player-box">
+                    <h4 class="text-center">MLC 24</h4>
+                    <p class="text-center"><a href="graphs-charts-MLC24.html" class="text-white">Key statistics of Top Players</a></p>
+                </div>
+                <div class="featured-player-box">
+                    <h4 class="text-center">India V Zimbabwe T20I Series</h4>
+                    <p class="text-center"><a href="graphs-charts-INDVZIM24.html" class="text-white">Key statistics of Top Players</a></p>
+                </div>
+                <div class="featured-player-box">
+                    <h4 class="text-center">Botham-Richards Trophy Test Series ENG V WI</h4>
+                    <p class="text-center"><a href="graphs-charts-BRT24.html" class="text-white">Key statistics of Top Players</a></p>
                 </div>
             </div>
         </div>
