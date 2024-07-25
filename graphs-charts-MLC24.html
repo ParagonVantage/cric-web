@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cricket Score Snap</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <link rel="stylesheet" href="mobile.css">
     <style>
@@ -57,62 +57,64 @@
     <header>
         <h1 class="text-center">Cricket Score Snap</h1>
         <nav>
-            <ul>
-                <li><a href="index.html" class="animated-button">Home</a></li>
-                <li><a href="MLC24.html" class="animated-button">MLC 24</a></li>
-                <li><a href="BRT24.html" class="animated-button">WI v ENG</a></li>
-                <li><a href="IVZ24.HTML" class="animated-button">IND v ZIM</a></li>
-                <li><a href="ZVIRINF.html" class="animated-button">ZIM v IRE</a></li>
-                <li><a href="mailto:agneya2208@gmail.com" class="animated-button">Contact</a></li>
+            <ul class="nav">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="MLC24.html" class="nav-link">MLC 24</a></li>
+                <li class="nav-item"><a href="BRT24.html" class="nav-link">WI v ENG</a></li>
+                <li class="nav-item"><a href="IVZ24.HTML" class="nav-link">IND v ZIM</a></li>
+                <li class="nav-item"><a href="ZVIRINF.html" class="nav-link">ZIM v IRE</a></li>
+                <li class="nav-item"><a href="mailto:agneya2208@gmail.com" class="nav-link">Contact</a></li>
             </ul>
         </nav>
     </header>
 
     <div class="container">
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="barChart1"></canvas>
-        </div>
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="barChart2"></canvas>
-        </div>
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="barChart3"></canvas>
-        </div>
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="barChart4"></canvas>
-        </div>
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="lineChart1"></canvas>
-        </div>
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="lineChart2"></canvas>
-        </div>
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="lineChart3"></canvas>
-        </div>
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="lineChart4"></canvas>
-        </div>
-        <div class="chart-container">
-            <div class="chart-description"></div>
-            <canvas id="lineChart5"></canvas>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="barChart1"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="barChart2"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="barChart3"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="barChart4"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart1"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart2"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart3"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart4"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart5"></canvas>
+            </div>
         </div>
     </div>
 
     <script>
         const dataBar1 = {
-            labels: ['Faf du Plesis','Ryan Rickelton','Travis Head','Finn Allen','Steven Smith'],
+            labels: ['Faf du Plesis','Travis Head','Steven Smith','Devon Conway','Ryan Rickelton'],
             datasets: [{
                 label: 'Runs Scored',
-                data: [264,225,194,186,183],
+                data: [375,250,247,231,225],
                 backgroundColor: 'rgba(0, 123, 255, 0.6)',
                 borderColor: 'rgba(0, 123, 255, 1)',
                 borderWidth: 1
@@ -120,10 +122,10 @@
         };
 
         const dataBar2 = {
-            labels: ['Finn Allen','Matthew Short','Travis Head','Rashid Khan','Faf du Plesis'],
+            labels: ['Finn Allen','Mathhew Short','Rashid Khan','Travis Head','Faf du Plesis'],
             datasets: [{
                 label: 'Strike Rate',
-                data: [202,181,180,176,166],
+                data: [200,181,178,174,168],
                 backgroundColor: 'rgba(220, 53, 69, 0.6)',
                 borderColor: 'rgba(220, 53, 69, 1)',
                 borderWidth: 1
@@ -131,10 +133,10 @@
         };
 
         const dataBar3 = {
-            labels: ['Saurabh Netravalkar','Rashid Khan','Cameron Gannon','Spencer Johnson','Trent Boult'],
+            labels: ['Saurabh Netravalkar','Cameron Gannon','Rashid Khan','Spencer Johnson','Trent Boult'],
             datasets: [{
                 label: 'Wickets',
-                data: [12,10,10,9,9],
+                data: [12,11,10,9,9],
                 backgroundColor: 'rgba(40, 167, 69, 0.6)',
                 borderColor: 'rgba(40, 167, 69, 1)',
                 borderWidth: 1
@@ -142,10 +144,10 @@
         };
 
         const dataBar4 = {
-            labels: ['Mohammad Mohsin','Sunil Narine','Rashid Khan','Imad Wasim','Glenn Maxwell',],
+            labels: ['Mohammad Mohsin','Rashid Khan','Sunil Narine','Imad Wasim','Glenn Maxwell'],
             datasets: [{
                 label: 'Economy',
-                data: [5.8,6.2,6.3,6.5,6.7],
+                data: [6.0,6.2,6.2,6.5,6.7],
                 backgroundColor: 'rgba(255, 193, 7, 0.6)',
                 borderColor: 'rgba(255, 193, 7, 1)',
                 borderWidth: 1
@@ -241,10 +243,10 @@
         );
 
         const dataLine1 = {
-            labels: ['M1','M2','M3','M4','M5','M6'],
+            labels: ['M1','M2','M3','M4','M5','M6','E1'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [1,32,0,54,54,53],
+                data: [14,100,34,61,55,39,72],
                 borderColor: 'rgba(23, 162, 184, 1)',
                 backgroundColor: 'rgba(23, 162, 184, 0.2)',
                 borderWidth: 2,
@@ -254,10 +256,10 @@
         };
 
         const dataLine2 = {
-            labels: ['M1','M2','M3','M4','M5'],
+            labels: ['M1','M2','M3','M4','M5','M6','M7'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [14,100,34,61,55],
+                data: [1,32,0,54,54,53,56],
                 borderColor: 'rgba(255, 193, 7, 1)',
                 backgroundColor: 'rgba(255, 193, 7, 0.2)',
                 borderWidth: 2,
@@ -267,10 +269,10 @@
         };
 
         const dataLine3 = {
-            labels: ['M1','M2','M3','M4','M5'],
+            labels: ['M1','M2','M3','M4','M5','M6','M7'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [53,39,32,40,16],
+                data: [46,26,12,42,8,57,56],
                 borderColor: 'rgba(220, 53, 69, 1)',
                 backgroundColor: 'rgba(220, 53, 69, 0.2)',
                 borderWidth: 2,
@@ -280,10 +282,10 @@
         };
 
         const dataLine4 = {
-            labels: ['M2','M3','M4','M5','M6'],
+            labels: ['M1','M2','M3','M4','M5','M6','M7'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [103,4,29,89,0],
+                data: [23,39,32,40,16,0,51],
                 borderColor: 'rgba(0, 123, 255, 1)',
                 backgroundColor: 'rgba(0, 123, 255, 0.2)',
                 borderWidth: 2,
@@ -293,10 +295,10 @@
         };
 
         const dataLine5 = {
-            labels: ['M1','M2','M3','M4','M5'],
+            labels: ['M2','M3','M4','M5','M6','M7'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [58,33,56,4,19],
+                data: [103,4,29,89,0,0],
                 borderColor: 'rgba(40, 167, 69, 1)',
                 backgroundColor: 'rgba(40, 167, 69, 0.2)',
                 borderWidth: 2,
@@ -316,7 +318,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Runs Scored by Travis Head'
+                        text: 'Runs Scored by Faf du Plesis'
                     }
                 },
                 scales: {
@@ -338,7 +340,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Runs Scored by Faf du Plesis'
+                        text: 'Runs Scored by Travis Head'
                     }
                 },
                 scales: {
@@ -360,7 +362,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Runs Scored by Devon Conway'
+                        text: 'Runs Scored by Steven Smith'
                     }
                 },
                 scales: {
@@ -382,7 +384,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Runs Scored by Ryan Rickelton'
+                        text: 'Runs Scored by Devon Conway'
                     }
                 },
                 scales: {
@@ -404,7 +406,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Runs Scored by Matthew Short'
+                        text: 'Runs Scored by Ryan Rickelton'
                     }
                 },
                 scales: {
