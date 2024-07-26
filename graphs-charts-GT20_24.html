@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Score Snap</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <link rel="stylesheet" href="mobile.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .chart-container {
+            margin: 20px 0;
+            width: 100%;
+            max-width: 600px; /* Adjust the max-width as needed */
+            margin: 0 auto; /* Center the chart containers */
+        }
+        .chart-container canvas {
+            width: 100%;
+            height: 400px; /* Adjust the height as needed */
+        }
+        header {
+            position: sticky;
+            top: 0;
+            background-color: #343a40;
+            color: white;
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+        nav ul li a:hover {
+            color: #17a2b8;
+        }
+        .chart-description {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="text-center">Cricket Score Snap</h1>
+        <nav>
+            <ul class="nav">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="MLC24.html" class="nav-link">MLC 24</a></li>
+                <li class="nav-item"><a href="BRT24.html" class="nav-link">WI v ENG</a></li>
+                <li class="nav-link"><a href="GT20_24.HTML" class="nav-link">GT20 CANADA</a></li>
+                <li class="nav-item"><a href="ZVIRINF.html" class="nav-link">ZIM v IRE</a></li>
+                <li class="nav-item"><a href="mailto:agneya2208@gmail.com" class="nav-link">Contact</a></li>
+                <li><a href="archives.html" class="animated-button">Archives</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="barChart1"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="barChart2"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="barChart3"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="barChart4"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart1"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart2"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart3"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart4"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart5"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dataBar1 = {
+            labels: ['Colin Munro','Rassie van der Dussen','Unmukt Chand','Rezza Hendricks','Munir Ahmad'],
+            datasets: [{
+                label: 'Runs Scored',
+                data: [41,31,23,23,23],
+                backgroundColor: 'rgba(0, 123, 255, 0.6)',
+                borderColor: 'rgba(0, 123, 255, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        const dataBar2 = {
+            labels: ['Rassie van der Dussen','Colin Munro','Unmukt Chand','Yuvraj Samra','Rezza Hendricks'],
+            datasets: [{
+                label: 'Strike Rate',
+                data: [172,113,100,100,92],
+                backgroundColor: 'rgba(220, 53, 69, 0.6)',
+                borderColor: 'rgba(220, 53, 69, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        const dataBar3 = {
+            labels: ['Junaid Siddiqui','Muhammad Rohid','Saad bin Zafar','Jason Behrendorff','Paul van Meekeren'],
+            datasets: [{
+                label: 'Wickets',
+                data: [4,2,2,1,1],
+                backgroundColor: 'rgba(40, 167, 69, 0.6)',
+                borderColor: 'rgba(40, 167, 69, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        const dataBar4 = {
+            labels: ['Saad bin Zafar','Jason Behrendorff','Jatindarpal Matharu','Muhammad Rohid','Sandeep Lamichane'],
+            datasets: [{
+                label: 'Economy',
+                data: [2.8,5.0,7.0,7.3,7.3],
+                backgroundColor: 'rgba(255, 193, 7, 0.6)',
+                borderColor: 'rgba(255, 193, 7, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        const configBar1 = {
+            type: 'bar',
+            data: dataBar1,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Runs Scored by Batsmen'
+                    }
+                }
+            },
+        };
+
+        const configBar2 = {
+            type: 'bar',
+            data: dataBar2,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Strike Rates of Batsmen'
+                    }
+                }
+            },
+        };
+
+        const configBar3 = {
+            type: 'bar',
+            data: dataBar3,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Wickets Taken by Bowlers'
+                    }
+                }
+            },
+        };
+
+        const configBar4 = {
+            type: 'bar',
+            data: dataBar4,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Economy of Bowlers'
+                    }
+                }
+            },
+        };
+
+        const barChart1 = new Chart(
+            document.getElementById('barChart1'),
+            configBar1
+        );
+
+        const barChart2 = new Chart(
+            document.getElementById('barChart2'),
+            configBar2
+        );
+
+        const barChart3 = new Chart(
+            document.getElementById('barChart3'),
+            configBar3
+        );
+
+        const barChart4 = new Chart(
+            document.getElementById('barChart4'),
+            configBar4
+        );
+
+        const dataLine1 = {
+            labels: ['M1'],
+            datasets: [{
+                label: 'Runs Scored per Match',
+                data: [44],
+                borderColor: 'rgba(23, 162, 184, 1)',
+                backgroundColor: 'rgba(23, 162, 184, 0.2)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(23, 162, 184, 1)',
+                pointBorderColor: 'rgba(23, 162, 184, 1)',
+            }]
+        };
+
+        const dataLine2 = {
+            labels: ['M1'],
+            datasets: [{
+                label: 'Runs Scored per Match',
+                data: [31],
+                borderColor: 'rgba(255, 193, 7, 1)',
+                backgroundColor: 'rgba(255, 193, 7, 0.2)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(255, 193, 7, 1)',
+                pointBorderColor: 'rgba(255, 193, 7, 1)',
+            }]
+        };
+
+        const dataLine3 = {
+            labels: ['M1'],
+            datasets: [{
+                label: 'Runs Scored per Match',
+                data: [23],
+                borderColor: 'rgba(220, 53, 69, 1)',
+                backgroundColor: 'rgba(220, 53, 69, 0.2)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(220, 53, 69, 1)',
+                pointBorderColor: 'rgba(220, 53, 69, 1)',
+            }]
+        };
+
+        const dataLine4 = {
+            labels: ['M1'],
+            datasets: [{
+                label: 'Runs Scored per Match',
+                data: [23],
+                borderColor: 'rgba(0, 123, 255, 1)',
+                backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(0, 123, 255, 1)',
+                pointBorderColor: 'rgba(0, 123, 255, 1)',
+            }]
+        };
+
+        const dataLine5 = {
+            labels: ['M1'],
+            datasets: [{
+                label: 'Runs Scored per Match',
+                data: [23],
+                borderColor: 'rgba(40, 167, 69, 1)',
+                backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(40, 167, 69, 1)',
+                pointBorderColor: 'rgba(40, 167, 69, 1)',
+            }]
+        };
+
+        const configLine1 = {
+            type: 'line',
+            data: dataLine1,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Runs Scored by Colin Munro'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+        };
+
+        const configLine2 = {
+            type: 'line',
+            data: dataLine2,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Runs Scored by Rassie van der Dussen'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+        };
+
+        const configLine3 = {
+            type: 'line',
+            data: dataLine3,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Runs Scored by Unmukt Chand'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+        };
+
+        const configLine4 = {
+            type: 'line',
+            data: dataLine4,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Runs Scored by Rezza Hendricks'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+        };
+
+        const configLine5 = {
+            type: 'line',
+            data: dataLine5,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Runs Scored by Munir Ahmad'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+        };
+
+        const lineChart1 = new Chart(
+            document.getElementById('lineChart1'),
+            configLine1
+        );
+
+        const lineChart2 = new Chart(
+            document.getElementById('lineChart2'),
+            configLine2
+        );
+
+        const lineChart3 = new Chart(
+            document.getElementById('lineChart3'),
+            configLine3
+        );
+
+        const lineChart4 = new Chart(
+            document.getElementById('lineChart4'),
+            configLine4
+        );
+
+        const lineChart5 = new Chart(
+            document.getElementById('lineChart5'),
+            configLine5
+        );
+    </script>
+</body>
+</html>
