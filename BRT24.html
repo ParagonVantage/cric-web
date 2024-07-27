@@ -151,7 +151,12 @@
                     columnDefs: [
                         { searchPanes: { show: true }, targets: filterColumns },
                         { type: 'num', targets: Array.from({length: numColumns}, (_, i) => i + 2), render: function(data, type) {
-                            return type === 'sort' && data === '#DIV/0!' ? -Infinity : data;
+                            if (type === 'sort' && data === '#DIV/0!') {
+                                return -Infinity;
+                            } else if (data === '#DIV/0!' || data === "") {
+                                return '-';
+                            }
+                            return data;
                         }}
                     ]
                 });
