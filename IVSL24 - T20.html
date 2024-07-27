@@ -12,38 +12,6 @@
     <script src="https://cdn.datatables.net/searchpanes/1.4.0/js/dataTables.searchPanes.min.js"></script>
     <script src="https://cdn.datatables.net/select/1.3.4/js/dataTables.select.min.js"></script>
     <link rel="stylesheet" href="mobile.css">
-    <script>
-        $(document).ready(function() {
-            function initializeDataTable(tableId, filterColumns) {
-                if ($(tableId).length) { // Check if table exists
-                    try {
-                        $(tableId).DataTable({
-                            dom: 'Pfrtip',
-                            searchPanes: {
-                                cascadePanes: true,
-                                columns: filterColumns
-                            },
-                            columnDefs: [
-                                { searchPanes: { show: true }, targets: filterColumns },
-                                { type: 'num', targets: Array.from({ length: 13 }, (_, i) => i + 2), render: function(data, type) {
-                                    return type === 'sort' && data === '#DIV/0!' ? -Infinity : data;
-                                }}
-                            ]
-                        });
-                        console.log(`Initialized DataTable for ${tableId}`);
-                    } catch (error) {
-                        console.error(`Error initializing DataTable for ${tableId}:`, error);
-                    }
-                } else {
-                    console.warn(`Table ${tableId} not found`);
-                }
-            }
-            initializeDataTable('#myTable1', [0, 1]);
-            initializeDataTable('#myTable2', [0, 1]);
-            initializeDataTable('#myTable3', [0, 1]);
-            initializeDataTable('#myTable4', [0, 1]);
-        });
-    </script>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -123,14 +91,13 @@
         .text-container h3 {
             margin-top: 0;
         }
-    .table-container {
-        width: 100%;
-        overflow-x: auto;
-        margin-bottom: 20px;
-    }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
         table {
             width: 100%;
-            margin-bottom: 20px;
             border-collapse: collapse;
         }
         table caption {
@@ -171,68 +138,48 @@
         footer a:hover {
             text-decoration: underline;
         }
-        .image-container {
-        display: flex;
-        justify-content: space-around;
-        margin: 20px 0;
-        flex-wrap: wrap; /* Make the images wrap on smaller screens */
-    }
-    .image-box {
-        position: relative; /* Needed for the overlay */
-        border: 2px solid #00796b;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin: 10px; /* Space between images */
-        flex: 1 1 calc(33.333% - 20px); /* Responsive design */
-        box-sizing: border-box;
-    }
-    .image-box img {
-        display: block;
-        width: 100%;
-        height: auto;
-    }
-    .overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 20%; /* Covers only a small percentage of the image */
-        background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    .image-box:hover .overlay {
-        opacity: 1;
-    }
-    @media (max-width: 768px) {
-        .image-box {
-            flex: 1 1 calc(50% - 20px);
-        }
-    }
-    @media (max-width: 480px) {
-        .image-box {
-            flex: 1 1 100%;
-        }
-    }
     </style>
+    <script>
+        $(document).ready(function() {
+            function initializeDataTable(tableId, filterColumns, numColumns) {
+                $(tableId).DataTable({
+                    dom: 'Pfrtip',
+                    searchPanes: {
+                        cascadePanes: true,
+                        columns: filterColumns
+                    },
+                    columnDefs: [
+                        { searchPanes: { show: true }, targets: filterColumns },
+                        { type: 'num', targets: Array.from({length: numColumns}, (_, i) => i + 2), render: function(data, type) {
+                            if (type === 'sort' && data === '#DIV/0!') {
+                                return -Infinity;
+                            } else if (data === '#DIV/0!' || data === "") {
+                                return '-';
+                            }
+                            return data;
+                        }}
+                    ]
+                });
+            }
+            initializeDataTable('#myTable1', [0, 1], 15);
+            initializeDataTable('#myTable2', [0, 1], 13);
+            initializeDataTable('#myTable3', [0, 1], 13); // Adjusted number of columns for myTable3
+            initializeDataTable('#myTable4', [0, 1], 13);
+        });
+    </script>
 </head>
 <body>
     <header>
-        <h1>Cricket Score Snap</h1>
+        <h1 class="text-center">Cricket Score Snap</h1>
         <nav>
-            <ul> 
-                <li><a href="index.html" class="animated-button">Home</a></li>
-                <li><a href="IVSL24 - T20.html" class="animated-button">IND v SL T20s</a></li>
-                <li><a href="MLC24.html" class="animated-button">MLC 24</a></li>
-                <li><a href="BRT24.html" class="animated-button">WI v ENG</a></li>
-                <li><a href="GT20_24.html" class="animated-button">GT20 CANADA</a></li>
-                <li><a href="mailto:agneya2208@gmail.com" class="animated-button">Contact</a></li>
-                <li><a href="archives.html" class="animated-button">Archives</a></li>
+            <ul>
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="MLC24.html" class="nav-link">MLC 24</a></li>
+                <li><a href="BRT24.html" class="nav-link">WI v ENG</a></li>
+                <li><a href="GT20_24.HTML" class="nav-link">GT20 CANADA</a></li>
+                <li><a href="ZVIRINF.html" class="nav-link">ZIM v IRE</a></li>
+                <li><a href="mailto:agneya2208@gmail.com" class="nav-link">Contact</a></li>
+                <li><a href="archives.html" class="nav-link">Archives</a></li>
             </ul>
         </nav>
     </header>
@@ -1013,7 +960,7 @@
                     </tbody>
                 </table>
                 </div>
-       <!--<div class="table-container">
+       <div class="table-container">
             <table id="myTable3">
                 <caption style="text-align: center; color: crimson; font-weight: 700; font-size: x-large; background-color: antiquewhite;">Series Batting Stats</caption>
                     <thead>
@@ -1024,10 +971,6 @@
                             <th>INNINGS</th>
                             <th>Got Out</th>
                             <th>M1</th>
-                            <th>M2</th>
-                            <th>M3</th>
-                            <th>M4</th>
-                            <th>M5</th>
                             <th>BALLS</th>
                             <th>RUNS</th>
                             <th>100S</th>
@@ -1037,723 +980,382 @@
                             <th>STRIKE RATE</th>
                             <th>BAT AVG</th>
                             <th>AVG RUNS</th>
-                            <th>STDEV</th>
-                            <th>BAT INDEX</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <th>INDIA</th>
-                            <td>ABHISHEK SHARMA</td>
-                            <td>4</td>
-                            <td>3</td>
-                            <td>3</td>
+                            <td>ARSHDEEP SINGH</td>
+                            <td>1</td>
+                            <td>1</td>
                             <td>0</td>
-                            <td>100</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>100.00</td>
+                            <td>#DIV/0!</td>
+                            <td>1.00</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>AXAR PATEL</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>10</td>
+                            <td>5</td>
                             <td>10</td>
                             <td>0</td>
-                            <td>14</td>
-                            <td>71</td>
-                            <td>124</td>
+                            <td>0</td>
+                            <td>0</td>
                             <td>1</td>
-                            <td></td>
-                            <td>8</td>
-                            <td>8</td>
-                            <td>174.65</td>
-                            <td>41.33</td>
-                            <td>41.33</td>
-                            <td>38.00</td>
-                            <td>134.65</td>
-                        </tr>
-                        <tr>
-                            <th>INDIA</th>
-                            <td>AVESH KHAN</td>
-                            <td>3</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>16</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td></td>
-                            <td></td>
-                            <td>12</td>
-                            <td>16</td>
-                            <td></td>
-                            <td></td>
-                            <td>3</td>
-                            <td>0</td>
-                            <td>133.33</td>
-                            <td>16.00</td>
-                            <td>16.00</td>
-                            <td>7.54</td>
-                            <td>98.13</td>
-                        </tr>
-                        <tr>
-                            <th>INDIA</th>
-                            <td>DHRUV JUREL</td>
-                            <td>2</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>6</td>
-                            <td>0</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>14</td>
-                            <td>6</td>
-                            <td></td>
-                            <td></td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td>42.86</td>
-                            <td>6.00</td>
-                            <td>6.00</td>
-                            <td>3.00</td>
-                            <td>31.80</td>
-                        </tr>
-                        <tr>
-                            <th>INDIA</th>
-                            <td>KHALEEL AHMED</td>
-                            <td>3</td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td></td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td></td>
-                            <td></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0.00</td>
+                            <td>200.00</td>
                             <td>#DIV/0!</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>#DIV/0!</td>
+                            <td>10.00</td>
                         </tr>
                         <tr>
                             <th>INDIA</th>
-                            <td>MUKESH KUMAR</td>
-                            <td>3</td>
+                            <td>HARDIK PANDYA</td>
                             <td>1</td>
                             <td>1</td>
+                            <td>1</td>
+                            <td>9</td>
+                            <td>10</td>
+                            <td>9</td>
                             <td>0</td>
                             <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>90.00</td>
+                            <td>9.00</td>
+                            <td>9.00</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>MOHAMMAD SIRAJ</td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td>0</td>
-                            <td>3</td>
-                            <td>0</td>
                             <td></td>
                             <td></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
                         </tr>
                         <tr>
                             <th>INDIA</th>
                             <td>RAVI BISHNOI</td>
-                            <td>5</td>
                             <td>1</td>
-                            <td>1</td>
-                            <td>9</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>8</td>
-                            <td>9</td>
                             <td></td>
                             <td></td>
-                            <td>2</td>
+                            <td></td>
+                            <td></td>
                             <td>0</td>
-                            <td>112.50</td>
-                            <td>9.00</td>
-                            <td>9.00</td>
-                            <td>3.60</td>
-                            <td>81.45</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
                         </tr>
                         <tr>
                             <th>INDIA</th>
                             <td>RINKU SINGH</td>
-                            <td>5</td>
-                            <td>4</td>
                             <td>1</td>
-                            <td>0</td>
-                            <td>48</td>
                             <td>1</td>
-                            <td>0</td>
-                            <td>11</td>
-                            <td>34</td>
-                            <td>60</td>
-                            <td></td>
-                            <td></td>
+                            <td>1</td>
+                            <td>1</td>
                             <td>2</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>50.00</td>
+                            <td>1.00</td>
+                            <td>1.00</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>RISHABH PANT</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>49</td>
+                            <td>33</td>
+                            <td>49</td>
+                            <td>0</td>
+                            <td>0</td>
                             <td>6</td>
-                            <td>176.47</td>
-                            <td>60.00</td>
-                            <td>15.00</td>
-                            <td>18.47</td>
-                            <td>141.53</td>
+                            <td>1</td>
+                            <td>148.48</td>
+                            <td>49.00</td>
+                            <td>49.00</td>
                         </tr>
                         <tr>
                             <th>INDIA</th>
                             <td>RIYAN PARAG</td>
-                            <td>3</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>0</td>
-                            <td></td>
-                            <td></td>
-                            <td>22</td>
-                            <td>27</td>
-                            <td>24</td>
-                            <td></td>
-                            <td></td>
-                            <td>0</td>
                             <td>1</td>
-                            <td>88.89</td>
-                            <td>12.00</td>
-                            <td>12.00</td>
-                            <td>9.93</td>
-                            <td>65.82</td>
-                        </tr>
-                        <tr>
-                            <th>INDIA</th>
-                            <td>RUTURAJ GAIKWAD</td>
-                            <td>4</td>
-                            <td>3</td>
-                            <td>2</td>
+                            <td>1</td>
+                            <td>1</td>
                             <td>7</td>
-                            <td>77</td>
-                            <td>49</td>
+                            <td>6</td>
+                            <td>7</td>
                             <td>0</td>
-                            <td>0</td>
-                            <td>84</td>
-                            <td>133</td>
                             <td>0</td>
                             <td>1</td>
-                            <td>16</td>
-                            <td>4</td>
-                            <td>158.33</td>
-                            <td>66.50</td>
-                            <td>44.33</td>
-                            <td>31.12</td>
-                            <td>130.78</td>
-                        </tr>
-                        <tr>
-                            <th>INDIA</th>
-                            <td>SAI SUDARSHAN</td>
-                            <td>1</td>
                             <td>0</td>
-                            <td>0</td>
-                            <td></td>
-                            <td>0</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td></td>
-                            <td></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>#DIV/0!</td>
-                            <td>#DIV/0!</td>
-                            <td>#DIV/0!</td>
-                            <td>0.00</td>
-                            <td>#DIV/0!</td>
-                        </tr>
-                        <tr>
-                            <th>INDIA</th>
-                            <td>SANJU SAMSON</td>
-                            <td>3</td>
-                            <td>2</td>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td>12</td>
-                            <td>0</td>
-                            <td>58</td>
-                            <td>52</td>
-                            <td>70</td>
-                            <td></td>
-                            <td>1</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>134.62</td>
-                            <td>70.00</td>
-                            <td>35.00</td>
-                            <td>25.00</td>
-                            <td>115.23</td>
-                        </tr>
-                        <tr>
-                            <th>INDIA</th>
-                            <td>SHIVAM DUBE</td>
-                            <td>3</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>26</td>
-                            <td>12</td>
-                            <td>26</td>
-                            <td></td>
-                            <td>0</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>216.67</td>
-                            <td>26.00</td>
-                            <td>26.00</td>
-                            <td>12.26</td>
-                            <td>159.47</td>
+                            <td>116.67</td>
+                            <td>7.00</td>
+                            <td>7.00</td>
                         </tr>
                         <tr>
                             <th>INDIA</th>
                             <td>SHUBHMAN GILL</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>4</td>
-                            <td>31</td>
-                            <td>2</td>
-                            <td>66</td>
-                            <td>58</td>
-                            <td>13</td>
-                            <td>135</td>
-                            <td>170</td>
-                            <td></td>
-                            <td>2</td>
-                            <td>20</td>
-                            <td>5</td>
-                            <td>125.93</td>
-                            <td>42.50</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>34</td>
+                            <td>16</td>
+                            <td>34</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>6</td>
+                            <td>1</td>
+                            <td>212.50</td>
                             <td>34.00</td>
-                            <td>24.80</td>
-                            <td>100.90</td>
+                            <td>34.00</td>
                         </tr>
                         <tr>
                             <th>INDIA</th>
-                            <td>TUSHAR DESHPANDE</td>
+                            <td>SURYA KUMAR YADAV</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>58</td>
+                            <td>26</td>
+                            <td>58</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>8</td>
                             <td>2</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>#DIV/0!</td>
-                            <td>#DIV/0!</td>
-                            <td>#DIV/0!</td>
-                            <td>0.00</td>
-                            <td>#DIV/0!</td>
-                        </tr>
-                        <tr>
-                            <th>INDIA</th>
-                            <td>WASHINGTON SUNDAR</td>
-                            <td>5</td>
-                            <td>2</td>
-                            <td>1</td>
-                            <td>27</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>1</td>
-                            <td>35</td>
-                            <td>28</td>
-                            <td></td>
-                            <td></td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>80.00</td>
-                            <td>28.00</td>
-                            <td>14.00</td>
-                            <td>10.71</td>
-                            <td>64.40</td>
+                            <td>223.08</td>
+                            <td>58.00</td>
+                            <td>58.00</td>
                         </tr>
                         <tr>
                             <th>INDIA</th>
                             <td>YASHASVI JAISWAL</td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>2</td>
-                            <td></td>
-                            <td></td>
-                            <td>36</td>
-                            <td>93</td>
-                            <td>12</td>
-                            <td>85</td>
-                            <td>141</td>
-                            <td></td>
-                            <td>1</td>
-                            <td>17</td>
-                            <td>6</td>
-                            <td>165.88</td>
-                            <td>70.50</td>
-                            <td>47.00</td>
-                            <td>33.97</td>
-                            <td>137.27</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>BLESSING MUZARABANI</td>
-                            <td>5</td>
-                            <td>3</td>
-                            <td>2</td>
-                            <td>0</td>
-                            <td>2</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>1</td>
-                            <td>7</td>
-                            <td>3</td>
-                            <td></td>
-                            <td></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>42.86</td>
-                            <td>1.50</td>
-                            <td>1.00</td>
-                            <td>0.80</td>
-                            <td>30.45</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>BRANDON MAVUTA</td>
                             <td>1</td>
                             <td>1</td>
                             <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>4</td>
-                            <td>7</td>
-                            <td>4</td>
-                            <td></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>57.14</td>
-                            <td>4.00</td>
-                            <td>4.00</td>
-                            <td>0.00</td>
-                            <td>41.20</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>BRIAN BENNETT</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>22</td>
-                            <td>26</td>
-                            <td>4</td>
-                            <td>9</td>
-                            <td>10</td>
-                            <td>51</td>
-                            <td>71</td>
-                            <td></td>
-                            <td></td>
-                            <td>9</td>
-                            <td>3</td>
-                            <td>139.22</td>
-                            <td>14.20</td>
-                            <td>14.20</td>
-                            <td>8.35</td>
-                            <td>101.71</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>CLIVE MADANDE</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>4</td>
-                            <td>29</td>
-                            <td>0</td>
-                            <td>37</td>
-                            <td>7</td>
-                            <td>1</td>
-                            <td>64</td>
-                            <td>74</td>
-                            <td></td>
-                            <td></td>
-                            <td>7</td>
-                            <td>2</td>
-                            <td>115.63</td>
-                            <td>18.50</td>
-                            <td>14.80</td>
-                            <td>15.26</td>
-                            <td>86.49</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>DION MYERS</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>4</td>
-                            <td>23</td>
-                            <td>0</td>
-                            <td>65</td>
-                            <td>12</td>
-                            <td>34</td>
-                            <td>117</td>
-                            <td>134</td>
-                            <td></td>
-                            <td>1</td>
-                            <td>13</td>
-                            <td>2</td>
-                            <td>114.53</td>
-                            <td>33.50</td>
-                            <td>26.80</td>
-                            <td>22.19</td>
-                            <td>90.22</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>FARAZ AKRAM</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>4</td>
-                            <td>27</td>
-                            <td>16</td>
-                            <td>31</td>
-                            <td></td>
-                            <td>0</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>193.75</td>
-                            <td>31.00</td>
-                            <td>15.50</td>
-                            <td>11.50</td>
-                            <td>144.93</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>INNOCENT KAIA</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>0</td>
-                            <td>4</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>4</td>
-                            <td>4</td>
-                            <td></td>
-                            <td></td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td>100.00</td>
-                            <td>2.00</td>
-                            <td>2.00</td>
-                            <td>2.00</td>
-                            <td>70.60</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>JOHNATHAN CAMPBELL</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>0</td>
-                            <td>10</td>
-                            <td>1</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>31</td>
-                            <td>18</td>
-                            <td></td>
-                            <td></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>58.06</td>
-                            <td>3.60</td>
-                            <td>3.60</td>
-                            <td>3.50</td>
-                            <td>41.73</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>LUKE JONGWE</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>1</td>
-                            <td>33</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>29</td>
-                            <td>34</td>
-                            <td></td>
-                            <td></td>
-                            <td>4</td>
-                            <td>0</td>
-                            <td>117.24</td>
-                            <td>17.00</td>
-                            <td>17.00</td>
-                            <td>16.00</td>
-                            <td>87.17</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>RICHARD NGARAVA</td>
-                            <td>3</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>SIKANDAR RAZA</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>17</td>
-                            <td>4</td>
-                            <td>15</td>
-                            <td>46</td>
-                            <td>8</td>
-                            <td>79</td>
-                            <td>90</td>
-                            <td></td>
-                            <td></td>
-                            <td>7</td>
-                            <td>3</td>
-                            <td>113.92</td>
-                            <td>18.00</td>
-                            <td>18.00</td>
-                            <td>14.76</td>
-                            <td>85.15</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>TADIWANASHE MARUMANI</td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td></td>
-                            <td></td>
-                            <td>13</td>
-                            <td>32</td>
-                            <td>27</td>
-                            <td>65</td>
-                            <td>72</td>
-                            <td></td>
-                            <td>0</td>
-                            <td>11</td>
-                            <td>0</td>
-                            <td>110.77</td>
-                            <td>24.00</td>
-                            <td>24.00</td>
-                            <td>8.04</td>
-                            <td>84.74</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>TENDAI CHATARA</td>
-                            <td>4</td>
-                            <td>2</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td></td>
-                            <td>11</td>
-                            <td>0</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>0.00</td>
-                            <td>#DIV/0!</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>#DIV/0!</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>WELLINGTON MASAKADZA</td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>2</td>
-                            <td>0</td>
-                            <td>1</td>
-                            <td>18</td>
-                            <td></td>
-                            <td></td>
-                            <td>14</td>
-                            <td>19</td>
-                            <td></td>
-                            <td>0</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>135.71</td>
-                            <td>9.50</td>
-                            <td>6.33</td>
-                            <td>8.26</td>
-                            <td>97.85</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>WESSLY MADHEVERE</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>5</td>
+                            <td>40</td>
                             <td>21</td>
-                            <td>43</td>
+                            <td>40</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>5</td>
+                            <td>2</td>
+                            <td>190.48</td>
+                            <td>40.00</td>
+                            <td>40.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>ASITHA FERNANDO</td>
                             <td>1</td>
-                            <td>25</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td>0</td>
-                            <td>90</td>
-                            <td>90</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>10</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>CHARITH ASALANKA</td>
                             <td>1</td>
-                            <td>100.00</td>
-                            <td>18.00</td>
-                            <td>18.00</td>
-                            <td>16.10</td>
-                            <td>75.40</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>DASUN SHANAKA</td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>DILSHAN MADUSHANKA</td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>KAMINDU MENDIS</td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>KUSAL MENDIS</td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>KUSAL PERERA</td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>MAHEESH THEEKSANA</td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>MATHEESA PATHIRANA</td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>PATHUM NISSANKA</td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>WANINDU HASARANGA</td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1766,7 +1368,6 @@
                             <th>Team</th>
                             <th>Player</th>
                             <th>MATCHES</th>
-                            <th>INNINGS</th>
                             <th>OVERS</th>
                             <th>MAIDENS</th>
                             <th>RUNS GIVEN</th>
@@ -1780,418 +1381,215 @@
                             <th>STRIKE RATE</th>
                             <th>BOWLING AVERAGE</th>
                             <th>AVG RUNS</th>
-                            <th>BOWLING INDEX</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <th>INDIA</th>
-                            <td>ABHISHEK SHARMA</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>13</td>
-                            <td>0</td>
-                            <td>116</td>
-                            <td>2</td>
-                            <td>8.92</td>
+                            <td>ARSHDEEP SINGH</td>
                             <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td></td>
+                            <td></td>
                             <td>0</td>
-                            <td>78</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>39.00</td>
-                            <td>58.00</td>
-                            <td>23.20</td>
-                            <td>0.10</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>0.00</td>
                         </tr>
                         <tr>
                             <th>INDIA</th>
-                            <td>AVESH KHAN</td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>11</td>
+                            <td>AXAR PATEL</td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td></td>
+                            <td></td>
                             <td>0</td>
-                            <td>83</td>
-                            <td>6</td>
-                            <td>7.55</td>
-                            <td>3</td>
-                            <td>0</td>
-                            <td>66</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>11.00</td>
-                            <td>13.83</td>
-                            <td>27.67</td>
-                            <td>5.23</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>0.00</td>
                         </tr>
                         <tr>
                             <th>INDIA</th>
-                            <td>KHALEEL AHMED</td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>11</td>
-                            <td>0</td>
-                            <td>75</td>
-                            <td>3</td>
-                            <td>6.82</td>
-                            <td>2</td>
+                            <td>HARDIK PANDYA</td>
                             <td>1</td>
-                            <td>66</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td></td>
+                            <td></td>
                             <td>0</td>
-                            <td>0</td>
-                            <td>22.00</td>
-                            <td>25.00</td>
-                            <td>25.00</td>
-                            <td>0.80</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>0.00</td>
                         </tr>
                         <tr>
                             <th>INDIA</th>
-                            <td>MUKESH KUMAR</td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>10.1</td>
-                            <td>0</td>
-                            <td>75</td>
-                            <td>8</td>
-                            <td>7.43</td>
-                            <td>4</td>
-                            <td>3</td>
-                            <td>60.6</td>
+                            <td>MOHAMMAD SIRAJ</td>
                             <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td></td>
+                            <td></td>
                             <td>0</td>
-                            <td>7.58</td>
-                            <td>9.38</td>
-                            <td>25.00</td>
-                            <td>15.17</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>0.00</td>
                         </tr>
                         <tr>
                             <th>INDIA</th>
                             <td>RAVI BISHNOI</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>19</td>
-                            <td>2</td>
-                            <td>106</td>
-                            <td>6</td>
-                            <td>5.58</td>
-                            <td>2</td>
-                            <td>0</td>
-                            <td>114</td>
                             <td>1</td>
-                            <td>0</td>
-                            <td>19.00</td>
-                            <td>17.67</td>
-                            <td>21.20</td>
-                            <td>3.20</td>
-                        </tr>
-                        <tr>
-                            <th>INDIA</th>
-                            <td>RIYAN PARAG</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>0</td>
-                            <td>5.00</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>6</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>#DIV/0!</td>
-                            <td>#DIV/0!</td>
-                            <td>5.00</td>
-                            <td>#DIV/0!</td>
-                        </tr>
-                        <tr>
-                            <th>INDIA</th>
-                            <td>SHIVAM DUBE</td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>8</td>
-                            <td>0</td>
-                            <td>63</td>
-                            <td>3</td>
-                            <td>7.88</td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td>48</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>16.00</td>
-                            <td>21.00</td>
-                            <td>21.00</td>
-                            <td>1.13</td>
-                        </tr>
-                        <tr>
-                            <th>INDIA</th>
-                            <td>TUSHAR DESHPANDE</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>6</td>
-                            <td>0</td>
-                            <td>55</td>
-                            <td>2</td>
-                            <td>9.17</td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td>36</td>
                             <td></td>
                             <td></td>
-                            <td>18.00</td>
-                            <td>27.50</td>
-                            <td>27.50</td>
-                            <td>0.44</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>0.00</td>
                         </tr>
                         <tr>
-                            <th>INDIA</th>
-                            <td>WASHINGTON SUNDAR</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>18</td>
-                            <td>0</td>
-                            <td>93</td>
-                            <td>8</td>
-                            <td>5.17</td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td>108</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>13.50</td>
-                            <td>11.63</td>
-                            <td>18.60</td>
-                            <td>9.87</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>BLESSING MUZARABANI</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>19.2</td>
-                            <td>1</td>
-                            <td>116</td>
-                            <td>6</td>
-                            <td>6.04</td>
-                            <td>3</td>
-                            <td>0</td>
-                            <td>115.2</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>19.20</td>
-                            <td>19.33</td>
-                            <td>23.20</td>
-                            <td>2.68</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>BRANDON MAVUTA</td>
-                            <td>1</td>
+                            <th>SRI LANKA</th>
+                            <td>ASITHA FERNANDO</td>
                             <td>1</td>
                             <td>4</td>
                             <td>0</td>
-                            <td>39</td>
+                            <td>47</td>
                             <td>1</td>
-                            <td>9.75</td>
-                            <td>2</td>
+                            <td>11.75</td>
+                            <td>1</td>
                             <td>0</td>
                             <td>24</td>
                             <td></td>
                             <td></td>
                             <td>24.00</td>
-                            <td>39.00</td>
-                            <td>39.00</td>
-                            <td>0.11</td>
+                            <td>47.00</td>
+                            <td>47.00</td>
                         </tr>
                         <tr>
-                            <th>ZIMBABWE</th>
-                            <td>BRIAN BENNETT</td>
-                            <td>4</td>
-                            <td>4</td>
-                            <td>5</td>
+                            <th>SRI LANKA</th>
+                            <td>DILSHAN MADUSHANKA</td>
                             <td>1</td>
-                            <td>53</td>
+                            <td>3</td>
+                            <td>0</td>
+                            <td>45</td>
                             <td>1</td>
-                            <td>10.60</td>
-                            <td>2</td>
-                            <td>1</td>
-                            <td>30</td>
+                            <td>15.00</td>
                             <td>0</td>
                             <td>0</td>
-                            <td>30.00</td>
-                            <td>53.00</td>
-                            <td>13.25</td>
-                            <td>0.06</td>
+                            <td>18</td>
+                            <td></td>
+                            <td></td>
+                            <td>18.00</td>
+                            <td>45.00</td>
+                            <td>45.00</td>
                         </tr>
                         <tr>
-                            <th>ZIMBABWE</th>
-                            <td>DION MYERS</td>
+                            <th>SRI LANKA</th>
+                            <td>KAMINDU MENDIS</td>
                             <td>1</td>
                             <td>1</td>
+                            <td>0</td>
+                            <td>9</td>
+                            <td>0</td>
+                            <td>9.00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>6</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>9.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>MAHEESH THEEKSANA</td>
                             <td>1</td>
+                            <td>4</td>
+                            <td>0</td>
+                            <td>44</td>
+                            <td>0</td>
+                            <td>11.00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>24</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>44.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>MATHEESA PATHIRANA</td>
+                            <td>1</td>
+                            <td>4</td>
+                            <td>0</td>
+                            <td>40</td>
+                            <td>4</td>
+                            <td>10.00</td>
+                            <td>3</td>
+                            <td>0</td>
+                            <td>24</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>6.00</td>
+                            <td>10.00</td>
+                            <td>40.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>WANINDU HASARANGA</td>
+                            <td>1</td>
+                            <td>4</td>
                             <td>0</td>
                             <td>28</td>
-                            <td>0</td>
-                            <td>28.00</td>
                             <td>1</td>
+                            <td>7.00</td>
                             <td>0</td>
-                            <td>6</td>
+                            <td>0</td>
+                            <td>24</td>
                             <td></td>
                             <td></td>
-                            <td>#DIV/0!</td>
-                            <td>#DIV/0!</td>
-                            <td>28.00</td>
-                            <td>#DIV/0!</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>FARAZ AKRAM</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>8</td>
-                            <td>0</td>
-                            <td>80</td>
-                            <td>0</td>
-                            <td>10.00</td>
-                            <td>2</td>
-                            <td>0</td>
-                            <td>48</td>
-                            <td></td>
-                            <td></td>
-                            <td>#DIV/0!</td>
-                            <td>#DIV/0!</td>
-                            <td>40.00</td>
-                            <td>#DIV/0!</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>LUKE JONGWE</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>8</td>
-                            <td>0</td>
-                            <td>81</td>
-                            <td>1</td>
-                            <td>10.13</td>
-                            <td>2</td>
-                            <td>0</td>
-                            <td>48</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>48.00</td>
-                            <td>81.00</td>
-                            <td>40.50</td>
-                            <td>0.03</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>RICHARD NGAVARA</td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>11</td>
-                            <td>0</td>
-                            <td>95</td>
-                            <td>1</td>
-                            <td>8.64</td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td>66</td>
-                            <td></td>
-                            <td></td>
-                            <td>66.00</td>
-                            <td>95.00</td>
-                            <td>31.67</td>
-                            <td>0.02</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>SIKANDAR RAZA</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>17</td>
-                            <td>0</td>
-                            <td>164</td>
-                            <td>6</td>
-                            <td>9.65</td>
-                            <td>3</td>
-                            <td>1</td>
-                            <td>102</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>17.00</td>
-                            <td>27.33</td>
-                            <td>32.80</td>
-                            <td>1.34</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>TENDAI CHATARA</td>
-                            <td>4</td>
-                            <td>4</td>
-                            <td>12.5</td>
-                            <td>1</td>
-                            <td>107</td>
-                            <td>3</td>
-                            <td>8.56</td>
-                            <td>2</td>
-                            <td>0</td>
-                            <td>75</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>25.00</td>
-                            <td>35.67</td>
-                            <td>26.75</td>
-                            <td>0.39</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>WELLINGTON MASAKADZA</td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>8</td>
-                            <td>0</td>
-                            <td>69</td>
-                            <td>2</td>
-                            <td>8.63</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>48</td>
-                            <td>0</td>
-                            <td>0</td>
                             <td>24.00</td>
-                            <td>34.50</td>
-                            <td>23.00</td>
-                            <td>0.28</td>
-                        </tr>
-                        <tr>
-                            <th>ZIMBABWE</th>
-                            <td>WESSLY MADHEVERE</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td>19</td>
-                            <td>0</td>
-                            <td>19.00</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>6</td>
-                            <td></td>
-                            <td></td>
-                            <td>#DIV/0!</td>
-                            <td>#DIV/0!</td>
-                            <td>19.00</td>
-                            <td>#DIV/0!</td>
+                            <td>28.00</td>
+                            <td>28.00</td>
                         </tr>
                     </tbody>
                 </table>
-            </div>-->
+            </div>
     </main>
-    <footer>
+    <!--<footer>
         <div id="GC" style="border: yellow solid 2px;height:50px;">
             <a href="graphs-charts-IVZ24.html" style="color: rgb(255, 0, 0);position: relative;top:7.5px;">Top Players Of the Series</a>
         </div>
-    </footer>
+    </footer>-->
 </body>
 </html>
