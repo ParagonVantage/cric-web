@@ -29,7 +29,6 @@
             color: white;
             padding: 10px 0;
             border-bottom: 1px solid #ccc;
-            z-index: 1000; /* Ensure header stays on top */
         }
         nav ul {
             list-style: none;
@@ -57,30 +56,6 @@
             text-align: center;
             margin-bottom: 10px;
         }
-        .row-spacing {
-            margin-top: 40px; /* Add space between rows */
-        }
-        .border-box {
-            border: 1px solid #333;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .border-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-        .container-spacing {
-            margin-top: 20px; /* Add space between header and charts */
-        }
-        .center-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
     </style>
 </head>
 <body>
@@ -99,62 +74,53 @@
         </nav>        
     </header>
 
-    <div class="container container-spacing center-content">
-        <!-- Bar Charts Section -->
-        <div class="border-box">
-            <div class="row">
-                <div class="col-12 col-md-6 col-lg-4 chart-container">
-                    <div class="chart-description"></div>
-                    <canvas id="barChart1"></canvas>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 chart-container">
-                    <div class="chart-description"></div>
-                    <canvas id="barChart2"></canvas>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 chart-container">
-                    <div class="chart-description"></div>
-                    <canvas id="barChart3"></canvas>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 chart-container">
-                    <div class="chart-description"></div>
-                    <canvas id="barChart4"></canvas>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="barChart1"></canvas>
             </div>
-        </div>
-
-        <!-- Line Charts Section -->
-        <div class="border-box">
-            <div class="row">
-                <div class="col-12 col-md-6 col-lg-4 chart-container">
-                    <div class="chart-description"></div>
-                    <canvas id="lineChart1"></canvas>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 chart-container">
-                    <div class="chart-description"></div>
-                    <canvas id="lineChart2"></canvas>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 chart-container">
-                    <div class="chart-description"></div>
-                    <canvas id="lineChart3"></canvas>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 chart-container">
-                    <div class="chart-description"></div>
-                    <canvas id="lineChart4"></canvas>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 chart-container">
-                    <div class="chart-description"></div>
-                    <canvas id="lineChart5"></canvas>
-                </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="barChart2"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="barChart3"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="barChart4"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart1"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart2"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart3"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart4"></canvas>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart-container">
+                <div class="chart-description"></div>
+                <canvas id="lineChart5"></canvas>
             </div>
         </div>
     </div>
 
     <script>
         const dataBar1 = {
-            labels: ['Dilpreet Bajwa','George Munsey','Harsh Thaker','Unmukt Chand','Rahmanullah Gurbaz'],
+            labels: ['Pathum Nissanka','Surya Kumar Yadav','Kusal Perera','Yashasvi Jaiswal','Kusal Mendis'],
             datasets: [{
                 label: 'Runs Scored',
-                data: [174,146,100,97,96],
+                data: [111,84,73,70,55],
                 backgroundColor: 'rgba(0, 123, 255, 0.6)',
                 borderColor: 'rgba(0, 123, 255, 1)',
                 borderWidth: 1
@@ -162,10 +128,10 @@
         };
 
         const dataBar2 = {
-            labels: ['Dilpreet Bajwa','Tim Seifert','David Wiese','George Munsey','Marcus Stoinis',],
+            labels: ['Surya Kumar Yadav','Yashasvi Jaiswal','Hardik Pandya','Pathum Nissanka','Kusal Perera'],
             datasets: [{
                 label: 'Strike Rate',
-                data: [158,148,147,143,141],
+                data: [221,194,163,154,152],
                 backgroundColor: 'rgba(220, 53, 69, 0.6)',
                 borderColor: 'rgba(220, 53, 69, 1)',
                 borderWidth: 1
@@ -173,10 +139,10 @@
         };
 
         const dataBar3 = {
-            labels: ['Junaid Siddique','Aayan Afzal Khan','David Wiese','Sunil Narine','Shakib Al Hasan'],
+            labels: ['Matheesa Pathirana','Arshdeep Singh','Axar Patel','Ravi Bishnoi','Riyan Parag'],
             datasets: [{
                 label: 'Wickets',
-                data: [10,8,7,7,6],
+                data: [5,4,4,4,3],
                 backgroundColor: 'rgba(40, 167, 69, 0.6)',
                 borderColor: 'rgba(40, 167, 69, 1)',
                 borderWidth: 1
@@ -184,10 +150,10 @@
         };
 
         const dataBar4 = {
-            labels: ['Saad bin Zafar','Shoriful Islam','Azmatullah Omarzai','Mohammad Amir','Kaleem Sana'],
+            labels: ['Riyan Parag','Wanindu Hasaranga','Ravi Bishnoi','Arshdeep Singh','Mohammad Siraj'],
             datasets: [{
                 label: 'Economy',
-                data: [3.5,4.4,4.4,5.0,5.2],
+                data: [6.7,7.7,7.9,8.0,8.3],
                 backgroundColor: 'rgba(255, 193, 7, 0.6)',
                 borderColor: 'rgba(255, 193, 7, 1)',
                 borderWidth: 1
@@ -282,18 +248,11 @@
             configBar4
         );
 
-        function calculateStandardDeviation(data) {
-            const mean = data.reduce((a, b) => a + b) / data.length;
-            const squaredDiffs = data.map(value => (value - mean) ** 2);
-            const avgSquaredDiff = squaredDiffs.reduce((a, b) => a + b) / squaredDiffs.length;
-            return Math.sqrt(avgSquaredDiff).toFixed(2);
-        }
-
         const dataLine1 = {
-            labels: ['M1','M2','M3'],
+            labels: ['M1','M2'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [41,33,100],
+                data: [79,32],
                 borderColor: 'rgba(23, 162, 184, 1)',
                 backgroundColor: 'rgba(23, 162, 184, 0.2)',
                 borderWidth: 2,
@@ -302,13 +261,11 @@
             }]
         };
 
-        const stdDev1 = calculateStandardDeviation(dataLine1.datasets[0].data);
-
         const dataLine2 = {
-            labels: ['M1','M2','M3','M4'],
+            labels: ['M1','M2'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [69,3,54,20],
+                data: [58,26],
                 borderColor: 'rgba(255, 193, 7, 1)',
                 backgroundColor: 'rgba(255, 193, 7, 0.2)',
                 borderWidth: 2,
@@ -317,13 +274,11 @@
             }]
         };
 
-        const stdDev2 = calculateStandardDeviation(dataLine2.datasets[0].data);
-
         const dataLine3 = {
-            labels: ['M1','M2','M3','M4'],
+            labels: ['M1','M2'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [0,79,18,3],
+                data: [20,53],
                 borderColor: 'rgba(220, 53, 69, 1)',
                 backgroundColor: 'rgba(220, 53, 69, 0.2)',
                 borderWidth: 2,
@@ -332,13 +287,11 @@
             }]
         };
 
-        const stdDev3 = calculateStandardDeviation(dataLine3.datasets[0].data);
-
         const dataLine4 = {
-            labels: ['M1','M2','M3'],
+            labels: ['M1','M2'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [23,53,21],
+                data: [40,30],
                 borderColor: 'rgba(0, 123, 255, 1)',
                 backgroundColor: 'rgba(0, 123, 255, 0.2)',
                 borderWidth: 2,
@@ -347,13 +300,11 @@
             }]
         };
 
-        const stdDev4 = calculateStandardDeviation(dataLine4.datasets[0].data);
-
         const dataLine5 = {
-            labels: ['M1','M2','M3','M4'],
+            labels: ['M1','M2'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [64,4,24,4],
+                data: [45,10],
                 borderColor: 'rgba(40, 167, 69, 1)',
                 backgroundColor: 'rgba(40, 167, 69, 0.2)',
                 borderWidth: 2,
@@ -361,8 +312,6 @@
                 pointBorderColor: 'rgba(40, 167, 69, 1)',
             }]
         };
-
-        const stdDev5 = calculateStandardDeviation(dataLine5.datasets[0].data);
 
         const configLine1 = {
             type: 'line',
@@ -375,8 +324,7 @@
                     },
                     title: {
                         display: true,
-                        text: `Runs Scored by Dilpreet Bajwa (Std Dev: ${stdDev1})`,
-                        color: dataLine1.datasets[0].borderColor
+                        text: 'Runs Scored by Pathum Nissanka'
                     }
                 },
                 scales: {
@@ -398,8 +346,7 @@
                     },
                     title: {
                         display: true,
-                        text: `Runs Scored by George Munsey (Std Dev: ${stdDev2})`,
-                        color: dataLine2.datasets[0].borderColor
+                        text: 'Runs Scored by Surya Kumar Yadav'
                     }
                 },
                 scales: {
@@ -421,8 +368,7 @@
                     },
                     title: {
                         display: true,
-                        text: `Runs Scored by Harsh Thaker (Std Dev: ${stdDev3})`,
-                        color: dataLine3.datasets[0].borderColor
+                        text: 'Runs Scored by Kusal Perera'
                     }
                 },
                 scales: {
@@ -444,8 +390,7 @@
                     },
                     title: {
                         display: true,
-                        text: `Runs Scored by Unmukt Chand (Std Dev: ${stdDev4})`,
-                        color: dataLine4.datasets[0].borderColor
+                        text: 'Runs Scored by Yashasvi Jaiswal'
                     }
                 },
                 scales: {
@@ -467,8 +412,7 @@
                     },
                     title: {
                         display: true,
-                        text: `Runs Scored by Rahmanullah Gurbaz (Std Dev: ${stdDev5})`,
-                        color: dataLine5.datasets[0].borderColor
+                        text: 'Runs Scored by Kusal Mendis'
                     }
                 },
                 scales: {

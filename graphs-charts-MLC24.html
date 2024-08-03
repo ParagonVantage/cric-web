@@ -29,6 +29,7 @@
             color: white;
             padding: 10px 0;
             border-bottom: 1px solid #ccc;
+            z-index: 1000; /* Ensure header stays on top */
         }
         nav ul {
             list-style: none;
@@ -56,13 +57,37 @@
             text-align: center;
             margin-bottom: 10px;
         }
+        .row-spacing {
+            margin-top: 40px; /* Add space between rows */
+        }
+        .border-box {
+            border: 1px solid #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .border-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .container-spacing {
+            margin-top: 20px; /* Add space between header and charts */
+        }
+        .center-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1 class="text-center">Cricket Score Snap</h1>
         <nav>
-           <ul class="nav">
+            <ul class="nav">
                 <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="MLC24.html" class="nav-link">MLC 24</a></li>
                 <li class="nav-item"><a href="BRT24.html" class="nav-link">WI v ENG</a></li>
@@ -71,46 +96,55 @@
                 <li class="nav-item"><a href="mailto:agneya2208@gmail.com" class="nav-link">Contact</a></li>
                 <li><a href="archives.html" class="nav-link">Archives</a></li>
             </ul>
-        </nav>
+        </nav>        
     </header>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-6 col-lg-4 chart-container">
-                <div class="chart-description"></div>
-                <canvas id="barChart1"></canvas>
+    <div class="container container-spacing center-content">
+        <!-- Bar Charts Section -->
+        <div class="border-box">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-4 chart-container">
+                    <div class="chart-description"></div>
+                    <canvas id="barChart1"></canvas>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 chart-container">
+                    <div class="chart-description"></div>
+                    <canvas id="barChart2"></canvas>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 chart-container">
+                    <div class="chart-description"></div>
+                    <canvas id="barChart3"></canvas>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 chart-container">
+                    <div class="chart-description"></div>
+                    <canvas id="barChart4"></canvas>
+                </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-4 chart-container">
-                <div class="chart-description"></div>
-                <canvas id="barChart2"></canvas>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4 chart-container">
-                <div class="chart-description"></div>
-                <canvas id="barChart3"></canvas>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4 chart-container">
-                <div class="chart-description"></div>
-                <canvas id="barChart4"></canvas>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4 chart-container">
-                <div class="chart-description"></div>
-                <canvas id="lineChart1"></canvas>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4 chart-container">
-                <div class="chart-description"></div>
-                <canvas id="lineChart2"></canvas>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4 chart-container">
-                <div class="chart-description"></div>
-                <canvas id="lineChart3"></canvas>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4 chart-container">
-                <div class="chart-description"></div>
-                <canvas id="lineChart4"></canvas>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4 chart-container">
-                <div class="chart-description"></div>
-                <canvas id="lineChart5"></canvas>
+        </div>
+
+        <!-- Line Charts Section -->
+        <div class="border-box">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-4 chart-container">
+                    <div class="chart-description"></div>
+                    <canvas id="lineChart1"></canvas>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 chart-container">
+                    <div class="chart-description"></div>
+                    <canvas id="lineChart2"></canvas>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 chart-container">
+                    <div class="chart-description"></div>
+                    <canvas id="lineChart3"></canvas>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 chart-container">
+                    <div class="chart-description"></div>
+                    <canvas id="lineChart4"></canvas>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 chart-container">
+                    <div class="chart-description"></div>
+                    <canvas id="lineChart5"></canvas>
+                </div>
             </div>
         </div>
     </div>
