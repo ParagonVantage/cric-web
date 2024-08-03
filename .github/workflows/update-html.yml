@@ -1,0 +1,26 @@
+name: Update HTML
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install pandas openpyxl watchdog schedule
+
+    - name: Run update script
+      run: python GT20_24_WATCHDOG.PY
