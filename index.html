@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Score Snap</title>
+    <meta name="description" content="Get the latest cricket player statistics, match fixtures, and highlights from recent games. Stay updated with your favorite teams and players.">
+    <meta name="keywords" content="cricket, player statistics, match fixtures, cricket highlights, cricket scores, cricket news">
+    <meta name="author" content="CricketScoreSnap,cricketscoresnap,Cricket Score Snap,CricketScore Snap,Cricket ScoreSnap,Cricket Score,Score Snap,Cricket Snap">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Cricket Score Snap">
+    <meta property="og:description" content="Get the latest cricket player statistics, match fixtures, and highlights from recent games. Stay updated with your favorite teams and players.">
+    <meta property="og:url" content="https://cricketscoresnap.com">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="mobile.css">
+    <link rel="stylesheet" href="tablestyles_c.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #00796b;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        header:hover {
+            transform: scale(1.02);
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+        nav ul li a:hover {
+            color: #b2dfdb;
+            text-decoration: underline;
+        }
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px 0;
+            max-width: 1500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .image-box {
+            position: relative;
+            border: 2px solid #00796b;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            height: 300px;
+            transition: transform 0.3s ease;
+            margin: 10px;
+        }
+        .image-box img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .image-box:hover {
+            transform: scale(1.05);
+        }
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20%;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .image-box:hover .overlay {
+            opacity: 1;
+        }
+        .content-box {
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .text-center1 {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 10px 0;
+            color: #007bff;
+        }
+        .text-success {
+            color: #28a745 !important;
+            font-weight: bold;
+        }
+        .bounce-text {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+        .bg-light {
+            background-color: #f8f9fa !important;
+        }
+        .bg-primary {
+            background-color: #007bff !important;
+        }
+        .bg-primary.text-white {
+            color: white;
+        }
+        @keyframes borderLoop {
+            0% { border-color: #007bff; }
+            25% { border-color: #28a745; }
+            50% { border-color: #ffc107; }
+            75% { border-color: #dc3545; }
+            100% { border-color: #007bff; }
+        }
+        .featured-player-box {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            border: 5px solid;
+            animation: borderLoop 5s infinite;
+            margin: 10px;
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+        }
+        .featured-players-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .formats h3 {
+            margin-top: 20px;
+        }
+        .formats ul {
+            list-style: none;
+            padding: 0;
+        }
+        .formats ul li {
+            background: #007bff;
+            color: white;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .formats ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        .formats ul li:hover {
+            background: #0056b3;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const monthNames = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+            const currentYear = new Date().getFullYear();
+            const currentMonthName = monthNames[new Date().getMonth()];
+            
+            document.getElementById('year').textContent = currentYear + " Fixtures - ";
+        });
+    </script>
+</head>
+<body>
+    <header class="text-center1 animated-header">
+        <h1>Cricket Score Snap</h1>
+        <nav>
+            <ul class="nav">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="MLC24.html" class="nav-link">MLC 24</a></li>
+                <li class="nav-item"><a href="BRT24.html" class="nav-link">WI v ENG</a></li>
+                <li class="nav-link"><a href="GT20_24.HTML" class="nav-link">GT20 CANADA</a></li>
+                <li class="nav-item"><a href="IVSL24 - T20.HTML" class="nav-link">IND V SL T20Is</a></li>
+                <li class="nav-item"><a href="mailto:agneya2208@gmail.com" class="nav-link">Contact</a></li>
+                <li><a href="archives.html" class="nav-link">Archives</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="container">
+        <div class="content-box bg-primary text-white">
+            <h1 id="year"></h1>
+            <div class="formats row">
+                <div class="col-12 col-md-4">
+                    <h3>TESTS</h3>
+                    <ul>
+                        <li><a href="BRT24.html" class="text-warning">Botham-Richards Trophy (WI VS ENG)</a> - 3 Tests JUL10 - JUL30</li>
+                        <li><a href="ZVIR24.html" class="text-warning">Zimbabwe vs Ireland</a> - 1 Test JUL25 - JUL29 - COMING SOON</li>
+                        <li><a href="SVR24.html" class="text-warning">Sir Vivian Richard Trophy (SA VS WI)</a> - 2 Tests AUG7 - AUG19 - COMING SOON</li>
+                        <li><a href="BVP24.html" class="text-warning">Bangladesh in Pakistan Test Series</a> - 2 Tests AUG21 - SEP3 - COMING SOON</li>
+                        <li><a href="SLVE24.html" class="text-warning">Sri Lanka in England Test Series</a> - 3 Tests AUG21 - SEP10 - COMING SOON</li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4">
+                    <h3>ODIS</h3>
+                    <ul>
+                        <li><a href="IVSL24 - ODI.HTML" class="text-warning">India in Sri Lanka ODI Series</a> - 3 ODIs AUG1 - AUG7 - COMING SOON</li>
+                        <li><a href="AUSVENG24.html" class="text-warning">Australia in England ODI Series</a> - 5 ODIs SEP19 - SEP29 - COMING SOON</li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4">
+                    <h3>T20IS</h3>
+                    <ul>
+                        <li><a href="MLC24.html" class="text-warning">Major League Cricket 2024</a> - T20 Franchise Tournament JUL5 - JUL28</li>
+                        <li><a href="GT2024.html" class="text-warning">Global T20 Canada 2024</a> - T20 Franchise Tournament JUL26 - AUG11</li>
+                        <li><a href="IVZ24.html" class="text-warning">India in Zimbabwe T20Is Series</a> - 5 T20Is JUL6 - JUL14</li>
+                        <li><a href="IVSL24 - T20.HTML" class="text-warning">India in Sri Lanka T20Is Series</a> - 3 T20Is JUL26 - JUL29 - COMING SOON</li>
+                        <li><a href="SAVWI20.html" class="text-warning">South Africa in West Indies T20Is Series</a> - 3 T20Is AUG23 - AUG27 - COMING SOON</li>
+                        <li><a href="AUSVSCT20.html" class="text-warning">Australia in Scotland T20I Series</a> - 3 T20Is SEP4 - SEP7 - COMING SOON</li>
+                        <li><a href="AUSVENG20.html" class="text-warning">Australia in England T20I Series</a> - 3 T20Is SEP11 - SEP15 - COMING SOON</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container">
+        <div class="content-box">
+            <h2 class="text-center1">Recent Match Highlights</h2>
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item d-block w-100" src="https://www.youtube.com/embed/McABS-Gv9iE" allowfullscreen style="height: 250px;width:400px;padding-right: 10px;position: relative;left:10px"></iframe>
+                    </div>
+                </div>
+                <div class="col-12 mb-4">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item d-block w-100" src="https://www.youtube.com/embed/N3sZ6HTEtVM" allowfullscreen style="height: 250px;width:400px;padding-right: 10px;position: relative;left:10px"></iframe>
+                    </div>
+                </div>
+                <div class="col-12 mb-4">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item d-block w-100" src="https://www.youtube.com/embed/PgpqGErj0PU" allowfullscreen style="height: 250px;width:400px;padding-right: 10px;position: relative;left:10px"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container">
+        <div class="content-box">
+            <h2 class="text-center1">Shots from Latest Fixtures</h2>
+            <div class="row image-container justify-content-center">
+                <div class="col-12 col-md-4 col-lg-4 mb-4 d-flex justify-content-center">
+                    <div class="image-box">
+                        <img src="images\ewi7.webp" alt="Image 1" class="img-fluid">
+                        <div class="overlay">Joe Root takes an unbelievable catch on slip under Jamie Smith</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 mb-4 d-flex justify-content-center">
+                    <div class="image-box">
+                        <img src="images\ewi8.webp" alt="Image 2" class="img-fluid">
+                        <div class="overlay">Jayden Seales seals England with early wickets in the last session of Day One</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 mb-4 d-flex justify-content-center">
+                    <div class="image-box">
+                        <img src="images\ewi9.webp" alt="Image 3" class="img-fluid">
+                        <div class="overlay">Mark Wood takes the middle wicket with an unplayable yorker</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 mb-4 d-flex justify-content-center">
+                    <div class="image-box">
+                        <img src="images\mlc12.webp" alt="Image 4" class="img-fluid">
+                        <div class="overlay">Finn Allen scores 101 off 53 to get SF past 200</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 mb-4 d-flex justify-content-center">
+                    <div class="image-box">
+                        <img src="images\mlc13.webp" alt="Image 5" class="img-fluid">
+                        <div class="overlay">Joshua Tromp gets his maiden fifty but in vain as Texas falls 10 short</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 mb-4 d-flex justify-content-center">
+                    <div class="image-box">
+                        <img src="images\gt1.webp" alt="Image 6" class="img-fluid">
+                        <div class="overlay">The Season 4 of GT20 Canada League kicks off with Vancouver vs Toronto</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="content-box">
+            <h2 class="text-success bounce-text">Welcome to Cricket Player Statistics</h2>
+            <p>Explore detailed statistics, interactive charts, and comparative analysis of your favorite cricket players.</p>
+            <h3 class="text-info">Key Features</h3>
+            <ul>
+                <li>Interactive charts and graphs</li>
+                <li>Player comparison tools</li>
+                <li>Historical data and trends</li>
+                <li>Latest match statistics</li>
+            </ul>
+            <h3 class="text-info">Featured Players</h3>
+            <div class="featured-players-container">
+                <div class="featured-player-box">
+                    <h4 class="text-center">MLC 24</h4>
+                    <p class="text-center"><a href="graphs-charts-MLC24.html" class="text-white">Key statistics of Top Players</a></p>
+                </div>
+                <div class="featured-player-box">
+                    <h4 class="text-center">GT20 CANADA 2024</h4>
+                    <p class="text-center"><!--<a href="graphs-charts-GT20_24.html" class="text-white">-->COMING SOON<!--</a>--></p>
+                </div>
+                <div class="featured-player-box">
+                    <h4 class="text-center">Botham-Richards Trophy Test Series ENG V WI</h4>
+                    <p class="text-center"><a href="graphs-charts-BRT24.html" class="text-white">Key statistics of Top Players</a></p>
+                </div>
+            </div>
+        </div>
+    </section>    
+
+    
+    <footer>
+        <p>&copy; 2024 CricketScoreSnap. All rights reserved.</p>
+        <a href="https://example.com/privacy-policy">Privacy Policy</a>
+    </footer>
+</body>
+</html>

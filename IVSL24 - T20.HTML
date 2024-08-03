@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: bisque;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Score Snap</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/1.4.0/css/searchPanes.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.4/css/select.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/searchpanes/1.4.0/js/dataTables.searchPanes.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.3.4/js/dataTables.select.min.js"></script>
+    <link rel="stylesheet" href="mobile.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #00796b;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+        nav ul li a:hover {
+            color: #b2dfdb;
+            text-decoration: underline;
+        }
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .video-wrapper {
+            flex: 1 1 60%;
+            position: relative;
+            padding-bottom: 33.75%; /* 16:9 aspect ratio */
+            height: 0;
+            border: 5px solid #00796b;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .text-container {
+            flex: 1 1 35%;
+            padding: 20px;
+            margin-left: 20px;
+            background-color: #fff;
+            border: 2px solid #00796b;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .text-container h3 {
+            margin-top: 0;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table caption {
+            text-align: center;
+            color: crimson;
+            font-weight: bold;
+            font-size: x-large;
+            background-color: antiquewhite;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        table th, table td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        table th {
+            background-color: #00796b;
+            color: white;
+        }
+        table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #00796b;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        footer a {
+            color: red;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            function initializeDataTable(tableId, filterColumns, numColumns) {
+                $(tableId).DataTable({
+                    dom: 'Pfrtip',
+                    searchPanes: {
+                        cascadePanes: true,
+                        columns: filterColumns
+                    },
+                    columnDefs: [
+                        { searchPanes: { show: true }, targets: filterColumns },
+                        { type: 'num', targets: Array.from({length: numColumns}, (_, i) => i + 2), render: function(data, type) {
+                            if (type === 'sort' && data === '#DIV/0!') {
+                                return -Infinity;
+                            } else if (data === '#DIV/0!' || data === "") {
+                                return '-';
+                            }
+                            return data;
+                        }}
+                    ]
+                });
+            }
+            initializeDataTable('#myTable1', [0, 1], 15);
+            initializeDataTable('#myTable2', [0, 1], 13);
+            initializeDataTable('#myTable3', [0, 1], 13); // Adjusted number of columns for myTable3
+            initializeDataTable('#myTable4', [0, 1], 13);
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1 class="text-center">Cricket Score Snap</h1>
+        <nav>
+            <ul class="nav">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="MLC24.html" class="nav-link">MLC 24</a></li>
+                <li class="nav-item"><a href="BRT24.html" class="nav-link">WI v ENG</a></li>
+                <li class="nav-link"><a href="GT20_24.HTML" class="nav-link">GT20 CANADA</a></li>
+                <li class="nav-item"><a href="IVSL24 - T20.HTML" class="nav-link">IND V SL T20Is</a></li>
+                <li class="nav-item"><a href="mailto:agneya2208@gmail.com" class="nav-link">Contact</a></li>
+                <li><a href="archives.html" class="nav-link">Archives</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main style="background-color: bisque;">
+        <div class="table-container">
+           <table id="myTable1">
+                <caption style="text-align: center; color: crimson; font-weight: 700; font-size: x-large; background-color: antiquewhite;">T20Is Career Batting Stats</caption>
+                    <thead>
+                        <tr>
+                            <th>Team</th>
+                            <th>Player</th>
+                            <th>MATCHES</th>
+                            <th>INNINGS</th>
+                            <th>NOT OUTS</th>
+                            <th>RUNS</th>
+                            <th>HIGHEST</th>
+                            <th>BATTING AVERAGE</th>
+                            <th>BALLS</th>
+                            <th>STRIKE RATE</th>
+                            <th>100S</th>
+                            <th>50S</th>
+                            <th>4S</th>
+                            <th>6S</th>
+                            <th>CATCHES</th>
+                            <th>STUMPING</th>
+                            <th>AVG RUNS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>AXAR PATEL</td>
+                            <td>60</td>
+                            <td>36</td>
+                            <td>13</td>
+                            <td>453</td>
+                            <td>65</td>
+                            <td>19.69</td>
+                            <td>316</td>
+                            <td>143.35</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>32</td>
+                            <td>22</td>
+                            <td>20</td>
+                            <td>0</td>
+                            <td>12.58</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>HARDIK PANDYA</td>
+                            <td>100</td>
+                            <td>77</td>
+                            <td>21</td>
+                            <td>1492</td>
+                            <td>71</td>
+                            <td>26.64</td>
+                            <td>1059</td>
+                            <td>140.89</td>
+                            <td>0</td>
+                            <td>4</td>
+                            <td>107</td>
+                            <td>78</td>
+                            <td>47</td>
+                            <td>0</td>
+                            <td>19.38</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>RINKU SINGH</td>
+                            <td>20</td>
+                            <td>15</td>
+                            <td>10</td>
+                            <td>416</td>
+                            <td>69</td>
+                            <td>83.2</td>
+                            <td>236</td>
+                            <td>176.27</td>
+                            <td>0</td>
+                            <td>2</td>
+                            <td>33</td>
+                            <td>26</td>
+                            <td>13</td>
+                            <td>0</td>
+                            <td>27.73</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>RISHABH PANT</td>
+                            <td>74</td>
+                            <td>64</td>
+                            <td>13</td>
+                            <td>1158</td>
+                            <td>65</td>
+                            <td>22.7</td>
+                            <td>915</td>
+                            <td>126.56</td>
+                            <td>0</td>
+                            <td>3</td>
+                            <td>105</td>
+                            <td>43</td>
+                            <td>40</td>
+                            <td>10</td>
+                            <td>18.09</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>RIYAN PARAG</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>0</td>
+                            <td>24</td>
+                            <td>22</td>
+                            <td>12</td>
+                            <td>27</td>
+                            <td>88.89</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>12.00</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>SANJU SAMSON</td>
+                            <td>28</td>
+                            <td>24</td>
+                            <td>3</td>
+                            <td>444</td>
+                            <td>77</td>
+                            <td>21.14</td>
+                            <td>333</td>
+                            <td>133.33</td>
+                            <td>0</td>
+                            <td>2</td>
+                            <td>34</td>
+                            <td>19</td>
+                            <td>16</td>
+                            <td>4</td>
+                            <td>18.50</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>SHIVAM DUBE</td>
+                            <td>32</td>
+                            <td>23</td>
+                            <td>9</td>
+                            <td>435</td>
+                            <td>63</td>
+                            <td>31.07</td>
+                            <td>318</td>
+                            <td>136.79</td>
+                            <td>0</td>
+                            <td>3</td>
+                            <td>27</td>
+                            <td>24</td>
+                            <td>14</td>
+                            <td>0</td>
+                            <td>18.91</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>SHUBHMAN GILL</td>
+                            <td>19</td>
+                            <td>19</td>
+                            <td>2</td>
+                            <td>505</td>
+                            <td>126</td>
+                            <td>29.7</td>
+                            <td>362</td>
+                            <td>139.50</td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>51</td>
+                            <td>21</td>
+                            <td>4</td>
+                            <td>0</td>
+                            <td>26.58</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>SURYA KUMAR YADAV</td>
+                            <td>68</td>
+                            <td>65</td>
+                            <td>11</td>
+                            <td>2340</td>
+                            <td>117</td>
+                            <td>43.33</td>
+                            <td>1395</td>
+                            <td>167.74</td>
+                            <td>4</td>
+                            <td>19</td>
+                            <td>207</td>
+                            <td>133</td>
+                            <td>45</td>
+                            <td>0</td>
+                            <td>36.00</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>WASHINGTON SUNDAR</td>
+                            <td>48</td>
+                            <td>17</td>
+                            <td>6</td>
+                            <td>135</td>
+                            <td>50</td>
+                            <td>12.27</td>
+                            <td>106</td>
+                            <td>127.36</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>11</td>
+                            <td>7</td>
+                            <td>15</td>
+                            <td>0</td>
+                            <td>7.94</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>YASHASVI JAISWAL</td>
+                            <td>20</td>
+                            <td>19</td>
+                            <td>2</td>
+                            <td>643</td>
+                            <td>100</td>
+                            <td>37.82</td>
+                            <td>395</td>
+                            <td>162.78</td>
+                            <td>1</td>
+                            <td>5</td>
+                            <td>72</td>
+                            <td>34</td>
+                            <td>13</td>
+                            <td>0</td>
+                            <td>33.84</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>AVISHKA FERNANDO</td>
+                            <td>35</td>
+                            <td>33</td>
+                            <td>2</td>
+                            <td>341</td>
+                            <td>37</td>
+                            <td>11</td>
+                            <td>367</td>
+                            <td>92.92</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>27</td>
+                            <td>7</td>
+                            <td>8</td>
+                            <td>0</td>
+                            <td>10.33</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>CHAMINDU WICKRAMASINGHE</td>
+                            <td>25</td>
+                            <td>17</td>
+                            <td>6</td>
+                            <td>282</td>
+                            <td>62</td>
+                            <td>25.63</td>
+                            <td>250</td>
+                            <td>112.80</td>
+                            <td>0</td>
+                            <td>2</td>
+                            <td>18</td>
+                            <td>11</td>
+                            <td>7</td>
+                            <td>0</td>
+                            <td>16.59</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>CHARITH ASALANKA</td>
+                            <td>47</td>
+                            <td>47</td>
+                            <td>5</td>
+                            <td>1061</td>
+                            <td>80</td>
+                            <td>25.26</td>
+                            <td>837</td>
+                            <td>126.76</td>
+                            <td>0</td>
+                            <td>5</td>
+                            <td>69</td>
+                            <td>52</td>
+                            <td>15</td>
+                            <td>0</td>
+                            <td>22.57</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>DASUN SHANAKA</td>
+                            <td>100</td>
+                            <td>92</td>
+                            <td>20</td>
+                            <td>1456</td>
+                            <td>74</td>
+                            <td>20.22</td>
+                            <td>1188</td>
+                            <td>122.56</td>
+                            <td>0</td>
+                            <td>5</td>
+                            <td>107</td>
+                            <td>72</td>
+                            <td>37</td>
+                            <td>0</td>
+                            <td>15.83</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>DINESH CHANDIMAL</td>
+                            <td>68</td>
+                            <td>61</td>
+                            <td>7</td>
+                            <td>1062</td>
+                            <td>66</td>
+                            <td>19.66</td>
+                            <td>1025</td>
+                            <td>103.61</td>
+                            <td>0</td>
+                            <td>6</td>
+                            <td>90</td>
+                            <td>22</td>
+                            <td>37</td>
+                            <td>6</td>
+                            <td>17.41</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>KAMINDU MENDIS</td>
+                            <td>13</td>
+                            <td>12</td>
+                            <td>1</td>
+                            <td>241</td>
+                            <td>65</td>
+                            <td>21.9</td>
+                            <td>194</td>
+                            <td>124.23</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>22</td>
+                            <td>10</td>
+                            <td>5</td>
+                            <td>0</td>
+                            <td>20.08</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>KUSAL MENDIS</td>
+                            <td>67</td>
+                            <td>67</td>
+                            <td>2</td>
+                            <td>1629</td>
+                            <td>86</td>
+                            <td>25.06</td>
+                            <td>1212</td>
+                            <td>134.41</td>
+                            <td>0</td>
+                            <td>14</td>
+                            <td>136</td>
+                            <td>74</td>
+                            <td>25</td>
+                            <td>5</td>
+                            <td>24.31</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>KUSAL PERERA</td>
+                            <td>66</td>
+                            <td>65</td>
+                            <td>2</td>
+                            <td>1677</td>
+                            <td>84</td>
+                            <td>26.61</td>
+                            <td>1286</td>
+                            <td>130.40</td>
+                            <td>0</td>
+                            <td>13</td>
+                            <td>155</td>
+                            <td>55</td>
+                            <td>17</td>
+                            <td>6</td>
+                            <td>25.80</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>PATHUM NISSANKA</td>
+                            <td>51</td>
+                            <td>50</td>
+                            <td>3</td>
+                            <td>1281</td>
+                            <td>75</td>
+                            <td>27.25</td>
+                            <td>1095</td>
+                            <td>116.99</td>
+                            <td>0</td>
+                            <td>10</td>
+                            <td>128</td>
+                            <td>28</td>
+                            <td>9</td>
+                            <td>0</td>
+                            <td>25.62</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>WANINDU HASARANGA</td>
+                            <td>68</td>
+                            <td>58</td>
+                            <td>13</td>
+                            <td>670</td>
+                            <td>71</td>
+                            <td>14.88</td>
+                            <td>507</td>
+                            <td>132.15</td>
+                            <td>0</td>
+                            <td>2</td>
+                            <td>66</td>
+                            <td>16</td>
+                            <td>29</td>
+                            <td>0</td>
+                            <td>11.55</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+                <div class="table-container">
+            <table id="myTable2">
+                <caption style="text-align: center; color: crimson; font-weight: 700; font-size: x-large; background-color: antiquewhite;">T20Is Career Bowling Stats</caption>
+                    <thead>
+                        <tr>
+                            <th>Team</th>
+                            <th>Player</th>
+                            <th>MATCHES</th>
+                            <th>INNINGS</th>
+                            <th>BALLS</th>
+                            <th>RUNS</th>
+                            <th>WICKETS</th>
+                            <th>BBI</th>
+                            <th>BBM</th>
+                            <th>BWL AVERAGE</th>
+                            <th>ECONOMY</th>
+                            <th>SR</th>
+                            <th>4WI</th>
+                            <th>5WI</th>
+                            <th>RUNS PER MATCH</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>ARSHDEEP SINGH</td>
+                            <td>52</td>
+                            <td>52</td>
+                            <td>1079</td>
+                            <td>1509</td>
+                            <td>79</td>
+                            <td>4/9</td>
+                            <td>4/9</td>
+                            <td>19.1</td>
+                            <td>8.39</td>
+                            <td>13.66</td>
+                            <td>2</td>
+                            <td>0</td>
+                            <td>29.02</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>AXAR PATEL</td>
+                            <td>60</td>
+                            <td>58</td>
+                            <td>1111</td>
+                            <td>1359</td>
+                            <td>58</td>
+                            <td>3/9</td>
+                            <td>3/9</td>
+                            <td>23.43</td>
+                            <td>7.34</td>
+                            <td>19.16</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>23.43</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>HARDIK PANDYA</td>
+                            <td>100</td>
+                            <td>89</td>
+                            <td>1583</td>
+                            <td>2141</td>
+                            <td>84</td>
+                            <td>4/16</td>
+                            <td>4/16</td>
+                            <td>25.48</td>
+                            <td>8.11</td>
+                            <td>18.85</td>
+                            <td>3</td>
+                            <td>0</td>
+                            <td>24.06</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>KHALEEL AHMED</td>
+                            <td>17</td>
+                            <td>17</td>
+                            <td>378</td>
+                            <td>534</td>
+                            <td>16</td>
+                            <td>2/27</td>
+                            <td>2/27</td>
+                            <td>33.37</td>
+                            <td>8.48</td>
+                            <td>23.63</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>31.41</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>MOHAMMAD SIRAJ</td>
+                            <td>13</td>
+                            <td>13</td>
+                            <td>294</td>
+                            <td>391</td>
+                            <td>13</td>
+                            <td>4/17</td>
+                            <td>4/17</td>
+                            <td>30.07</td>
+                            <td>7.98</td>
+                            <td>22.62</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>30.08</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>RAVI BISHNOI</td>
+                            <td>29</td>
+                            <td>29</td>
+                            <td>676</td>
+                            <td>809</td>
+                            <td>42</td>
+                            <td>4/13</td>
+                            <td>4/13</td>
+                            <td>19.26</td>
+                            <td>7.18</td>
+                            <td>16.10</td>
+                            <td>2</td>
+                            <td>0</td>
+                            <td>27.90</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>SHIVAM DUBE</td>
+                            <td>32</td>
+                            <td>23</td>
+                            <td>273</td>
+                            <td>434</td>
+                            <td>11</td>
+                            <td>3/30</td>
+                            <td>3/30</td>
+                            <td>39.45</td>
+                            <td>9.54</td>
+                            <td>24.82</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>18.87</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>WASHINGTON SUNDAR</td>
+                            <td>48</td>
+                            <td>46</td>
+                            <td>915</td>
+                            <td>1061</td>
+                            <td>42</td>
+                            <td>3/15</td>
+                            <td>3/15</td>
+                            <td>25.26</td>
+                            <td>6.96</td>
+                            <td>21.79</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>23.07</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>BINURA FERNANDO</td>
+                            <td>17</td>
+                            <td>17</td>
+                            <td>343</td>
+                            <td>488</td>
+                            <td>16</td>
+                            <td>2/12</td>
+                            <td>2/12</td>
+                            <td>30.5</td>
+                            <td>8.54</td>
+                            <td>21.44</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>28.71</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>BUNITH WELLALAGE</td>
+                            <td>47</td>
+                            <td>41</td>
+                            <td>757</td>
+                            <td>912</td>
+                            <td>43</td>
+                            <td>4/10</td>
+                            <td>4/10</td>
+                            <td>21.2</td>
+                            <td>7.23</td>
+                            <td>17.60</td>
+                            <td>2</td>
+                            <td>0</td>
+                            <td>22.24</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>CHAMINDU WICKRAMASINGHE</td>
+                            <td>25</td>
+                            <td>20</td>
+                            <td>226</td>
+                            <td>378</td>
+                            <td>12</td>
+                            <td>2/1</td>
+                            <td>2/1</td>
+                            <td>31.5</td>
+                            <td>10.04</td>
+                            <td>18.83</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>18.90</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>CHARITH ASALANKA</td>
+                            <td>47</td>
+                            <td>5</td>
+                            <td>37</td>
+                            <td>38</td>
+                            <td>0</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>6.16</td>
+                            <td>-</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>7.60</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>DASUN SHANAKA</td>
+                            <td>100</td>
+                            <td>52</td>
+                            <td>516</td>
+                            <td>707</td>
+                            <td>33</td>
+                            <td>3/16</td>
+                            <td>3/16</td>
+                            <td>21.42</td>
+                            <td>8.22</td>
+                            <td>15.64</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>13.60</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>DUSHMANTHA CHAMEERA</td>
+                            <td>55</td>
+                            <td>55</td>
+                            <td>1178</td>
+                            <td>1588</td>
+                            <td>55</td>
+                            <td>4/17</td>
+                            <td>4/17</td>
+                            <td>28.87</td>
+                            <td>8.09</td>
+                            <td>21.42</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>28.87</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>KAMINDU MENDIS</td>
+                            <td>13</td>
+                            <td>4</td>
+                            <td>48</td>
+                            <td>70</td>
+                            <td>0</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>8.75</td>
+                            <td>-</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>17.50</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>MAHEESH THEEKSANA</td>
+                            <td>49</td>
+                            <td>49</td>
+                            <td>1112</td>
+                            <td>1245</td>
+                            <td>45</td>
+                            <td>3/17</td>
+                            <td>3/17</td>
+                            <td>27.66</td>
+                            <td>6.72</td>
+                            <td>24.71</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>25.41</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>MATHEESA PATHIRANA</td>
+                            <td>9</td>
+                            <td>9</td>
+                            <td>178</td>
+                            <td>239</td>
+                            <td>14</td>
+                            <td>4/24</td>
+                            <td>4/24</td>
+                            <td>17.07</td>
+                            <td>8.06</td>
+                            <td>12.71</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>26.56</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>NUWAN THUSHARA</td>
+                            <td>11</td>
+                            <td>11</td>
+                            <td>209</td>
+                            <td>277</td>
+                            <td>19</td>
+                            <td>5/20</td>
+                            <td>5/20</td>
+                            <td>14.57</td>
+                            <td>7.95</td>
+                            <td>11.00</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>25.18</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>WANINDU HASARANGA</td>
+                            <td>68</td>
+                            <td>66</td>
+                            <td>1488</td>
+                            <td>1698</td>
+                            <td>110</td>
+                            <td>4/9</td>
+                            <td>4/9</td>
+                            <td>15.43</td>
+                            <td>6.85</td>
+                            <td>13.53</td>
+                            <td>3</td>
+                            <td>0</td>
+                            <td>25.73</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+       <div class="table-container">
+            <table id="myTable3">
+                <caption style="text-align: center; color: crimson; font-weight: 700; font-size: x-large; background-color: antiquewhite;">Series Batting Stats</caption>
+                    <thead>
+                        <tr>
+                            <th>Team</th>
+                            <th>Player</th>
+                            <th>MATCHES</th>
+                            <th>INNINGS</th>
+                            <th>Got Out</th>
+                            <th>M1</th>
+                            <th>M2</th>
+                            <th>BALLS</th>
+                            <th>RUNS</th>
+                            <th>100S</th>
+                            <th>50S</th>
+                            <th>4s</th>
+                            <th>6s</th>
+                            <th>STRIKE RATE</th>
+                            <th>BAT AVG</th>
+                            <th>AVG RUNS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>ARSHDEEP SINGH</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td></td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>100.00</td>
+                            <td>#DIV/0!</td>
+                            <td>1.00</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>AXAR PATEL</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>10</td>
+                            <td></td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>1</td>
+                            <td>200.00</td>
+                            <td>#DIV/0!</td>
+                            <td>10.00</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>HARDIK PANDYA</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>9</td>
+                            <td>22</td>
+                            <td>19</td>
+                            <td>31</td>
+                            <td></td>
+                            <td></td>
+                            <td>4</td>
+                            <td>1</td>
+                            <td>163.16</td>
+                            <td>31.00</td>
+                            <td>15.50</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>MOHAMMAD SIRAJ</td>
+                            <td>2</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>RAVI BISHNOI</td>
+                            <td>2</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>RINKU SINGH</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td></td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>50.00</td>
+                            <td>1.00</td>
+                            <td>1.00</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>RISHABH PANT</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>49</td>
+                            <td>2</td>
+                            <td>35</td>
+                            <td>51</td>
+                            <td></td>
+                            <td></td>
+                            <td>6</td>
+                            <td>1</td>
+                            <td>145.71</td>
+                            <td>51.00</td>
+                            <td>25.50</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>RIYAN PARAG</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>7</td>
+                            <td></td>
+                            <td>6</td>
+                            <td>7</td>
+                            <td></td>
+                            <td></td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>116.67</td>
+                            <td>7.00</td>
+                            <td>7.00</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>SANJU SAMSON</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td></td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>SHUBHMAN GILL</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>34</td>
+                            <td></td>
+                            <td>16</td>
+                            <td>34</td>
+                            <td></td>
+                            <td></td>
+                            <td>6</td>
+                            <td>1</td>
+                            <td>212.50</td>
+                            <td>34.00</td>
+                            <td>34.00</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>SURYA KUMAR YADAV</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>58</td>
+                            <td>26</td>
+                            <td>38</td>
+                            <td>84</td>
+                            <td></td>
+                            <td>1</td>
+                            <td>12</td>
+                            <td>3</td>
+                            <td>221.05</td>
+                            <td>42.00</td>
+                            <td>42.00</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>YASHASVI JAISWAL</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>40</td>
+                            <td>30</td>
+                            <td>36</td>
+                            <td>70</td>
+                            <td></td>
+                            <td></td>
+                            <td>8</td>
+                            <td>10</td>
+                            <td>194.44</td>
+                            <td>35.00</td>
+                            <td>35.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>ASITHA FERNANDO</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td></td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0.00</td>
+                            <td>#DIV/0!</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>RAMESH MENDIS</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td></td>
+                            <td>12</td>
+                            <td>10</td>
+                            <td>12</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>1</td>
+                            <td>120.00</td>
+                            <td>12.00</td>
+                            <td>12.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>CHARITH ASALANKA</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>0</td>
+                            <td>14</td>
+                            <td>14</td>
+                            <td>14</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>1</td>
+                            <td>100.00</td>
+                            <td>7.00</td>
+                            <td>7.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>DASUN SHANAKA</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>DILSHAN MADUSHANKA</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td></td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>KAMINDU MENDIS</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>12</td>
+                            <td>26</td>
+                            <td>31</td>
+                            <td>38</td>
+                            <td></td>
+                            <td></td>
+                            <td>6</td>
+                            <td>0</td>
+                            <td>122.58</td>
+                            <td>19.00</td>
+                            <td>19.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>KUSAL MENDIS</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>45</td>
+                            <td>10</td>
+                            <td>38</td>
+                            <td>55</td>
+                            <td></td>
+                            <td></td>
+                            <td>9</td>
+                            <td>1</td>
+                            <td>144.74</td>
+                            <td>27.50</td>
+                            <td>27.50</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>KUSAL PERERA</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>20</td>
+                            <td>53</td>
+                            <td>48</td>
+                            <td>73</td>
+                            <td></td>
+                            <td>1</td>
+                            <td>9</td>
+                            <td>2</td>
+                            <td>152.08</td>
+                            <td>36.50</td>
+                            <td>36.50</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>MAHEESH THEEKSANA</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>8</td>
+                            <td>4</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>50.00</td>
+                            <td>2.00</td>
+                            <td>2.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>MATHEESA PATHIRANA</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>6</td>
+                            <td>1</td>
+                            <td>8</td>
+                            <td>7</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>87.50</td>
+                            <td>7.00</td>
+                            <td>3.50</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>PATHUM NISSANKA</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>79</td>
+                            <td>32</td>
+                            <td>72</td>
+                            <td>111</td>
+                            <td></td>
+                            <td>1</td>
+                            <td>12</td>
+                            <td>4</td>
+                            <td>154.17</td>
+                            <td>55.50</td>
+                            <td>55.50</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>WANINDU HASARANGA</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>0</td>
+                            <td>4</td>
+                            <td>2</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>50.00</td>
+                            <td>1.00</td>
+                            <td>1.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+        <div class="table-container">
+            <table id="myTable4">
+                <caption style="text-align: center; color: crimson; font-weight: 700; font-size: x-large; background-color: antiquewhite;">Series Bowling Stats</caption>
+                    <thead>
+                        <tr>
+                            <th>Team</th>
+                            <th>Player</th>
+                            <th>MATCHES</th>
+                            <th>OVERS</th>
+                            <th>MAIDENS</th>
+                            <th>RUNS GIVEN</th>
+                            <th>WICKETS TAKEN</th>
+                            <th>ECON</th>
+                            <th>WD</th>
+                            <th>NB</th>
+                            <th>BALLS</th>
+                            <th>4WC</th>
+                            <th>5WC</th>
+                            <th>STRIKE RATE</th>
+                            <th>BOWLING AVERAGE</th>
+                            <th>AVG RUNS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>ARSHDEEP SINGH</td>
+                            <td>2</td>
+                            <td>6</td>
+                            <td>0</td>
+                            <td>48</td>
+                            <td>4</td>
+                            <td>8.0</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>36</td>
+                            <td></td>
+                            <td></td>
+                            <td>9.00</td>
+                            <td>12.00</td>
+                            <td>24.00</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>AXAR PATEL</td>
+                            <td>2</td>
+                            <td>8</td>
+                            <td>0</td>
+                            <td>68</td>
+                            <td>4</td>
+                            <td>8.5</td>
+                            <td>2</td>
+                            <td>0</td>
+                            <td>48</td>
+                            <td></td>
+                            <td></td>
+                            <td>12.00</td>
+                            <td>17.00</td>
+                            <td>34.00</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>HARDIK PANDYA</td>
+                            <td>2</td>
+                            <td>6</td>
+                            <td>0</td>
+                            <td>64</td>
+                            <td>2</td>
+                            <td>10.7</td>
+                            <td>7</td>
+                            <td>0</td>
+                            <td>36</td>
+                            <td></td>
+                            <td></td>
+                            <td>18.00</td>
+                            <td>32.00</td>
+                            <td>32.00</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>MOHAMMAD SIRAJ</td>
+                            <td>2</td>
+                            <td>6</td>
+                            <td>0</td>
+                            <td>50</td>
+                            <td>1</td>
+                            <td>8.3</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>36</td>
+                            <td></td>
+                            <td></td>
+                            <td>36.00</td>
+                            <td>50.00</td>
+                            <td>25.00</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>RAVI BISHNOI</td>
+                            <td>2</td>
+                            <td>8</td>
+                            <td>0</td>
+                            <td>63</td>
+                            <td>4</td>
+                            <td>7.9</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>48</td>
+                            <td></td>
+                            <td></td>
+                            <td>12.00</td>
+                            <td>15.75</td>
+                            <td>31.50</td>
+                        </tr>
+                        <tr>
+                            <th>INDIA</th>
+                            <td>RIYAN PARAG</td>
+                            <td>2</td>
+                            <td>5.2</td>
+                            <td>0</td>
+                            <td>35</td>
+                            <td>3</td>
+                            <td>6.7</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>31</td>
+                            <td></td>
+                            <td></td>
+                            <td>10.40</td>
+                            <td>11.67</td>
+                            <td>17.50</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>ASITHA FERNANDO</td>
+                            <td>1</td>
+                            <td>4</td>
+                            <td>0</td>
+                            <td>47</td>
+                            <td>1</td>
+                            <td>11.75</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>24</td>
+                            <td></td>
+                            <td></td>
+                            <td>24.00</td>
+                            <td>47.00</td>
+                            <td>47.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>DASUN SHANAKA</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>12</td>
+                            <td>0</td>
+                            <td>12.00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>6</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>12.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>DILSHAN MADUSHANKA</td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>0</td>
+                            <td>45</td>
+                            <td>1</td>
+                            <td>15.00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>18</td>
+                            <td></td>
+                            <td></td>
+                            <td>18.00</td>
+                            <td>45.00</td>
+                            <td>45.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>KAMINDU MENDIS</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>9</td>
+                            <td>0</td>
+                            <td>9.00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>6</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>9.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>MAHEESH THEEKSANA</td>
+                            <td>2</td>
+                            <td>6</td>
+                            <td>0</td>
+                            <td>60</td>
+                            <td>1</td>
+                            <td>10.00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>36</td>
+                            <td></td>
+                            <td></td>
+                            <td>36.00</td>
+                            <td>60.00</td>
+                            <td>30.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>MATHEESA PATHIRANA</td>
+                            <td>2</td>
+                            <td>5.3</td>
+                            <td>0</td>
+                            <td>58</td>
+                            <td>5</td>
+                            <td>10.94</td>
+                            <td>3</td>
+                            <td>0</td>
+                            <td>31.8</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>6.36</td>
+                            <td>11.60</td>
+                            <td>29.00</td>
+                        </tr>
+                        <tr>
+                            <th>SRI LANKA</th>
+                            <td>WANINDU HASARANGA</td>
+                            <td>2</td>
+                            <td>6</td>
+                            <td>0</td>
+                            <td>46</td>
+                            <td>2</td>
+                            <td>7.67</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>36</td>
+                            <td></td>
+                            <td></td>
+                            <td>18.00</td>
+                            <td>23.00</td>
+                            <td>23.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </main>
+    <!--<footer>
+        <div id="GC" style="border: yellow solid 2px;height:50px;">
+            <a href="graphs-charts-IVZ24.html" style="color: rgb(255, 0, 0);position: relative;top:7.5px;">Top Players Of the Series</a>
+        </div>
+    </footer>-->
+</body>
+</html>
