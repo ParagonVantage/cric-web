@@ -117,10 +117,10 @@
 
     <script>
         const dataBar1 = {
-            labels: ['Rohit Sharma','Dunith Wellalage','Axar Patel','Pathum Nissanka','Shubhman Gill'],
+            labels: ['Rohit Sharma','Avishka Fernando','Dunith Wellalage','Kusal Mendis','Pathum Nissanka'],
             datasets: [{
                 label: 'Runs Scored',
-                data: [122,106,77,56,51],
+                data: [157,137,108,103,101],
                 backgroundColor: 'rgba(0, 123, 255, 0.6)',
                 borderColor: 'rgba(0, 123, 255, 1)',
                 borderWidth: 1
@@ -128,10 +128,10 @@
         };
 
         const dataBar2 = {
-            labels: ['Rohit Sharma','Dunith Wellalage','Axar Patel','Virat Kohli','Pathum Nissanka'],
+            labels: ['Rohit Sharma','Dunith Wellalage','Kamindu Mendis','Virat Kohli','Avishka Fernando'],
             datasets: [{
                 label: 'Strike Rate',
-                data: [134,106,76,75,74],
+                data: [141,105,100,84,80],
                 backgroundColor: 'rgba(220, 53, 69, 0.6)',
                 borderColor: 'rgba(220, 53, 69, 1)',
                 borderWidth: 1
@@ -139,10 +139,10 @@
         };
 
         const dataBar3 = {
-            labels: ['Charith Asalanka','Jeffrey Vandersay','Washington Sundar','Axar Patel','Kuldeep Yadav'],
+            labels: ['Jeffrey Vandersay','Dunith Wellalage','Charith Asalanka','Washington Sundar','Axar Patel'],
             datasets: [{
                 label: 'Wickets',
-                data: [6,6,4,3,3],
+                data: [8,7,6,5,4],
                 backgroundColor: 'rgba(40, 167, 69, 0.6)',
                 borderColor: 'rgba(40, 167, 69, 1)',
                 borderWidth: 1
@@ -150,10 +150,10 @@
         };
 
         const dataBar4 = {
-            labels: ['Kuldeep Yadav','Charith Asalanka','Axar Patel','Washington Sundar','Akila Dananjaya'],
+            labels: ['Charith Asalanka','Kuldeep Yadav','Axar Patel','Washington Sundar','Jeffrey Vandersay'],
             datasets: [{
                 label: 'Economy',
-                data: [3.3,3.3,3.7,4.0,4.7],
+                data: [2.9,3.4,3.9,3.9,4.5],
                 backgroundColor: 'rgba(255, 193, 7, 0.6)',
                 borderColor: 'rgba(255, 193, 7, 1)',
                 borderWidth: 1
@@ -248,11 +248,18 @@
             configBar4
         );
 
+        function calculateStandardDeviation(data) {
+            const mean = data.reduce((a, b) => a + b) / data.length;
+            const squaredDiffs = data.map(value => (value - mean) ** 2);
+            const avgSquaredDiff = squaredDiffs.reduce((a, b) => a + b) / squaredDiffs.length;
+            return Math.sqrt(avgSquaredDiff).toFixed(2);
+        }
+
         const dataLine1 = {
-            labels: ['M1','M2'],
+            labels: ['M1','M2','M3'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [58,64],
+                data: [58,64,35],
                 borderColor: 'rgba(23, 162, 184, 1)',
                 backgroundColor: 'rgba(23, 162, 184, 0.2)',
                 borderWidth: 2,
@@ -261,11 +268,13 @@
             }]
         };
 
+        const stdDev1 = calculateStandardDeviation(dataLine1.datasets[0].data);
+
         const dataLine2 = {
-            labels: ['M1','M2'],
+            labels: ['M1','M2','M3'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [67,39],
+                data: [1,40,96],
                 borderColor: 'rgba(255, 193, 7, 1)',
                 backgroundColor: 'rgba(255, 193, 7, 0.2)',
                 borderWidth: 2,
@@ -274,11 +283,13 @@
             }]
         };
 
+        const stdDev2 = calculateStandardDeviation(dataLine2.datasets[0].data);
+
         const dataLine3 = {
-            labels: ['M1','M2'],
+            labels: ['M1','M2','M3'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [33,44],
+                data: [67,39,2],
                 borderColor: 'rgba(220, 53, 69, 1)',
                 backgroundColor: 'rgba(220, 53, 69, 0.2)',
                 borderWidth: 2,
@@ -287,11 +298,13 @@
             }]
         };
 
+        const stdDev3 = calculateStandardDeviation(dataLine3.datasets[0].data);
+
         const dataLine4 = {
-            labels: ['M1','M2'],
+            labels: ['M1','M2','M3'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [56,0],
+                data: [14,30,59],
                 borderColor: 'rgba(0, 123, 255, 1)',
                 backgroundColor: 'rgba(0, 123, 255, 0.2)',
                 borderWidth: 2,
@@ -300,11 +313,13 @@
             }]
         };
 
+        const stdDev4 = calculateStandardDeviation(dataLine4.datasets[0].data);
+
         const dataLine5 = {
-            labels: ['M1','M2'],
+            labels: ['M1','M2','M3'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [16,35],
+                data: [56,0,45],
                 borderColor: 'rgba(40, 167, 69, 1)',
                 backgroundColor: 'rgba(40, 167, 69, 0.2)',
                 borderWidth: 2,
@@ -312,6 +327,8 @@
                 pointBorderColor: 'rgba(40, 167, 69, 1)',
             }]
         };
+
+        const stdDev5 = calculateStandardDeviation(dataLine5.datasets[0].data);
 
         const configLine1 = {
             type: 'line',
@@ -324,7 +341,8 @@
                     },
                     title: {
                         display: true,
-                        text: 'Runs Scored by Rohit Sharma'
+                        text: `Runs Scored by Rohit Sharma (Std Dev: ${stdDev1})`,
+                        color: dataLine1.datasets[0].borderColor
                     }
                 },
                 scales: {
@@ -346,7 +364,8 @@
                     },
                     title: {
                         display: true,
-                        text: 'Runs Scored by Dunith Wellalage'
+                        text: `Runs Scored by Avishka Fernando (Std Dev: ${stdDev2})`,
+                        color: dataLine2.datasets[0].borderColor
                     }
                 },
                 scales: {
@@ -368,7 +387,8 @@
                     },
                     title: {
                         display: true,
-                        text: 'Runs Scored by Axar Patel'
+                        text: `Runs Scored by Dunith Wellalage (Std Dev: ${stdDev3})`,
+                        color: dataLine3.datasets[0].borderColor
                     }
                 },
                 scales: {
@@ -390,7 +410,8 @@
                     },
                     title: {
                         display: true,
-                        text: 'Runs Scored by Pathum Nissanka'
+                        text: `Runs Scored by Kusal Mendis (Std Dev: ${stdDev4})`,
+                        color: dataLine4.datasets[0].borderColor
                     }
                 },
                 scales: {
@@ -412,7 +433,8 @@
                     },
                     title: {
                         display: true,
-                        text: 'Runs Scored by Shubhman Gill'
+                        text: `Runs Scored by Pathum Nissanka (Std Dev: ${stdDev5})`,
+                        color: dataLine5.datasets[0].borderColor
                     }
                 },
                 scales: {
@@ -422,6 +444,7 @@
                 }
             },
         };
+
 
         const lineChart1 = new Chart(
             document.getElementById('lineChart1'),
