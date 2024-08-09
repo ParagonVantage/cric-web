@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: bisque;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Score Snap</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/1.4.0/css/searchPanes.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.4/css/select.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/searchpanes/1.4.0/js/dataTables.searchPanes.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.3.4/js/dataTables.select.min.js"></script>
+    <link rel="stylesheet" href="mobile.css">
+    <script>
+        $(document).ready(function() {
+            function initializeDataTable(tableId, filterColumns) {
+                if ($(tableId).length) { // Check if table exists
+                    try {
+                        $(tableId).DataTable({
+                            dom: 'Pfrtip',
+                            searchPanes: {
+                                cascadePanes: true,
+                                columns: filterColumns
+                            },
+                            columnDefs: [
+                                { searchPanes: { show: true }, targets: filterColumns },
+                                { type: 'num', targets: Array.from({ length: 13 }, (_, i) => i + 2), render: function(data, type) {
+                                    return type === 'sort' && data === '#DIV/0!' ? -Infinity : data;
+                                }}
+                            ]
+                        });
+                        console.log(`Initialized DataTable for ${tableId}`);
+                    } catch (error) {
+                        console.error(`Error initializing DataTable for ${tableId}:`, error);
+                    }
+                } else {
+                    console.warn(`Table ${tableId} not found`);
+                }
+            }
+            initializeDataTable('#myTable1', [0, 1]);
+            initializeDataTable('#myTable2', [0, 1]);
+            initializeDataTable('#myTable3', [0, 1]);
+            initializeDataTable('#myTable4', [0, 1]);
+        });
+    </script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #00796b;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .video-wrapper {
+            flex: 1 1 60%;
+            position: relative;
+            padding-bottom: 33.75%; /* 16:9 aspect ratio */
+            height: 0;
+            border: 5px solid #00796b;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .text-container {
+            flex: 1 1 35%;
+            padding: 20px;
+            margin-left: 20px;
+            background-color: #fff;
+            border: 2px solid #00796b;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .text-container h3 {
+            margin-top: 0;
+        }
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+        margin-bottom: 20px;
+    }
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+        table caption {
+            text-align: center;
+            color: crimson;
+            font-weight: bold;
+            font-size: x-large;
+            background-color: antiquewhite;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        table th, table td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        table th {
+            background-color: #00796b;
+            color: white;
+        }
+        table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #00796b;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        footer a {
+            color: red;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .image-container {
+        display: flex;
+        justify-content: space-around;
+        margin: 20px 0;
+        flex-wrap: wrap; /* Make the images wrap on smaller screens */
+    }
+    .image-box {
+        position: relative; /* Needed for the overlay */
+        border: 2px solid #00796b;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 10px; /* Space between images */
+        flex: 1 1 calc(33.333% - 20px); /* Responsive design */
+        box-sizing: border-box;
+    }
+    .image-box img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    .overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 20%; /* Covers only a small percentage of the image */
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .image-box:hover .overlay {
+        opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .image-box {
+            flex: 1 1 calc(50% - 20px);
+        }
+    }
+    @media (max-width: 480px) {
+        .image-box {
+            flex: 1 1 100%;
+        }
+    }
+    </style>
+</head>
+<body style="height: 4850px;">
+    <header>
+        <h1>Cricket Score Snap</h1>
+        <nav>
+            <ul class="nav">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="IVSL24 - ODI.HTML" class="nav-link">IND V SL ODIs</a></li>
+                <li class="nav-item"><a href="BRT24.html" class="nav-link">WI v ENG</a></li>
+                <li class="nav-link"><a href="GT20_24.HTML" class="nav-link">GT20 CANADA</a></li>
+                <li class="nav-item"><a href="IVSL24 - T20.HTML" class="nav-link">IND V SL T20Is</a></li>
+                <li class="nav-item"><a href="mailto:agneya2208@gmail.com" class="nav-link">Contact</a></li>
+                <li><a href="archives.html" class="nav-link">Archives</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main style="background-color: bisque;">
+        <div class="table-container">
+           <table id="myTable1">
+                <caption style="text-align: center; color: crimson; font-weight: 700; font-size: x-large; background-color: antiquewhite;">TEST Career Batting Stats</caption>
+                    <thead>
+                        <tr>
+                            <th>Team</th>
+                            <th>Player</th>
+                            <th>MATCHES</th>
+                            <th>INNINGS</th>
+                            <th>NOT OUTS</th>
+                            <th>RUNS</th>
+                            <th>HIGHEST</th>
+                            <th>BATTING AVERAGE</th>
+                            <th>BALLS</th>
+                            <th>STRIKE RATE</th>
+                            <th>100S</th>
+                            <th>50S</th>
+                            <th>4S</th>
+                            <th>6S</th>
+                            <th>CATCHES</th>
+                            <th>STUMPING</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>AIDEN MARKRAM</td>
+                            <td>37</td>
+                            <td>67</td>
+                            <td>1</td>
+                            <td>2398</td>
+                            <td>152</td>
+                            <td>36.33</td>
+                            <td>4032</td>
+                            <td>59.47</td>
+                            <td>7</td>
+                            <td>10</td>
+                            <td>353</td>
+                            <td>12</td>
+                            <td>37</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>DAVID BEDINGHAM</td>
+                            <td>4</td>
+                            <td>7</td>
+                            <td>0</td>
+                            <td>347</td>
+                            <td>110</td>
+                            <td>49.57</td>
+                            <td>513</td>
+                            <td>67.64</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>48</td>
+                            <td>7</td>
+                            <td>2</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>KYLE VERREYNE</td>
+                            <td>16</td>
+                            <td>26</td>
+                            <td>3</td>
+                            <td>600</td>
+                            <td>136</td>
+                            <td>26.08</td>
+                            <td>1128</td>
+                            <td>53.19</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>65</td>
+                            <td>3</td>
+                            <td>48</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>MATTHEW BREETZKE</td>
+                            <td>52</td>
+                            <td>93</td>
+                            <td>9</td>
+                            <td>3122</td>
+                            <td>188</td>
+                            <td>37.16</td>
+                            <td>6600</td>
+                            <td>47.30</td>
+                            <td>7</td>
+                            <td>14</td>
+                            <td>378</td>
+                            <td>9</td>
+                            <td>36</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>RYAN RICKELTON</td>
+                            <td>4</td>
+                            <td>8</td>
+                            <td>1</td>
+                            <td>165</td>
+                            <td>42</td>
+                            <td>23.57</td>
+                            <td>343</td>
+                            <td>48.10</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>20</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>TEMBA BAVUMA</td>
+                            <td>57</td>
+                            <td>97</td>
+                            <td>12</td>
+                            <td>2997</td>
+                            <td>172</td>
+                            <td>35.25</td>
+                            <td>6206</td>
+                            <td>48.29</td>
+                            <td>2</td>
+                            <td>20</td>
+                            <td>362</td>
+                            <td>7</td>
+                            <td>28</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>TONY de ZORZI</td>
+                            <td>4</td>
+                            <td>7</td>
+                            <td>0</td>
+                            <td>145</td>
+                            <td>85</td>
+                            <td>20.71</td>
+                            <td>320</td>
+                            <td>45.31</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>20</td>
+                            <td>0</td>
+                            <td>2</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>TRISTAN STUBBS</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>0</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>25</td>
+                            <td>16.00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>WIAAN MULDER</td>
+                            <td>12</td>
+                            <td>21</td>
+                            <td>0</td>
+                            <td>326</td>
+                            <td>42</td>
+                            <td>15.52</td>
+                            <td>793</td>
+                            <td>41.11</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>42</td>
+                            <td>3</td>
+                            <td>17</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>ALICK ATHANAZE</td>
+                            <td>39</td>
+                            <td>72</td>
+                            <td>6</td>
+                            <td>2297</td>
+                            <td>141</td>
+                            <td>34.8</td>
+                            <td>4053</td>
+                            <td>56.67</td>
+                            <td>2</td>
+                            <td>15</td>
+                            <td>268</td>
+                            <td>21</td>
+                            <td>46</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JASON HOLDER</td>
+                            <td>103</td>
+                            <td>165</td>
+                            <td>19</td>
+                            <td>3836</td>
+                            <td>202</td>
+                            <td>26.27</td>
+                            <td>6951</td>
+                            <td>55.19</td>
+                            <td>4</td>
+                            <td>15</td>
+                            <td>330</td>
+                            <td>50</td>
+                            <td>62</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JOSHUA de SILVA</td>
+                            <td>66</td>
+                            <td>114</td>
+                            <td>15</td>
+                            <td>3295</td>
+                            <td>136</td>
+                            <td>33.28</td>
+                            <td>6979</td>
+                            <td>47.21</td>
+                            <td>5</td>
+                            <td>16</td>
+                            <td>368</td>
+                            <td>18</td>
+                            <td>182</td>
+                            <td>9</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JUSTIN GREAVES</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>KAVEM HODGE</td>
+                            <td>63</td>
+                            <td>113</td>
+                            <td>5</td>
+                            <td>3211</td>
+                            <td>158</td>
+                            <td>29.73</td>
+                            <td>7179</td>
+                            <td>44.73</td>
+                            <td>5</td>
+                            <td>18</td>
+                            <td>357</td>
+                            <td>9</td>
+                            <td>60</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>KEACY CARTY</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>KRAIGG BRAITHWAITE</td>
+                            <td>210</td>
+                            <td>380</td>
+                            <td>27</td>
+                            <td>13664</td>
+                            <td>276</td>
+                            <td>38.7</td>
+                            <td>33807</td>
+                            <td>40.42</td>
+                            <td>32</td>
+                            <td>65</td>
+                            <td>550</td>
+                            <td>13</td>
+                            <td>42</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>MIKYLE LOUIS</td>
+                            <td>7</td>
+                            <td>14</td>
+                            <td>0</td>
+                            <td>682</td>
+                            <td>130</td>
+                            <td>48.71</td>
+                            <td>1388</td>
+                            <td>49.14</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>70</td>
+                            <td>15</td>
+                            <td>8</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>TEVIN IMLACH</td>
+                            <td>22</td>
+                            <td>38</td>
+                            <td>4</td>
+                            <td>1097</td>
+                            <td>136</td>
+                            <td>32.26</td>
+                            <td>2387</td>
+                            <td>45.95</td>
+                            <td>3</td>
+                            <td>6</td>
+                            <td>118</td>
+                            <td>7</td>
+                            <td>36</td>
+                            <td>2</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+                <div class="table-container">
+            <table id="myTable2">
+                <caption style="text-align: center; color: crimson; font-weight: 700; font-size: x-large; background-color: antiquewhite;">TEST Career Bowling Stats</caption>
+                    <thead>
+                        <tr>
+                            <th>Team</th>
+                            <th>Player</th>
+                            <th>MATCHES</th>
+                            <th>INNINGS</th>
+                            <th>BALLS</th>
+                            <th>RUNS</th>
+                            <th>WICKETS</th>
+                            <th>BBI</th>
+                            <th>BBM</th>
+                            <th>BWL AVERAGE</th>
+                            <th>ECONOMY</th>
+                            <th>SR</th>
+                            <th>4WI</th>
+                            <th>5WI</th>
+                            <th>10W</th>
+                            <th>RUNS PER MATCH</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>DANE PATERSON</td>
+                            <td>4</td>
+                            <td>7</td>
+                            <td>833</td>
+                            <td>399</td>
+                            <td>9</td>
+                            <td>3/39</td>
+                            <td>3/97</td>
+                            <td>44.33</td>
+                            <td>2.87</td>
+                            <td>92.56</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>57.00</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>DANE PIEDT</td>
+                            <td>12</td>
+                            <td>17</td>
+                            <td>2211</td>
+                            <td>1357</td>
+                            <td>34</td>
+                            <td>5/89</td>
+                            <td>8/152</td>
+                            <td>39.91</td>
+                            <td>3.68</td>
+                            <td>65.03</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>0</td>
+                            <td>79.82</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>KAGISO RABADA</td>
+                            <td>62</td>
+                            <td>112</td>
+                            <td>11416</td>
+                            <td>6419</td>
+                            <td>291</td>
+                            <td>7/112</td>
+                            <td>13/144</td>
+                            <td>22.06</td>
+                            <td>3.37</td>
+                            <td>39.23</td>
+                            <td>14</td>
+                            <td>14</td>
+                            <td>4</td>
+                            <td>57.31</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>KESHAV MAHARAJ</td>
+                            <td>50</td>
+                            <td>83</td>
+                            <td>9575</td>
+                            <td>5055</td>
+                            <td>158</td>
+                            <td>9/129</td>
+                            <td>12/283</td>
+                            <td>31.99</td>
+                            <td>3.17</td>
+                            <td>60.60</td>
+                            <td>4</td>
+                            <td>9</td>
+                            <td>1</td>
+                            <td>60.90</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>LUNG NGIDI</td>
+                            <td>18</td>
+                            <td>31</td>
+                            <td>2351</td>
+                            <td>1222</td>
+                            <td>54</td>
+                            <td>6/39</td>
+                            <td>8/102</td>
+                            <td>22.63</td>
+                            <td>3.12</td>
+                            <td>43.54</td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>0</td>
+                            <td>39.42</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>MIGAEL PRETORIUS</td>
+                            <td>64</td>
+                            <td>109</td>
+                            <td>9740</td>
+                            <td>5170</td>
+                            <td>188</td>
+                            <td>6/38</td>
+                            <td>9/80</td>
+                            <td>27.50</td>
+                            <td>3.18</td>
+                            <td>51.81</td>
+                            <td>8</td>
+                            <td>6</td>
+                            <td>0</td>
+                            <td>47.43</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>NEANDRE BURGER</td>
+                            <td>2</td>
+                            <td>4</td>
+                            <td>226</td>
+                            <td>154</td>
+                            <td>11</td>
+                            <td>4/33</td>
+                            <td>7/83</td>
+                            <td>14.00</td>
+                            <td>4.09</td>
+                            <td>20.55</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>38.50</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>WIAAN MULDER</td>
+                            <td>12</td>
+                            <td>20</td>
+                            <td>1050</td>
+                            <td>515</td>
+                            <td>19</td>
+                            <td>3/1</td>
+                            <td>5/108</td>
+                            <td>27.11</td>
+                            <td>2.94</td>
+                            <td>55.26</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>25.75</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>BRYAN CHARLES</td>
+                            <td>44</td>
+                            <td>74</td>
+                            <td>8206</td>
+                            <td>3985</td>
+                            <td>150</td>
+                            <td>7/43</td>
+                            <td>13/125</td>
+                            <td>26.57</td>
+                            <td>2.91</td>
+                            <td>54.71</td>
+                            <td>6</td>
+                            <td>7</td>
+                            <td>1</td>
+                            <td>53.85</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>GUDAKESH MOTIE</td>
+                            <td>46</td>
+                            <td>81</td>
+                            <td>7943</td>
+                            <td>3403</td>
+                            <td>160</td>
+                            <td>7/37</td>
+                            <td>13/99</td>
+                            <td>21.27</td>
+                            <td>2.57</td>
+                            <td>49.64</td>
+                            <td>9</td>
+                            <td>6</td>
+                            <td>2</td>
+                            <td>42.01</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JASON HOLDER</td>
+                            <td>103</td>
+                            <td>181</td>
+                            <td>15706</td>
+                            <td>6948</td>
+                            <td>258</td>
+                            <td>6/42</td>
+                            <td>11/103</td>
+                            <td>26.93</td>
+                            <td>2.65</td>
+                            <td>60.88</td>
+                            <td>8</td>
+                            <td>11</td>
+                            <td>1</td>
+                            <td>38.39</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JAYDEN SEALES</td>
+                            <td>28</td>
+                            <td>51</td>
+                            <td>4043</td>
+                            <td>2188</td>
+                            <td>91</td>
+                            <td>5/29</td>
+                            <td>8/125</td>
+                            <td>24.04</td>
+                            <td>3.25</td>
+                            <td>44.43</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>0</td>
+                            <td>42.90</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JOMEL WARRICAN</td>
+                            <td>15</td>
+                            <td>26</td>
+                            <td>3237</td>
+                            <td>1675</td>
+                            <td>46</td>
+                            <td>4/50</td>
+                            <td>7/190</td>
+                            <td>36.41</td>
+                            <td>3.10</td>
+                            <td>70.37</td>
+                            <td>4</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>64.42</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JUSTIN GREAVES</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>216</td>
+                            <td>113</td>
+                            <td>3</td>
+                            <td>2/36</td>
+                            <td>2/36</td>
+                            <td>37.67</td>
+                            <td>3.14</td>
+                            <td>72.00</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>37.67</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>KAVEM HODGE</td>
+                            <td>63</td>
+                            <td>77</td>
+                            <td>4920</td>
+                            <td>2283</td>
+                            <td>62</td>
+                            <td>6/68</td>
+                            <td>7/108</td>
+                            <td>36.82</td>
+                            <td>2.78</td>
+                            <td>79.35</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>29.65</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>KEMAR ROACH</td>
+                            <td>81</td>
+                            <td>147</td>
+                            <td>14464</td>
+                            <td>7491</td>
+                            <td>270</td>
+                            <td>6/48</td>
+                            <td>10146</td>
+                            <td>27.74</td>
+                            <td>3.11</td>
+                            <td>53.57</td>
+                            <td>14</td>
+                            <td>11</td>
+                            <td>1</td>
+                            <td>50.96</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>SHAMAR JOSEPH</td>
+                            <td>7</td>
+                            <td>14</td>
+                            <td>1053</td>
+                            <td>683</td>
+                            <td>34</td>
+                            <td>7/68</td>
+                            <td>8/124</td>
+                            <td>20.09</td>
+                            <td>3.89</td>
+                            <td>30.97</td>
+                            <td>0</td>
+                            <td>4</td>
+                            <td>0</td>
+                            <td>48.79</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+        <div class="table-container">
+            <table id="myTable3">
+                <caption style="text-align: center; color: crimson; font-weight: 700; font-size: x-large; background-color: antiquewhite;">Series Batting Stats</caption>
+                    <thead>
+                        <tr>
+                            <th>TEAM</th>
+                            <th>Player</th>
+                            <th>MATCHES</th>
+                            <th>INNINGS</th>
+                            <th>Got Out</th>
+                            <th>T1IN1</th>
+                            <th>BALLS</th>
+                            <th>RUNS</th>
+                            <th>100S</th>
+                            <th>50S</th>
+                            <th>4s</th>
+                            <th>6s</th>
+                            <th>STRIKE RATE</th>
+                            <th>BAT AVG</th>
+                            <th>AVG RUNS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>AIDEN MARKRAM</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>9</td>
+                            <td>34</td>
+                            <td>9</td>
+                            <td></td>
+                            <td></td>
+                            <td>1</td>
+                            <td></td>
+                            <td>26.47</td>
+                            <td>9.00</td>
+                            <td>9.00</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>DANE PATERSON</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>DANE PIEDT</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>DAVID BEDINGHAM</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>29</td>
+                            <td>45</td>
+                            <td>29</td>
+                            <td></td>
+                            <td></td>
+                            <td>3</td>
+                            <td>1</td>
+                            <td>64.44</td>
+                            <td>29.00</td>
+                            <td>29.00</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>KAGISO RABADA</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>21</td>
+                            <td>32</td>
+                            <td>21</td>
+                            <td></td>
+                            <td></td>
+                            <td>4</td>
+                            <td></td>
+                            <td>65.63</td>
+                            <td>21.00</td>
+                            <td>21.00</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>KESHAV MAHARAJ</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>KYLE VERREYNE</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>39</td>
+                            <td>87</td>
+                            <td>39</td>
+                            <td></td>
+                            <td></td>
+                            <td>5</td>
+                            <td></td>
+                            <td>44.83</td>
+                            <td>39.00</td>
+                            <td>39.00</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>LUNG NGIDI</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>4</td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>MATTHEW BREETZKE</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>MIGAEL PRETORIUS</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>NEANDRE BURGER</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>RYAN RICKELTON</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>19</td>
+                            <td>49</td>
+                            <td>19</td>
+                            <td></td>
+                            <td></td>
+                            <td>2</td>
+                            <td></td>
+                            <td>38.78</td>
+                            <td>19.00</td>
+                            <td>19.00</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>TEMBA BAVUMA</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>86</td>
+                            <td>182</td>
+                            <td>86</td>
+                            <td></td>
+                            <td>1</td>
+                            <td>7</td>
+                            <td>1</td>
+                            <td>47.25</td>
+                            <td>86.00</td>
+                            <td>86.00</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>TONY de ZORZI</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>78</td>
+                            <td>145</td>
+                            <td>78</td>
+                            <td></td>
+                            <td>1</td>
+                            <td>7</td>
+                            <td>2</td>
+                            <td>53.79</td>
+                            <td>78.00</td>
+                            <td>78.00</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>TRISTAN STUBBS</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>20</td>
+                            <td>48</td>
+                            <td>20</td>
+                            <td></td>
+                            <td></td>
+                            <td>2</td>
+                            <td></td>
+                            <td>41.67</td>
+                            <td>20.00</td>
+                            <td>20.00</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>WIAAN MULDER</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td></td>
+                            <td>41</td>
+                            <td>85</td>
+                            <td>41</td>
+                            <td></td>
+                            <td></td>
+                            <td>4</td>
+                            <td>1</td>
+                            <td>48.24</td>
+                            <td>#DIV/0!</td>
+                            <td>41.00</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>ALICK ATHANAZE</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>BRYAN CHARLES</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>GUDAKESH MOTIE</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JASON HOLDER</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JAYDEN SEALES</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JOMEL WARRICAN</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JOSHUA de SILVA</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JUSTIN GREAVES</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>KAVEM HODGE</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>KEACY CARTY</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>KEMAR ROACH</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>KRAIGG BRAITHWAITE</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>MIKYLE LOUIS</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>35</td>
+                            <td>90</td>
+                            <td>35</td>
+                            <td></td>
+                            <td></td>
+                            <td>5</td>
+                            <td></td>
+                            <td>38.89</td>
+                            <td>35.00</td>
+                            <td>35.00</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>SHAMAR JOSEPH</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+        <div class="table-container">
+            <table id="myTable4">
+                <caption style="text-align: center; color: crimson; font-weight: 700; font-size: x-large; background-color: antiquewhite;">Series Bowling Stats</caption>
+                    <thead>
+                        <tr>
+                            <th>Team</th>
+                            <th>Player</th>
+                            <th>MATCHES</th>
+                            <th>INNINGS</th>
+                            <th>OVERS</th>
+                            <th>MAIDENS</th>
+                            <th>RUNS GIVEN</th>
+                            <th>WICKETS TAKEN</th>
+                            <th>ECON</th>
+                            <th>WD</th>
+                            <th>NB</th>
+                            <th>BALLS</th>
+                            <th>BBI</th>
+                            <th>BBM</th>
+                            <th>STRIKE RATE</th>
+                            <th>BOWLING AVERAGE</th>
+                            <th>AVG RUNS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>DANE PATERSON</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>DANE PIEDT</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>KAGISO RABADA</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>KESHAV MAHARAJ</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>LUNG NGIDI</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>MIGAEL PRETORIUS</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>NEANDRE BURGER</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>SOUTH AFRICA</th>
+                            <td>WIAAN MULDER</td>
+                            <td>3</td>
+                            <td>6</td>
+                            <td>78</td>
+                            <td>14</td>
+                            <td>235</td>
+                            <td>11</td>
+                            <td>3.01</td>
+                            <td>0</td>
+                            <td>3</td>
+                            <td>468</td>
+                            <td>4/84</td>
+                            <td>6/112</td>
+                            <td>42.55</td>
+                            <td>21.36</td>
+                            <td>39.17</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>ALICK ATHANAZE</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td></td>
+                            <td>5</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>BRYAN CHARLES</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>GUDAKESH MOTIE</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>28</td>
+                            <td>2</td>
+                            <td>103</td>
+                            <td></td>
+                            <td>3.68</td>
+                            <td></td>
+                            <td></td>
+                            <td>168</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>103.00</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JASON HOLDER</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>17</td>
+                            <td>7</td>
+                            <td>39</td>
+                            <td>1</td>
+                            <td>2.29</td>
+                            <td></td>
+                            <td></td>
+                            <td>102</td>
+                            <td></td>
+                            <td></td>
+                            <td>102.00</td>
+                            <td>39.00</td>
+                            <td>39.00</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JAYDEN SEALES</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>24.4</td>
+                            <td>5</td>
+                            <td>67</td>
+                            <td>3</td>
+                            <td>2.75</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>146</td>
+                            <td></td>
+                            <td></td>
+                            <td>48.80</td>
+                            <td>22.33</td>
+                            <td>67.00</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JOMEL WARRICAN</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>22</td>
+                            <td>2</td>
+                            <td>69</td>
+                            <td>4</td>
+                            <td>3.14</td>
+                            <td></td>
+                            <td></td>
+                            <td>132</td>
+                            <td>1</td>
+                            <td></td>
+                            <td>33.00</td>
+                            <td>17.25</td>
+                            <td>69.00</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>JUSTIN GREAVES</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>KAVEM HODGE</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>KEMAR ROACH</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>20</td>
+                            <td>6</td>
+                            <td>53</td>
+                            <td>2</td>
+                            <td>2.65</td>
+                            <td></td>
+                            <td>5</td>
+                            <td>120</td>
+                            <td></td>
+                            <td></td>
+                            <td>60.00</td>
+                            <td>26.50</td>
+                            <td>53.00</td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>KRAIGG BRAITHWAITE</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>5</td>
+                            <td></td>
+                            <td>13</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>WEST INDIES</th>
+                            <td>SHAMAR JOSEPH</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td></td>
+                            <td></td>
+                            <td>0</td>
+                            <td></td>
+                            <td></td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                            <td>#DIV/0!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </main>
+    <footer>
+        <div id="GC" style="border: yellow solid 2px;height:50px;">
+            <a href="graphs-charts-SAVWI24 - TEST.html" style="color: rgb(255, 0, 0);position: relative;top:7.5px;">Top Players Of the Series</a>
+        </div>
+    </footer>
+</body>
+</html>
