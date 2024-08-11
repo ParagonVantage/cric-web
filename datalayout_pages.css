@@ -4,53 +4,47 @@ body {
 }
 
 header {
+    display: flex;
+    justify-content: center;
     background-color: #FF9800; /* Orange header background */
+    color: white;
+    padding: 10px 15px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    border-bottom: 2px solid #00796b;
 }
-
 footer {
     background-color: #388E3C; /* Darker green footer */
     color: #FFFFFF;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }
 
 h1, h2, h3 {
     color: #FFEB3B; /* Yellow headings */
 }
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    /* Positioning remains as it was before */
+}
 
-body {
-            font-family: 'Poppins', sans-serif;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            display: flex;
-            justify-content: center; /* Center the nav within the header */
-            align-items: center;
-            color: white;
-            padding: 10px 15px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            border-bottom: 2px solid #00796b;
-        }
-        
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: center; /* Center nav items */
-            align-items: center;
-            flex-wrap: nowrap;
-        }
-        
-        nav ul li {
-            margin: 0 10px; /* Add spacing between items */
-        }
-
+nav ul li {
+    margin: 0 10px;
+    position: relative; /* Ensure the parent `li` is the reference point for positioning the dropdown */
+}
 nav ul li a {
-    color: white;
+    color: #FFFFFF; /* White text for readability against the dark green background */
     text-decoration: none;
     font-weight: bold;
     font-size: 0.75rem; /* Compact font size */
@@ -61,7 +55,8 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background-color: #00695c;
+    background-color: #FF9800; /* Orange background on hover */
+    color: #004d40; /* Dark green text on hover for contrast */
 }
 
 /* Dropdown Menu */
@@ -69,8 +64,8 @@ nav ul li ul {
     display: none;
     position: absolute;
     top: 100%;
-    left: 0;
-    background-color: #004d40;
+    left: 0; /* Align the dropdown with the left edge of the parent `li` */
+    background-color: #00695c; /* Dropdown background */
     min-width: 150px;
     border-radius: 0 0 5px 5px;
     z-index: 1000;
@@ -88,17 +83,19 @@ nav ul li ul li a {
     padding: 8px;
     font-size: 0.7rem;
     border-bottom: 1px solid #00796b;
+    color: #FFFFFF; /* White text for readability */
 }
 
 nav ul li ul li a:hover {
-    background-color: #00796b;
+    background-color: #FF9800; /* Orange background on hover in dropdown */
+    color: #004d40; /* Dark green text on hover for contrast */
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
     nav ul {
-        flex-wrap: nowrap; /* Keep items on the same line */
-        overflow-x: auto; /* Enable horizontal scrolling if necessary */
+        flex-wrap: nowrap;
+        overflow-x: auto;
     }
 
     nav ul li {
@@ -106,8 +103,8 @@ nav ul li ul li a:hover {
     }
 
     nav ul li a {
-        padding: 8px 10px; /* Adjust padding for better fit on smaller screens */
-        font-size: 0.7rem; /* Slightly reduce font size for small screens */
+        padding: 8px 10px;
+        font-size: 0.7rem;
     }
 
     nav ul li ul {
@@ -115,6 +112,8 @@ nav ul li ul li a:hover {
         width: 100%;
     }
 }
+
+
 .video-container {
     display: flex;
     justify-content: center;
@@ -171,83 +170,16 @@ nav ul li ul li a:hover {
         margin: 10px 0; /* Margin for spacing between stacked items */
     }
 }
-        .text-container h3 {
-            margin-top: 0;
-        }
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table caption {
-            text-align: center;
-            color: crimson;
-            font-weight: bold;
-            font-size: x-large;
-            background-color: antiquewhite;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        table th, table td {
-            padding: 8px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-        table th {
-            background-color: #00796b;
-            color: white;
-        }
-        table tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        footer {
-            text-align: center;
-            padding: 10px 0;
-            color: white;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-        footer a {
-            color: red;
-            text-decoration: none;
-        }
-        footer a:hover {
-            text-decoration: underline;
-        }
-        /* Fade-in animation for table cells */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+
+.table-container table th {
+    background-color: #FF9800; /* Orange header background */
+    color: white;
 }
 
-.table-container table {
-    width: 100%;
-    border-collapse: collapse;
+.table-container table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
-.table-container table tbody td {
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-/* Hover effect for table cells */
-.table-container table tbody td {
-    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-}
-
-.table-container table tbody td:hover {
-    background-color: #f0f0f0;
-    color: #333;
-}
 .text-center1 {
     text-align: center;
     font-size: 1.5rem;
