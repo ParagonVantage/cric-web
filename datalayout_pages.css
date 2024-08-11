@@ -100,7 +100,7 @@ nav ul li ul li a:hover {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
     padding: 20px;
     margin: 20px 0;
     background-color: #f9f9f9;
@@ -109,8 +109,8 @@ nav ul li ul li a:hover {
 }
 
 .video-wrapper {
-    width: 100%; /* Take full width of the container */
-    max-width: 560px; /* Max width of a standard YouTube embed */
+    flex: 1 1 60%; /* Allow the video to take up 60% of the container on larger screens */
+    max-width: 560px; /* Max width for the video */
     position: relative;
     padding-bottom: 56.25%; /* 16:9 aspect ratio */
     height: 0;
@@ -118,7 +118,7 @@ nav ul li ul li a:hover {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    margin: 0 auto;
+    margin: 10px;
 }
 
 .video-wrapper iframe {
@@ -130,21 +130,28 @@ nav ul li ul li a:hover {
     border: none;
 }
 
-/* Additional styling for mobile */
+.text-container {
+    flex: 1 1 35%; /* Allow the text to take up 35% of the container */
+    padding: 20px;
+    margin: 10px;
+    background-color: #fff;
+    border: 2px solid #00796b;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile adjustments */
 @media (max-width: 768px) {
-    .video-wrapper {
-        max-width: 100%; /* Allow iframe to take up full width on smaller screens */
+    .video-container {
+        flex-direction: column; /* Stack video and text vertically on smaller screens */
+    }
+
+    .video-wrapper, .text-container {
+        flex: 1 1 100%; /* Each takes full width */
+        max-width: 100%;
+        margin: 10px 0; /* Margin for spacing between stacked items */
     }
 }
-        .text-container {
-            flex: 1 1 35%;
-            padding: 20px;
-            margin-left: 20px;
-            background-color: #fff;
-            border: 2px solid #00796b;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
         .text-container h3 {
             margin-top: 0;
         }
