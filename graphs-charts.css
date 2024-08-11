@@ -10,14 +10,29 @@ canvas {
     height: 100%;
 }
 
+body {
+    background-color: #4CAF50; /* Dominant green background */
+    color: #FFFFFF; /* White text for readability */
+}
 
+header {
+    background-color: #FF9800; /* Orange header background */
+}
+
+footer {
+    background-color: #388E3C; /* Darker green footer */
+    color: #FFFFFF;
+}
+
+h1, h2, h3 {
+    color: #FFEB3B; /* Yellow headings */
+}
 /* Additional styles (these are already in place) */
 body {
     font-family: 'Poppins', sans-serif;
     color: #333;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
 }
 
 .text-center1 {
@@ -32,7 +47,6 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #004d40;
     color: white;
     padding: 10px 15px;
     position: fixed;
