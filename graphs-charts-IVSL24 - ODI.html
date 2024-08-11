@@ -13,15 +13,15 @@
             padding: 20px;
         }
         .chart-container {
-            margin: 20px 0;
-            width: 100%;
-            max-width: 600px; /* Adjust the max-width as needed */
-            margin: 0 auto; /* Center the chart containers */
-        }
-        .chart-container canvas {
-            width: 100%;
-            height: 400px; /* Adjust the height as needed */
-        }
+        margin: 20px 0;
+        width: 100%;
+        max-width: 100%; /* Allow charts to take full width of the container */
+        margin: 0 auto; /* Center the chart containers */
+    }
+    .chart-container canvas {
+        width: 100% !important;
+        height: auto !important; /* Set height to auto to prevent compression */
+    }
         header {
             position: sticky;
             top: 0;
@@ -63,13 +63,19 @@
         <h1 class="text-center">Cricket Score Snap</h1>
         <nav>
             <ul class="nav">
-                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="IVSL24 - ODI.HTML" class="nav-link">IND V SL ODIs</a></li>
-                <li class="nav-link"><a href="GT20_24.HTML" class="nav-link">GT20 CANADA</a></li>
-                <li class="nav-item"><a href="SAVWI24 - TEST.html" class="nav-link">SA V WI TESTS</a></li>
-                <li class="nav-item"><a href="mailto:agneya2208@gmail.com" class="nav-link">Contact</a></li>
-                <li><a href="archives.html" class="nav-link">Archives</a></li>
-            </ul>
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="SAVWI24 - TEST.html">SA V WI TESTS</a></li>
+                <li class="nav-item"><a class="nav-link" href="GT20_24.HTML">GT20 CANADA</a></li>
+                <li class="nav-item">
+                    <a href="javascript:void(0)">More Series</a>
+                    <ul>
+                        <li class = 'nav-item'><a  class = "nav-link" href="IVSL24 - ODI.HTML">IND V SL ODIs</a></li>
+                        <li class = 'nav-item'><a class = "nav-link" href="BRT24.html">ENG V WI TESTS</a></li>
+                        <li class = 'nav-item'><a class = "nav-link" href="IVSL24 - T20.HTML">IND V SL T20Is</a></li>
+                    </ul>
+                </li>
+                <li class = 'nav-item'><a href="mailto:agneya2208@gmail.com">Contact</a></li>
+                <li class = 'nav-item'><a href="archives.html">Archives</a></li></ul>
         </nav>        
     </header>
 
@@ -160,17 +166,18 @@
         };
 
         const configBar1 = {
-            type: 'bar',
-            data: dataBar1,
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Runs Scored by Batsmen'
+        type: 'bar',
+        data: dataBar1,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, // Prevent aspect ratio maintenance
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Runs Scored by Batsmen'
                     }
                 }
             },
@@ -181,13 +188,14 @@
             data: dataBar2,
             options: {
                 responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Strike Rates of Batsmen'
+            maintainAspectRatio: false, // Prevent aspect ratio maintenance
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Strike Rates of Batsmen'
                     }
                 }
             },
@@ -198,13 +206,14 @@
             data: dataBar3,
             options: {
                 responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Wickets Taken by Bowlers'
+            maintainAspectRatio: false, // Prevent aspect ratio maintenance
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Wickets Taken by Bowlers'
                     }
                 }
             },
@@ -215,13 +224,14 @@
             data: dataBar4,
             options: {
                 responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Economy of Bowlers'
+            maintainAspectRatio: false, // Prevent aspect ratio maintenance
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Economy of Bowlers'
                     }
                 }
             },
