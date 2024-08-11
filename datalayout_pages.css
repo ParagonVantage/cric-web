@@ -6,29 +6,32 @@ body {
             background-color: #f5f5f5;
         }
         header {
-    background-color: #004d40;
-    color: white;
-    padding: 10px 15px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    border-bottom: 2px solid #00796b;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: flex-start; /* Align items horizontally */
-    align-items: center;
-    flex-wrap: nowrap; /* Prevent items from wrapping to the next line */
-}
-
-nav ul li {
-    position: relative;
-}
+            display: flex;
+            justify-content: center; /* Center the nav within the header */
+            align-items: center;
+            background-color: #004d40;
+            color: white;
+            padding: 10px 15px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 2px solid #00796b;
+        }
+        
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center; /* Center nav items */
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+        
+        nav ul li {
+            margin: 0 10px; /* Add spacing between items */
+        }
 
 nav ul li a {
     color: white;
@@ -202,3 +205,38 @@ nav ul li ul li a:hover {
         footer a:hover {
             text-decoration: underline;
         }
+        /* Fade-in animation for table cells */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container table tbody td {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Hover effect for table cells */
+.table-container table tbody td {
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.table-container table tbody td:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+.text-center1 {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 10px 0;
+    color: #007bff;
+}

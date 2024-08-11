@@ -126,22 +126,30 @@
         };
 
         const configBar1 = {
-        type: 'bar',
-        data: dataBar1,
-        options: {
-            responsive: true,
-            maintainAspectRatio: false, // Prevent aspect ratio maintenance
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Runs Scored by Batsmen'
-                    }
-                }
+    type: 'bar',
+    data: dataBar1,
+    options: {
+        responsive: true,
+        maintainAspectRatio: false, // This will keep the chart's aspect ratio constant
+        plugins: {
+            legend: {
+                position: 'top',
             },
-        };
+            title: {
+                display: true,
+                text: 'Runs Scored by Batsmen'
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 10, // You can adjust this value based on your data
+                }
+            }
+        }
+    }
+};
 
         const configBar2 = {
             type: 'bar',
@@ -156,10 +164,18 @@
                 title: {
                     display: true,
                     text: 'Strike Rates of Batsmen'
-                    }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 10, // You can adjust this value based on your data
                 }
-            },
-        };
+            }
+        }
+    }
+};
 
         const configBar3 = {
             type: 'bar',
@@ -174,10 +190,18 @@
                 title: {
                     display: true,
                     text: 'Wickets Taken by Bowlers'
-                    }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 10, // You can adjust this value based on your data
                 }
-            },
-        };
+            }
+        }
+    }
+};
 
         const configBar4 = {
             type: 'bar',
@@ -192,10 +216,18 @@
                 title: {
                     display: true,
                     text: 'Economy of Bowlers'
-                    }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 10, // You can adjust this value based on your data
                 }
-            },
-        };
+            }
+        }
+    }
+};
 
         const barChart1 = new Chart(
             document.getElementById('barChart1'),
