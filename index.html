@@ -51,66 +51,70 @@
     }
 
     nav ul li a {
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 0.75rem;
-        padding: 8px 12px;
-        display: block;
-        transition: background 0.3s ease;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.75rem; /* Reduced font size */
+    padding: 8px 12px; /* Adjusted padding for compactness */
+    display: block;
+    transition: background 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: #00695c;
+}
+
+/* Dropdown Menu */
+nav ul li ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #004d40;
+    min-width: 150px; /* Adjusted width */
+    border-radius: 0 0 5px 5px;
+    z-index: 1000;
+}
+
+nav ul li:hover > ul {
+    display: block;
+}
+
+nav ul li ul li {
+    width: 100%;
+}
+
+nav ul li ul li a {
+    padding: 8px; /* Adjusted padding for dropdown items */
+    font-size: 0.7rem; /* Reduced font size for dropdown items */
+    border-bottom: 1px solid #00796b;
+}
+
+nav ul li ul li a:hover {
+    background-color: #00796b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
-    nav ul li a:hover {
-        background-color: #00695c;
-    }
-    nav ul li ul {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background-color: #004d40;
-        min-width: 200px;
-        border-radius: 0 0 5px 5px;
-        z-index: 1000;
-    }
-
-    nav ul li:hover > ul {
-        display: block;
-    }
-
-    nav ul li ul li {
+    nav ul li {
         width: 100%;
     }
 
-    nav ul li ul li a {
-        padding: 10px;
-        border-bottom: 1px solid #00796b;
+    nav ul li a {
+        padding: 10px 15px; /* Adjusted padding for mobile */
+        font-size: 0.8rem; /* Slightly increased font size for better readability on mobile */
     }
 
-    nav ul li ul li a:hover {
-        background-color: #00796b;
+    nav ul li ul {
+        position: static;
+        width: 100%;
     }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        nav ul {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        nav ul li {
-            width: 100%;
-        }
-
-        nav ul li a {
-            padding: 15px 20px;
-        }
-
-        nav ul li ul {
-            position: static;
-            width: 100%;
-        }
-    }
+}
         .image-container {
             display: flex;
             flex-wrap: wrap;
