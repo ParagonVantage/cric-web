@@ -172,13 +172,34 @@ nav ul li ul li a:hover {
 }
 
 .table-container table th {
-    background-color: #FF9800; /* Orange header background */
+    background-color: #FF9800; /* Orange header background remains unchanged */
     color: white;
 }
 
-.table-container table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
+.table-container table tbody tr:nth-child(odd) {
+    background-color: #388E3C; /* Dark green for odd rows */
+    color: white;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
+
+.table-container table tbody tr:nth-child(even) {
+    background-color: #66BB6A; /* Light green for even rows */
+    color: white;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.table-container table tbody tr:nth-child(odd):hover {
+    background-color: #2E7D32; /* Slightly darker green on hover for odd rows */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Pop-out effect */
+    cursor: pointer;
+}
+
+.table-container table tbody tr:nth-child(even):hover {
+    background-color: #81C784; /* Slightly darker light green on hover for even rows */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Pop-out effect */
+    cursor: pointer;
+}
+
 
 .text-center1 {
     text-align: center;

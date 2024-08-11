@@ -399,30 +399,37 @@ nav ul li ul li a:hover {
 }
     </style>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-    // Set the year in the header
-    const monthNames = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
-    const currentYear = new Date().getFullYear();
-    const currentMonthName = monthNames[new Date().getMonth()];
+    document.addEventListener('DOMContentLoaded', function () {
+        // Set the year in the header
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        const currentYear = new Date().getFullYear();
+        const currentMonthName = monthNames[new Date().getMonth()];
 
-    document.getElementById('year').textContent = currentYear + " Fixtures - ";
+        document.getElementById('year').textContent = currentYear + " Fixtures - ";
 
-    // Handle hero section button click
-    const exploreButton = document.getElementById('explore-button');
-    const heroSection = document.getElementById('hero-section');
-    const contentSections = document.querySelector('.content-sections');
+        const exploreButton = document.getElementById('explore-button');
+        const heroSection = document.getElementById('hero-section');
+        const contentSections = document.querySelector('.content-sections');
 
-    exploreButton.addEventListener('click', function () {
-        heroSection.classList.add('hidden'); // Add the hidden class to start the curtain effect
-        setTimeout(() => {
-            heroSection.style.display = 'none'; // Hide the hero section after the transition ends
-            contentSections.style.display = 'block'; // Show the main content
-        }, 1500); // Match this to the transition duration
+        // Check if hero section has been seen
+        if (sessionStorage.getItem('heroSeen') === 'true') {
+            heroSection.style.display = 'none';
+            contentSections.style.display = 'block';
+        } else {
+            exploreButton.addEventListener('click', function () {
+                heroSection.classList.add('hidden'); // Add the hidden class to start the curtain effect
+                setTimeout(() => {
+                    heroSection.style.display = 'none'; // Hide the hero section after the transition ends
+                    contentSections.style.display = 'block'; // Show the main content
+                    sessionStorage.setItem('heroSeen', 'true'); // Mark hero section as seen
+                }, 1500); // Match this to the transition duration
+            });
+        }
     });
-});
+</script>
 
     </script>
 </head>
