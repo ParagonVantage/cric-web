@@ -1,0 +1,136 @@
+.chart-container {
+    margin: 20px 0;
+    width: 100%;
+    max-width: 100%; /* Allow charts to take full width of the container */
+    margin: 0 auto; /* Center the chart containers */
+}
+.chart-container canvas {
+    width: 100% !important;
+    height: auto !important; /* Set height to auto to prevent compression */
+}
+body {
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+    }
+    header {
+background-color: #004d40;
+color: white;
+padding: 10px 15px;
+position: fixed;
+top: 0;
+width: 100%;
+z-index: 1000;
+border-bottom: 2px solid #00796b;
+}
+
+nav ul {
+list-style: none;
+padding: 0;
+margin: 0;
+display: flex;
+justify-content: flex-start; /* Align items horizontally */
+align-items: center;
+flex-wrap: nowrap; /* Prevent items from wrapping to the next line */
+}
+
+nav ul li {
+position: relative;
+}
+
+nav ul li a {
+color: white;
+text-decoration: none;
+font-weight: bold;
+font-size: 0.75rem; /* Compact font size */
+padding: 8px 12px;
+display: block;
+transition: background 0.3s ease;
+white-space: nowrap; /* Prevent text from wrapping */
+}
+
+nav ul li a:hover {
+background-color: #00695c;
+}
+
+/* Dropdown Menu */
+nav ul li ul {
+display: none;
+position: absolute;
+top: 100%;
+left: 0;
+background-color: #004d40;
+min-width: 150px;
+border-radius: 0 0 5px 5px;
+z-index: 1000;
+}
+
+nav ul li:hover > ul {
+display: block;
+}
+
+nav ul li ul li {
+width: 100%;
+}
+
+nav ul li ul li a {
+padding: 8px;
+font-size: 0.7rem;
+border-bottom: 1px solid #00796b;
+}
+
+nav ul li ul li a:hover {
+background-color: #00796b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+nav ul {
+    flex-wrap: nowrap; /* Keep items on the same line */
+    overflow-x: auto; /* Enable horizontal scrolling if necessary */
+}
+
+nav ul li {
+    width: 100%;
+}
+
+nav ul li a {
+    padding: 8px 10px; /* Adjust padding for better fit on smaller screens */
+    font-size: 0.7rem; /* Slightly reduce font size for small screens */
+}
+
+nav ul li ul {
+    position: static;
+    width: 100%;
+}
+}
+    .chart-description {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .row-spacing {
+        margin-top: 40px; /* Add space between rows */
+    }
+    .border-box {
+        border: 1px solid #333;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .border-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .container-spacing {
+        margin-top: 20px; /* Add space between header and charts */
+    }
+    .center-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
