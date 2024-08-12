@@ -29,27 +29,29 @@ h1, h2, h3 {
     color: #FFEB3B; /* Yellow headings */
 }
 nav ul {
-    display: flex; /* Flexbox for horizontal alignment */
-    justify-content: center; /* Center the nav items */
-    align-items: center; 
+    list-style: none;
     padding: 0;
     margin: 0;
-    list-style: none;
-    flex-wrap: nowrap; /* Ensure items remain in a single row */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    /* Positioning remains as it was before */
 }
 
 nav ul li {
-    margin: 0 10px; /* Space between items */
-    display: inline-flex; /* Ensure items are inline */
+    margin: 0 10px;
+    position: relative; /* Ensure the parent `li` is the reference point for positioning the dropdown */
 }
-
 nav ul li a {
-    display: inline-block; /* Keep links inline */
-    padding: 8px 12px;
-    text-align: center; /* Center text within each nav item */
+    color: #FFFFFF; /* White text for readability against the dark green background */
     text-decoration: none;
-    font-size: 1rem; /* Adjust font size if necessary */
-    color: #FFFFFF; /* Text color */
+    font-weight: bold;
+    font-size: 0.75rem; /* Compact font size */
+    padding: 8px 12px;
+    display: block;
+    transition: background 0.3s ease;
+    white-space: nowrap; /* Prevent text from wrapping */
 }
 
 nav ul li a:hover {
@@ -88,69 +90,38 @@ nav ul li ul li a:hover {
     background-color: #FF9800; /* Orange background on hover in dropdown */
     color: #004d40; /* Dark green text on hover for contrast */
 }
-header {
-    flex-direction: column; /* Stack h1 and nav vertically */
-    align-items: center; /* Center align all header content */
-}
 
-header h1 {
-    margin-bottom: 10px; /* Add some space between the h1 and nav */
-}
 /* Responsive adjustments */
-/* For smaller screens */
 @media (max-width: 768px) {
-    nav ul {
-        justify-content: center; /* Re-ensure centering */
-        flex-wrap: nowrap; /* Prevent wrapping */
-    }
-
     nav ul li {
-        margin: 0 10px; /* Keep spacing consistent */
+        display: inline-block; /* Make sure the list items are inline */
+        margin: 0 5px; /* Adjust margin for spacing */
     }
-}
-header nav ul {
-    display: flex !important; /* Force flexbox for horizontal alignment */
-    justify-content: center !important; /* Center the nav items */
-    align-items: center !important; 
-    padding: 0 !important;
-    margin: 0 !important;
-    list-style: none !important;
-    flex-wrap: nowrap !important; /* Ensure items remain in a single row */
-}
 
-header nav ul li {
-    margin: 0 10px !important; /* Space between items */
-    display: inline-flex !important; /* Ensure items are inline */
-}
+    nav ul {
+        justify-content: center; /* Center the nav items */
+        flex-wrap: nowrap; /* Ensure items remain inline */
+    }
 
-header nav ul li a {
-    display: inline-block !important; /* Keep links inline */
-    padding: 8px 12px !important;
-    text-align: center !important; /* Center text within each nav item */
-    text-decoration: none !important;
-    font-size: 1rem !important; /* Adjust font size if necessary */
-    color: #FFFFFF !important; /* Text color */
-}
+    nav ul li a {
+        padding: 8px 10px;
+        font-size: 0.7rem;
+    }
 
-@media (max-width: 768px) {
+    nav ul li ul {
+        position: static;
+        width: 100%;
+    }
     header {
-        flex-direction: column !important; /* Stack h1 and nav vertically */
-        align-items: center !important; /* Center align all header content */
+        flex-direction: column; /* Stack h1 and nav vertically */
+        align-items: center; /* Center align all header content */
     }
 
     header h1 {
-        margin-bottom: 10px !important; /* Space between the h1 and nav */
-    }
-
-    header nav ul {
-        justify-content: center !important; /* Re-ensure centering */
-        flex-wrap: nowrap !important; /* Prevent wrapping */
-    }
-
-    header nav ul li {
-        margin: 0 10px !important; /* Keep spacing consistent */
+        margin-bottom: 10px; /* Add some space between the h1 and nav */
     }
 }
+
 .video-container {
     display: flex;
     justify-content: center;

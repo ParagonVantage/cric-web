@@ -13,25 +13,44 @@
     <meta property="og:url" content="https://cricketscoresnap.com">
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="mobile.css">
+    <link rel="stylesheet" href="tablestyles_c.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #4CAF50; /* Dominant green background */
     color: #FFFFFF; /* White text for readability */
     overflow-x: hidden;
 }
-
-/* Header Styles */
+footer {
+            text-align: center;
+            padding: 10px 0;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            background-color: #388E3C; /* Darker green footer */
+            color: #FFFFFF;
+}
+        footer a {
+            color: red;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+h1, h2, h3 {
+    color: #FFEB3B; /* Yellow headings */
+}
 header {
     display: flex;
-    flex-direction: column; /* Stack title and nav vertically */
-    align-items: center; /* Center align all header content */
+    justify-content: center;
     background-color: #FF9800; /* Orange header background */
     color: white;
-    padding: 15px;
+    padding: 10px 15px;
     position: fixed;
     top: 0;
     width: 100%;
@@ -39,40 +58,35 @@ header {
     border-bottom: 2px solid #00796b;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 2rem;
-}
-
-/* Navigation Styles */
 nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0;
-    margin: 10px 0 0;
-    list-style: none;
-    flex-wrap: nowrap; /* Ensure items remain in a single row */
+    flex-wrap: nowrap;
 }
 
 nav ul li {
     margin: 0 10px;
-    display: inline-block;
 }
 
 nav ul li a {
-    display: inline-block;
-    padding: 8px 12px;
-    text-align: center;
+    color: white;
     text-decoration: none;
-    font-size: 1rem;
-    color: #FFFFFF; /* Text color */
-    transition: background-color 0.3s ease;
+    font-weight: bold;
+    font-size: 0.75rem;
+    padding: 8px 12px;
+    display: block;
+    transition: background 0.3s ease;
+    white-space: nowrap;
 }
 
 nav ul li a:hover {
-    background-color: #00796b; /* Darker color on hover */
+    background-color: #00695c;
 }
+
 
 /* Dropdown Menu */
 nav ul li ul {
@@ -96,189 +110,35 @@ nav ul li ul li {
 
 nav ul li ul li a {
     padding: 8px;
-    font-size: 0.875rem;
+    font-size: 0.7rem;
     border-bottom: 1px solid #00796b;
-    color: #FFFFFF;
 }
 
 nav ul li ul li a:hover {
     background-color: #00796b;
 }
 
-/* Hero Section */
-.hero-section {
-    position: relative;
-    width: 100%;
-    height: 100vh; /* Full viewport height */
-    background-image: url('hero.webp'); /* Path to your background image */
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: white;
-}
-
-.hero-content {
-    background-color: rgba(255, 255, 255, 0.85); /* White box with slight transparency */
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 80%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.hero-content h1 {
-    font-size: 3rem;
-    color: #004d40;
-}
-
-.hero-content p {
-    font-size: 1.2rem;
-    color: #004d40;
-}
-
-#explore-button {
-    padding: 12px 25px;
-    font-size: 1.5rem;
-    font-weight: 600;
-    background-color: #004d40;
-    color: white;
-    border-radius: 50px;
-    border: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-#explore-button:hover {
-    background-color: #00FF00;
-    color: #004d40;
-}
-
-/* Content Sections */
-.content-box {
-    background-color: #ffffff;
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 10px;
-    color: #333;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.text-center1 {
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #007bff;
-}
-
-.text-success {
-    color: #28a745 !important;
-    font-weight: bold;
-}
-
-.bounce-text {
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-30px);
-    }
-    60% {
-        transform: translateY(-15px);
-    }
-}
-
-/* Footer Styles */
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #388E3C;
-    color: #FFFFFF;
-}
-
-footer a {
-    color: red;
-    text-decoration: none;
-}
-
-footer a:hover {
-    text-decoration: underline;
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }
-
-    .hero-content p {
-        font-size: 1rem;
-    }
-
-    #explore-button {
-        font-size: 1.2rem;
-        padding: 10px 20px;
-    }
-}
-
-@media (max-width: 480px) {
-
-    .hero-content h1 {
-        font-size: 2rem;
-    }
-
-    .hero-content p {
-        font-size: 0.9rem;
-    }
-
-    #explore-button {
-        font-size: 1rem;
-        padding: 8px 16px;
-    }
-}   
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 1.75rem;
-    }
-
     nav ul {
-        display: flex !important; /* Ensure flexbox is applied */
-        flex-wrap: nowrap !important; /* Prevent wrapping */
-        justify-content: center !important; /* Center the items */
-        align-items: center !important; /* Align items centrally */
+        flex-wrap: nowrap; /* Keep items on the same line */
+        overflow-x: auto; /* Enable horizontal scrolling if necessary */
     }
 
     nav ul li {
-        margin: 0 8px !important; /* Reduce margin between items */
-        display: inline-block !important; /* Ensure list items are inline */
+        width: 100%;
     }
 
     nav ul li a {
-        font-size: 0.875rem; /* Decrease font size for smaller screens */
-        padding: 6px 8px; /* Adjust padding to reduce space */
-        display: inline-block !important; /* Ensure links are inline */
+        padding: 8px 10px; /* Adjust padding for better fit on smaller screens */
+        font-size: 0.7rem; /* Slightly reduce font size for small screens */
+    }
+
+    nav ul li ul {
+        position: static;
+        width: 100%;
     }
 }
-
-@media (max-width: 480px) {
-    header h1 {
-        font-size: 1.5rem;
-    }
-
-    nav ul li a {
-        font-size: 0.75rem; /* Further decrease font size for very small screens */
-        padding: 5px 6px;
-    }
-
-    nav ul li {
-        margin: 0 5px; /* Reduce margin further */
-    }
-}
-
         .image-container {
             display: flex;
             flex-wrap: wrap;
@@ -325,6 +185,38 @@ footer a:hover {
         }
         .image-box:hover .overlay {
             opacity: 1;
+        }
+        .content-box {
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .text-center1 {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 10px 0;
+    color: #007bff;
+}
+        .text-success {
+            color: #28a745 !important;
+            font-weight: bold;
+        }
+        .bounce-text {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
         }
         .bg-light {
             background-color: #f8f9fa !important;
@@ -397,6 +289,99 @@ footer a:hover {
             background: #0056b3;
         }
         
+        .hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    background-image: url('hero.webp'); /* Path to your background image */
+    background-size: cover; /* Ensures the image covers the entire area */
+    background-position: center; /* Keeps the image centered */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 2000;
+    transition: transform 1.5s ease-in-out; /* Smooth transition for the curtain effect */
+}
+
+.hero-content {
+    position: relative;
+    text-align: center;
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.85); /* White box with slight transparency */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #004d40; /* Dark green text to contrast with the white box */
+    letter-spacing: 2px;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+    color: #004d40; /* Matching the heading color */
+}
+
+#explore-button {
+    padding: 12px 25px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    background-color: #004d40; /* Dark green button background */
+    color: white; /* White text on the button */
+    border-radius: 50px;
+    border: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#explore-button:hover {
+    background-color: #00FF00; /* Green background on hover */
+    color: #004d40; /* Dark green text on hover */
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5rem; /* Slightly smaller font size for smaller screens */
+    }
+
+    .hero-content p {
+        font-size: 1rem; /* Adjusted paragraph size for better readability on small screens */
+    }
+
+    #explore-button {
+        font-size: 1.2rem; /* Adjusted button size */
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2rem; /* Further reduce the heading size on very small screens */
+    }
+
+    .hero-content p {
+        font-size: 0.9rem; /* Smaller paragraph size for mobile */
+    }
+
+    #explore-button {
+        font-size: 1rem; /* Further adjust button size */
+        padding: 8px 16px;
+    }
+}
+#explore-button:hover {
+    background-color: #00FF00; /* Green background on hover */
+    color: #004d40; /* Dark green text on hover */
+}
+
 .scrollable-container {
     height: 100vh;
     overflow-y: auto; /* Allows scrolling for the entire page */
@@ -408,19 +393,10 @@ footer a:hover {
 .hidden-content {
     overflow: hidden;
 }
+
 .hidden-content.revealed {
     transform: translateY(-100vh);
 }
-header {
-        flex-direction: column; /* Stack h1 and nav vertically */
-        align-items: center; /* Center align all header content */
-    }
-    header:hover {
-    background-color: #FF9800 !important; /* Retain the original orange background on hover */
-}
-    header h1 {
-        margin-bottom: 10px; /* Add some space between the h1 and nav */
-    }
     </style>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -453,33 +429,9 @@ header {
             });
         }
     });
-    document.addEventListener('DOMContentLoaded', function () {
-    const header = document.querySelector('header');
-    const heroSection = document.getElementById('hero-section');
-    const firstDiv = document.querySelector('.content-sections');
-
-    // Add margin-top to the first div after header
-    if (firstDiv) {
-        firstDiv.style.marginTop = '30px';
-    }
-
-    function toggleHeaderVisibility() {
-        const heroBottom = heroSection.getBoundingClientRect().bottom;
-        
-        if (heroBottom <= 0) {
-            header.style.display = 'block';
-        } else {
-            header.style.display = 'none';
-        }
-    }
-
-    // Initial check in case the user starts mid-page
-    toggleHeaderVisibility();
-
-    // Listen to scroll events to toggle header visibility
-    window.addEventListener('scroll', toggleHeaderVisibility);
-});
 </script>
+
+    </script>
 </head>
 <body>
     <header class="text-center1 animated-header">
