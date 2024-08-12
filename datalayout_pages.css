@@ -99,15 +99,6 @@ header h1 {
 /* Responsive adjustments */
 /* For smaller screens */
 @media (max-width: 768px) {
-    header {
-        flex-direction: column; /* Stack h1 and nav vertically */
-        align-items: center; /* Center align all header content */
-    }
-
-    header h1 {
-        margin-bottom: 10px; /* Space between the h1 and nav */
-    }
-
     nav ul {
         justify-content: center; /* Re-ensure centering */
         flex-wrap: nowrap; /* Prevent wrapping */
@@ -117,9 +108,49 @@ header h1 {
         margin: 0 10px; /* Keep spacing consistent */
     }
 }
+header nav ul {
+    display: flex !important; /* Force flexbox for horizontal alignment */
+    justify-content: center !important; /* Center the nav items */
+    align-items: center !important; 
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    flex-wrap: nowrap !important; /* Ensure items remain in a single row */
+}
 
+header nav ul li {
+    margin: 0 10px !important; /* Space between items */
+    display: inline-flex !important; /* Ensure items are inline */
+}
 
+header nav ul li a {
+    display: inline-block !important; /* Keep links inline */
+    padding: 8px 12px !important;
+    text-align: center !important; /* Center text within each nav item */
+    text-decoration: none !important;
+    font-size: 1rem !important; /* Adjust font size if necessary */
+    color: #FFFFFF !important; /* Text color */
+}
 
+@media (max-width: 768px) {
+    header {
+        flex-direction: column !important; /* Stack h1 and nav vertically */
+        align-items: center !important; /* Center align all header content */
+    }
+
+    header h1 {
+        margin-bottom: 10px !important; /* Space between the h1 and nav */
+    }
+
+    header nav ul {
+        justify-content: center !important; /* Re-ensure centering */
+        flex-wrap: nowrap !important; /* Prevent wrapping */
+    }
+
+    header nav ul li {
+        margin: 0 10px !important; /* Keep spacing consistent */
+    }
+}
 .video-container {
     display: flex;
     justify-content: center;
