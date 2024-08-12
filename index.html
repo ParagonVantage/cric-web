@@ -83,9 +83,6 @@ nav ul li a {
     white-space: nowrap;
 }
 
-nav ul li a:hover {
-    background-color: #00695c;
-}
 
 
 /* Dropdown Menu */
@@ -397,6 +394,14 @@ nav ul li ul li a:hover {
 .hidden-content.revealed {
     transform: translateY(-100vh);
 }
+header {
+        flex-direction: column; /* Stack h1 and nav vertically */
+        align-items: center; /* Center align all header content */
+    }
+
+    header h1 {
+        margin-bottom: 10px; /* Add some space between the h1 and nav */
+    }
     </style>
     <script>
     document.addEventListener('DOMContentLoaded', function () {

@@ -90,28 +90,17 @@ nav ul li ul li a:hover {
     background-color: #FF9800; /* Orange background on hover in dropdown */
     color: #004d40; /* Dark green text on hover for contrast */
 }
+header {
+    flex-direction: column; /* Stack h1 and nav vertically */
+    align-items: center; /* Center align all header content */
+}
 
+header h1 {
+    margin-bottom: 10px; /* Add some space between the h1 and nav */
+}
 /* Responsive adjustments */
+/* For smaller screens */
 @media (max-width: 768px) {
-    nav ul li {
-        display: inline-block; /* Make sure the list items are inline */
-        margin: 0 5px; /* Adjust margin for spacing */
-    }
-
-    nav ul {
-        justify-content: center; /* Center the nav items */
-        flex-wrap: nowrap; /* Ensure items remain inline */
-    }
-
-    nav ul li a {
-        padding: 8px 10px;
-        font-size: 0.7rem;
-    }
-
-    nav ul li ul {
-        position: static;
-        width: 100%;
-    }
     header {
         flex-direction: column; /* Stack h1 and nav vertically */
         align-items: center; /* Center align all header content */
@@ -120,7 +109,28 @@ nav ul li ul li a:hover {
     header h1 {
         margin-bottom: 10px; /* Add some space between the h1 and nav */
     }
+
+    nav ul {
+        display: flex;
+        justify-content: center; /* Center the nav items */
+        align-items: center;
+        flex-wrap: nowrap; /* Ensure items remain inline */
+        padding: 0;
+        margin: 0;
+    }
+
+    nav ul li {
+        display: inline-block; /* Ensure the list items are inline */
+        margin: 0 5px; /* Adjust margin for spacing */
+    }
+
+    nav ul li a {
+        display: block; /* Make sure each anchor is a block element */
+        padding: 10px;
+        font-size: 1rem; /* Increase font size if needed */
+    }
 }
+
 
 .video-container {
     display: flex;
