@@ -271,6 +271,44 @@ footer a:hover {
         padding: 8px 16px;
     }
 }   
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.75rem;
+    }
+
+    nav ul {
+        display: flex !important; /* Ensure flexbox is applied */
+        flex-wrap: nowrap !important; /* Prevent wrapping */
+        justify-content: center !important; /* Center the items */
+        align-items: center !important; /* Align items centrally */
+    }
+
+    nav ul li {
+        margin: 0 8px !important; /* Reduce margin between items */
+        display: inline-block !important; /* Ensure list items are inline */
+    }
+
+    nav ul li a {
+        font-size: 0.875rem; /* Decrease font size for smaller screens */
+        padding: 6px 8px; /* Adjust padding to reduce space */
+        display: inline-block !important; /* Ensure links are inline */
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    nav ul li a {
+        font-size: 0.75rem; /* Further decrease font size for very small screens */
+        padding: 5px 6px;
+    }
+
+    nav ul li {
+        margin: 0 5px; /* Reduce margin further */
+    }
+}
 
         .image-container {
             display: flex;
