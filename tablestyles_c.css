@@ -3,35 +3,21 @@ body {
     color: #212529;
     font-family: 'Arial', sans-serif;
 }
+/* Comment out conflicting styles in tablestyles_c.css */
 header {
-    background-color: #00796b;
-    color: white;
-    padding: 10px 0;
+    /* background-color: #00796b; Teal background */
+    /* color: white; */
+    /* padding: 10px 0; */
     transition: background-color 0.3s ease;
 }
-header:hover {
-    background-color: #004d40;
-}
-header h1 {
-    margin: 0;
-}
-nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-}
+
 nav ul li {
-    margin: 0 15px;
     transition: transform 0.3s ease;
 }
 nav ul li:hover {
     transform: scale(1.1);
 }
 nav ul li a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
     transition: color 0.3s ease;
 }
 nav ul li a:hover, nav ul li a:focus {
@@ -61,8 +47,6 @@ nav ul li a:hover, nav ul li a:focus {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 footer {
-    background-color: #00796b;
-    color: white;
     text-align: center;
     padding: 10px 0;
 }
