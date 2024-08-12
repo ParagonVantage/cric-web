@@ -111,26 +111,28 @@ header h1 {
     }
 
     nav ul {
-        display: flex;
+        display: flex; /* Use flexbox for horizontal alignment */
         justify-content: center; /* Center the nav items */
         align-items: center;
-        flex-wrap: nowrap; /* Keep items in a single row */
+        flex-wrap: nowrap; /* Ensure items remain in a single row */
         padding: 0;
         margin: 0;
         list-style: none;
     }
 
     nav ul li {
-        display: inline-block; /* Ensure the list items are inline */
+        display: inline-flex; /* Make list items flex items */
         margin: 0 10px; /* Adjust margin for spacing */
     }
 
     nav ul li a {
-        display: block; /* Make sure each anchor is a block element */
-        padding: 8px 12px; /* Adjust padding if necessary */
-        font-size: 1rem; /* Adjust font size if necessary */
+        display: inline-block; /* Ensure anchor tags are inline blocks */
+        padding: 8px 12px;
+        font-size: 1rem;
+        text-align: center; /* Center text inside each nav item */
     }
 }
+
 
 
 .video-container {
