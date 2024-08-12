@@ -114,20 +114,21 @@ header h1 {
         display: flex;
         justify-content: center; /* Center the nav items */
         align-items: center;
-        flex-wrap: nowrap; /* Ensure items remain inline */
+        flex-wrap: nowrap; /* Keep items in a single row */
         padding: 0;
         margin: 0;
+        list-style: none;
     }
 
     nav ul li {
         display: inline-block; /* Ensure the list items are inline */
-        margin: 0 5px; /* Adjust margin for spacing */
+        margin: 0 10px; /* Adjust margin for spacing */
     }
 
     nav ul li a {
         display: block; /* Make sure each anchor is a block element */
-        padding: 10px;
-        font-size: 1rem; /* Increase font size if needed */
+        padding: 8px 12px; /* Adjust padding if necessary */
+        font-size: 1rem; /* Adjust font size if necessary */
     }
 }
 
