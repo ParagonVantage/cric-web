@@ -117,23 +117,34 @@ nav ul li ul li a:hover {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    header {
+        flex-direction: column; /* Stack h1 and nav vertically */
+        align-items: center; /* Center align all header content */
+    }
+
+    header h1 {
+        margin-bottom: 10px; /* Add some space between the h1 and nav */
+    }
+
     nav ul {
-        flex-wrap: nowrap; /* Keep items on the same line */
-        overflow-x: auto; /* Enable horizontal scrolling if necessary */
+        display: flex;
+        justify-content: center; /* Center the nav items */
+        align-items: center;
+        flex-wrap: nowrap; /* Keep items in a single row */
+        padding: 0;
+        margin: 0;
+        list-style: none;
     }
 
     nav ul li {
-        width: 100%;
+        display: inline-block; /* Ensure the list items are inline */
+        margin: 0 10px; /* Adjust margin for spacing */
     }
 
     nav ul li a {
-        padding: 8px 10px; /* Adjust padding for better fit on smaller screens */
-        font-size: 0.7rem; /* Slightly reduce font size for small screens */
-    }
-
-    nav ul li ul {
-        position: static;
-        width: 100%;
+        display: block; /* Make sure each anchor is a block element */
+        padding: 8px 12px; /* Adjust padding if necessary */
+        font-size: 1rem; /* Adjust font size if necessary */
     }
 }
         .image-container {
