@@ -185,6 +185,21 @@ header {
         margin: 10px 0; /* Margin for spacing between stacked items */
     }
 }
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling for touch devices */
+    width: 100%; /* Ensure the container uses full available width */
+}
+
+table {
+    width: 100%; /* Keep the table width dynamic */
+    /* Remove the display block if it causes issues */
+}
+.dataTables_filter input {
+    width: 100%;
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
 
 .table-container table th {
     background-color: #FF9800; /* Orange header background remains unchanged */
