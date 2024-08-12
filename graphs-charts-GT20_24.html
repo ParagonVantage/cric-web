@@ -82,10 +82,10 @@
 
     <script>
         const dataBar1 = {
-            labels: ['Dilpreet Bajwa','George Munsey','Iftikhar Ahmed','Rahmanullah Gurbaz','Rezza Hendricks'],
+            labels: ['Dilpreet Bajwa','George Munsey','Nick Hobson','Iftikhar Ahmed','Colin Munro'],
             datasets: [{
                 label: 'Runs Scored',
-                data: [204,146,124,115,115],
+                data: [204,172,127,124,123],
                 backgroundColor: 'rgba(0, 123, 255, 0.6)',
                 borderColor: 'rgba(0, 123, 255, 1)',
                 borderWidth: 1
@@ -93,10 +93,10 @@
         };
 
         const dataBar2 = {
-            labels: ['Dilpreet Bajwa','George Munsey','Akhil Kumar','Marcus Stoinis','Rahmanullah Gurbaz'],
+            labels: ['Dilpreet Bajwa','George Munsey','Marcus Stoinis','Rahmanullah Gurbaz','Colin Munro'],
             datasets: [{
                 label: 'Strike Rate',
-                data: [155,143,138,134,134],
+                data: [155,137,134,134,133],
                 backgroundColor: 'rgba(220, 53, 69, 0.6)',
                 borderColor: 'rgba(220, 53, 69, 1)',
                 borderWidth: 1
@@ -104,10 +104,10 @@
         };
 
         const dataBar3 = {
-            labels: ['Junaid Siddique','David Wiese','Aayan Afzal Khan','Kaleem Sana','Sunil Narine'],
+            labels: ['Junaid Siddique','Romario Shepherd','David Wiese','Aayan Afzal Khan','Kaleem Sana'],
             datasets: [{
                 label: 'Wickets',
-                data: [12,9,9,9,9],
+                data: [13,12,9,9,9],
                 backgroundColor: 'rgba(40, 167, 69, 0.6)',
                 borderColor: 'rgba(40, 167, 69, 1)',
                 borderWidth: 1
@@ -115,10 +115,10 @@
         };
 
         const dataBar4 = {
-            labels: ['Saad bin Zafar','Ben Lister','Azmatullah Omarzai','Jason Behrendorff','Kaleem Sana'],
+            labels: ['Saad bin Zafar','Jason Behrendorff','Ben Lister','Azmatullah Omarzai','Kaleem Sana'],
             datasets: [{
                 label: 'Economy',
-                data: [3.7,4.7,4.8,4.9,4.9],
+                data: [3.7,4.4,4.7,4.8,4.9],
                 backgroundColor: 'rgba(255, 193, 7, 0.6)',
                 borderColor: 'rgba(255, 193, 7, 1)',
                 borderWidth: 1
@@ -272,10 +272,10 @@
         const stdDev1 = calculateStandardDeviation(dataLine1.datasets[0].data);
 
         const dataLine2 = {
-            labels: ['M1','M2','M3','M4'],
+            labels: ['M1','M2','M3','M4','M6'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [69,3,54,20],
+                data: [69,3,54,20,26],
                 borderColor: 'rgba(255, 193, 7, 1)',
                 backgroundColor: 'rgba(255, 193, 7, 0.2)',
                 borderWidth: 2,
@@ -287,10 +287,10 @@
         const stdDev2 = calculateStandardDeviation(dataLine2.datasets[0].data);
 
         const dataLine3 = {
-            labels: ['M1','M2','M3','M4','M5','M6'],
+            labels: ['M1','M2','M3','M4','M6'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [28,50,2,13,19,12],
+                data: [16,21,2,37,51],
                 borderColor: 'rgba(220, 53, 69, 1)',
                 backgroundColor: 'rgba(220, 53, 69, 0.2)',
                 borderWidth: 2,
@@ -305,7 +305,7 @@
             labels: ['M1','M2','M3','M4','M5','M6'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [64,4,24,4,0,19],
+                data: [28,50,2,13,19,12],
                 borderColor: 'rgba(0, 123, 255, 1)',
                 backgroundColor: 'rgba(0, 123, 255, 0.2)',
                 borderWidth: 2,
@@ -317,10 +317,10 @@
         const stdDev4 = calculateStandardDeviation(dataLine4.datasets[0].data);
 
         const dataLine5 = {
-            labels: ['M1','M2','M3','M4','M5','M6'],
+            labels: ['M1','M2','M3','M4','M6','M7','M8'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [23,10,34,27,4,17],
+                data: [44,11,4,17,10,1,36],
                 borderColor: 'rgba(40, 167, 69, 1)',
                 backgroundColor: 'rgba(40, 167, 69, 0.2)',
                 borderWidth: 2,
@@ -388,7 +388,7 @@
                     },
                     title: {
                         display: true,
-                        text: `Runs Scored by Iftikhar Ahmed (Std Dev: ${stdDev3})`,
+                        text: `Runs Scored by Nick Hobson (Std Dev: ${stdDev3})`,
                         color: dataLine3.datasets[0].borderColor
                     }
                 },
@@ -411,7 +411,7 @@
                     },
                     title: {
                         display: true,
-                        text: `Runs Scored by Rahmanullah Gurbaz (Std Dev: ${stdDev4})`,
+                        text: `Runs Scored by Iftikhar Ahmed (Std Dev: ${stdDev4})`,
                         color: dataLine4.datasets[0].borderColor
                     }
                 },
@@ -434,7 +434,7 @@
                     },
                     title: {
                         display: true,
-                        text: `Runs Scored by Rezza Hendricks (Std Dev: ${stdDev5})`,
+                        text: `Runs Scored by Colin Munro (Std Dev: ${stdDev5})`,
                         color: dataLine5.datasets[0].borderColor
                     }
                 },
