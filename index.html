@@ -59,28 +59,27 @@ header {
 }
 
 nav ul {
-    list-style: none;
+    display: flex; /* Flexbox for horizontal alignment */
+    justify-content: center; /* Center the nav items */
+    align-items: center; 
     padding: 0;
     margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
+    list-style: none;
+    flex-wrap: nowrap; /* Ensure items remain in a single row */
 }
 
 nav ul li {
-    margin: 0 10px;
+    margin: 0 10px; /* Space between items */
+    display: inline-flex; /* Ensure items are inline */
 }
 
 nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 0.75rem;
+    display: inline-block; /* Keep links inline */
     padding: 8px 12px;
-    display: block;
-    transition: background 0.3s ease;
-    white-space: nowrap;
+    text-align: center; /* Center text within each nav item */
+    text-decoration: none;
+    font-size: 1rem; /* Adjust font size if necessary */
+    color: #FFFFFF; /* Text color */
 }
 
 
@@ -124,29 +123,16 @@ nav ul li ul li a:hover {
     }
 
     header h1 {
-        margin-bottom: 10px; /* Add some space between the h1 and nav */
+        margin-bottom: 10px; /* Space between the h1 and nav */
     }
 
     nav ul {
-        display: flex; /* Use flexbox for horizontal alignment */
-        justify-content: center; /* Center the nav items */
-        align-items: center;
-        flex-wrap: nowrap; /* Ensure items remain in a single row */
-        padding: 0;
-        margin: 0;
-        list-style: none;
+        justify-content: center; /* Re-ensure centering */
+        flex-wrap: nowrap; /* Prevent wrapping */
     }
 
     nav ul li {
-        display: inline-flex; /* Make list items flex items */
-        margin: 0 10px; /* Adjust margin for spacing */
-    }
-
-    nav ul li a {
-        display: inline-block; /* Ensure anchor tags are inline blocks */
-        padding: 8px 12px;
-        font-size: 1rem;
-        text-align: center; /* Center text inside each nav item */
+        margin: 0 10px; /* Keep spacing consistent */
     }
 }
 
