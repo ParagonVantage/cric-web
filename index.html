@@ -425,14 +425,16 @@ header {
 
     /* Center the button like others on the page */
     #toggle-box-btn {
-        display: inline-block;
-        margin: 0 auto;
-        background-color: #ffc107 !important;
-        color: #000 !important;
-        padding: 10px 20px !important;
-        border-radius: 5px !important;
-        text-align: center !important;
-    }
+    display: block; /* Ensure it's treated as a block-level element */
+    width: 98%; /* Set the width to 98% */
+    margin: 0 auto; /* Center the button horizontally */
+    background-color: #ffc107 !important;
+    color: #000 !important;
+    padding: 10px 20px !important;
+    border-radius: 5px !important;
+    text-align: center !important;
+}
+
 
     /* Transition for the button hover effect */
     #toggle-box-btn:hover {
@@ -478,41 +480,15 @@ header {
             if (toggleBox.classList.contains('show')) {
                 toggleBox.classList.remove('show');
                 setTimeout(() => {
-                    toggleBox.style.display = 'none';
-                }, 500); // Wait for the transition to end before setting display to 'none'
+                    toggleBox.style.display = 'none';}, 500); // Wait for the transition to end before setting display to 'none'
                 toggleBtn.textContent = 'Show Statistics';
             } else {
                 toggleBox.style.display = 'block';
-                setTimeout(() => {
-                    toggleBox.classList.add('show');
-                }, 10); // Slight delay to allow the display change to take effect
+                setTimeout(() => {toggleBox.classList.add('show');}, 10); // Slight delay to allow the display change to take effect
                 toggleBtn.textContent = 'Hide Statistics';
             }
         });
     });
-</script>
-<!-- Your content -->
-
-<!-- Place this script just before the closing body tag -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const toggleBtn = document.getElementById('toggle-box-btn');
-    const toggleBox = document.getElementById('toggle-box');
-
-    console.log(toggleBtn);  // Debugging
-    console.log(toggleBox);  // Debugging
-
-    toggleBtn.addEventListener('click', function () {
-        if (toggleBox.style.display === 'none') {
-            toggleBox.style.display = 'block';
-            toggleBtn.textContent = 'Hide Statistics';
-        } else {
-            toggleBox.style.display = 'none';
-            toggleBtn.textContent = 'Show Statistics';
-        }
-    });
-});
-
 </script>
 </body>
 
