@@ -189,22 +189,17 @@ nav ul li ul li a:hover {
 <body>
     <header class="text-center animated-header">
         <h1>Cricket Score Snap - Archives</h1>
-        <nav>
-            <ul class="nav">
-                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="SAVWI24 - TEST.html">SA V WI TESTS</a></li>
-                <li class="nav-item"><a class="nav-link" href="GT20_24.HTML">GT20 CANADA</a></li>
-                <li class="nav-item">
-                    <a href="javascript:void(0)">More Series</a>
-                    <ul>
-                        <li class = 'nav-item'><a  class = "nav-link" href="IVSL24 - ODI.HTML">IND V SL ODIs</a></li>
-                        <li class = 'nav-item'><a class = "nav-link" href="BRT24.html">ENG V WI TESTS</a></li>
-                        <li class = 'nav-item'><a class = "nav-link" href="IVSL24 - T20.HTML">IND V SL T20Is</a></li>
-                    </ul>
-                </li>
-                <li class = 'nav-item'><a href="mailto:agneya2208@gmail.com">Contact</a></li>
-                <li class = 'nav-item'><a href="archives.html">Archives</a></li></ul>
-        </nav>
+        <div id="nav-placeholder"></div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch('nav.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('nav-placeholder').innerHTML = data;
+            });
+    });
+</script>
     </header>
 
     <section class="container">
@@ -230,6 +225,16 @@ nav ul li ul li a:hover {
                 <div class="archive-links">
                     <ul>
                         <li><a href="IVSL24 - T20.HTML" class="text-warning">India in Sri Lanka T20Is Series</a> - 3 T20Is JUL26 - JUL29</li>
+                    </ul>
+                </div>
+                <div class="archive-links">
+                    <ul>
+                        <li><a href="IVSL24 - ODI.HTML" class="text-warning">India in Sri Lanka ODIs Series</a> - 3 ODIs AUG2 - AUG8</li>
+                    </ul>
+                </div>
+                <div class="archive-links">
+                    <ul>
+                        <li><a href="GT20_24.HTML" class="text-warning">Global T20 Canada 2024</a> - T20 Franchise Tournament JUL26 - AUG11</li>
                     </ul>
                 </div>
         </div>
