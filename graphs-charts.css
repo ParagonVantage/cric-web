@@ -72,8 +72,9 @@ nav ul li ul {
     display: none;
     position: absolute;
     top: 100%;
-    left: 0; /* Align the dropdown with the left edge of the parent `li` */
-    background-color: #00695c; /* Dropdown background */
+    left: 50%; /* Start from the center of the parent element */
+    transform: translateX(-50%); /* Shift it left by 50% of its own width to center align */
+    background-color: #004d40;
     min-width: 150px;
     border-radius: 0 0 5px 5px;
     z-index: 1000;
