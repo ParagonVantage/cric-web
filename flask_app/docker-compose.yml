@@ -1,0 +1,21 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=cricketscoresnap
+      - DB_USER=crick_admin
+      - DB_PASSWORD=your_password
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: cricketscoresnap
+      POSTGRES_USER: crick_admin
+      POSTGRES_PASSWORD: your_password
+    ports:
+      - "5432:5432"
