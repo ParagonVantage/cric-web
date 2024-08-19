@@ -5,6 +5,7 @@
         .lesshst
         .redhat/
         .vscode/
+        .env/
         AppData/
         Contacts/
         Downloads/
