@@ -1,8 +1,10 @@
 import os
 from flask import Flask, jsonify
+from flask_cors import CORS
 import psycopg2
 
 app = Flask(__name__)
+CORS(app)  # Apply CORS after creating the Flask app
 
 # PostgreSQL connection
 def get_db_connection():
@@ -49,4 +51,3 @@ def get_batting_stats():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
-

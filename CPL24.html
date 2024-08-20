@@ -16,46 +16,47 @@
     <script src="datapanes.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <script>
-  $(document).ready(function () {
-    $.ajax({
-      url: 'http://127.0.0.1:5000/api/test-batting-stats', // Use your actual server URL when deployed
-      method: 'GET',
-      success: function (data) {
-        const table = $('#battingStatsTable').DataTable();
-        table.clear();
-        data.forEach(row => {
-          table.row.add([
-            row.team,
-            row.player,
-            row.matches,
-            row.innings,
-            row.not_outs,
-            row.runs,
-            row.highest,
-            row.batting_average,
-            row.balls,
-            row.strike_rate,
-            row.hundreds,
-            row.fifties,
-            row.fours,
-            row.sixes,
-            row.catches,
-            row.stumping,
-            row.avg_runs
-          ]).draw();
+        $(document).ready(function() {
+            $.ajax({
+                url: 'http://127.0.0.1:5000/api/test-batting-stats',
+                method: 'GET',
+                success: function(data) {
+                    let tableBody = $('#myTable1 tbody');
+                    tableBody.empty(); // Clear any existing rows
+
+                    data.forEach(function(stat) {
+                        let row = `<tr>
+                            <td>${stat.team}</td>
+                            <td>${stat.player}</td>
+                            <td>${stat.matches}</td>
+                            <td>${stat.innings}</td>
+                            <td>${stat.not_outs}</td>
+                            <td>${stat.runs}</td>
+                            <td>${stat.highest}</td>
+                            <td>${stat.batting_average}</td>
+                            <td>${stat.balls}</td>
+                            <td>${stat.strike_rate}</td>
+                            <td>${stat.hundreds}</td>
+                            <td>${stat.fifties}</td>
+                            <td>${stat.fours}</td>
+                            <td>${stat.sixes}</td>
+                            <td>${stat.catches}</td>
+                            <td>${stat.stumpings}</td>
+                            <td>${stat.avg_runs}</td>
+                        </tr>`;
+                        tableBody.append(row);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Failed to fetch data from API:', status, error);
+                }
+            });
         });
-      },
-      error: function (xhr, status, error) {
-        console.error("Error fetching data:", status, error);
-      }
-    });
-  });
-</script>
+    </script>
 </head>
 <body>
     <header>
         <h1>Cricket Score Snap</h1>
-        
         <nav>
             <ul class="nav">
                 <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
@@ -71,31 +72,36 @@
                 </li>
                 <li class = 'nav-item'><a href="mailto:agneya2208@gmail.com">Contact</a></li>
                 <li class = 'nav-item'><a href="archives.html">Archives</a></li></ul>
-        </nav>
-    </header>
-    <table id="battingStatsTable" class="display">
-        <thead>
-            <tr>
-                <th>Team</th>
-                <th>Player</th>
-                <th>Matches</th>
-                <th>Innings</th>
-                <th>Not Outs</th>
-                <th>Runs</th>
-                <th>Highest</th>
-                <th>Batting Average</th>
-                <th>Balls</th>
-                <th>Strike Rate</th>
-                <th>Hundreds</th>
-                <th>Fifties</th>
-                <th>Fours</th>
-                <th>Sixes</th>
-                <th>Catches</th>
-                <th>Stumpings</th>
-                <th>Avg Runs</th>
-            </tr>
-        </thead>
-        <tbody>
+            </nav>
+        </header>
+    
+        <div class="table-container">
+            <table id="myTable1">
+                <caption style="text-align: center; color: crimson; font-weight: 700; font-size: x-large; background-color: antiquewhite;">
+                    T20s Career Batting Stats
+                </caption>
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th>Player</th>
+                        <th>Matches</th>
+                        <th>Innings</th>
+                        <th>Not Outs</th>
+                        <th>Runs</th>
+                        <th>Highest</th>
+                        <th>Batting Average</th>
+                        <th>Balls</th>
+                        <th>Strike Rate</th>
+                        <th>100s</th>
+                        <th>50s</th>
+                        <th>4s</th>
+                        <th>6s</th>
+                        <th>Catches</th>
+                        <th>Stumpings</th>
+                        <th>Avg Runs</th>
+                    </tr>
+                </thead>
+                <tbody>
         </tbody>
     </table>
     
