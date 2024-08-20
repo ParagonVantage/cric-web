@@ -16,6 +16,10 @@ def get_db_connection():
     )
     return conn
 
+@app.route('/')
+def index():
+    return "Welcome to Cricket Score Snap!"
+
 @app.route('/api/test-batting-stats')
 def get_batting_stats():
     conn = get_db_connection()
