@@ -16,9 +16,9 @@
     <script src="datapanes.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <script>
-        $(document).ready(function() {
+       $(document).ready(function() {
             $.ajax({
-                url: 'http://127.0.0.1:5000/api/test-batting-stats',
+                url: 'http://127.0.0.1:5000/api/test-batting-stats', // Fetch data from Flask API
                 method: 'GET',
                 success: function(data) {
                     let tableBody = $('#myTable1 tbody');
@@ -41,7 +41,7 @@
                             <td>${stat.fours}</td>
                             <td>${stat.sixes}</td>
                             <td>${stat.catches}</td>
-                            <td>${stat.stumpings}</td>
+                            <td>${stat.stumping}</td>
                             <td>${stat.avg_runs}</td>
                         </tr>`;
                         tableBody.append(row);

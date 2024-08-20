@@ -1,5 +1,16 @@
-version: '3'
+version: "3"
 services:
+  db:
+    image: postgres:15
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: cricketscoresnap
+      POSTGRES_USER: crick_admin
+      POSTGRES_PASSWORD: your_password
+    ports:
+      - "5432:5432"
+
   web:
     build: .
     ports:
@@ -7,15 +18,12 @@ services:
     depends_on:
       - db
     environment:
-      - DB_HOST=db
-      - DB_NAME=cricketscoresnap
-      - DB_USER=crick_admin
-      - DB_PASSWORD=your_password
-  db:
-    image: postgres:15
-    environment:
-      POSTGRES_DB: cricketscoresnap
-      POSTGRES_USER: crick_admin
-      POSTGRES_PASSWORD: your_password
-    ports:
-      - "5432:5432"
+      DB_HOST: db
+      DB_NAME: cricketscoresnap
+      DB_USER: crick_admin
+      DB_PASSWORD: your_password
+    volumes:
+      - .:/app
+
+volumes:
+  pgdata:

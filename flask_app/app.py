@@ -4,7 +4,7 @@ from flask_cors import CORS
 import psycopg2
 
 app = Flask(__name__)
-CORS(app)  # Apply CORS after creating the Flask app
+CORS(app, resources={r"/api/*": {"origins": "*"}})  # Enable CORS for all origins on your API endpoints
 
 # PostgreSQL connection
 def get_db_connection():
