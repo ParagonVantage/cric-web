@@ -15,6 +15,43 @@
     <link rel="stylesheet" href="datalayout_pages.css">
     <script src="datapanes.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <style>
+    .cta-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem; /* Base font size */
+    transition: background-color 0.3s ease, font-size 0.3s ease;
+    z-index: 1000;
+}
+
+.cta-button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .cta-button {
+        padding: 8px 16px;  /* Adjust padding on smaller screens */
+        font-size: 0.9rem;  /* Slightly smaller font size on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .cta-button {
+        padding: 6px 12px;  /* Further adjust padding on very small screens */
+        font-size: 0.8rem;  /* Even smaller font size on very small screens */
+        top: 5px;           /* Adjust position if needed */
+        right: 10px;
+    }
+}
+</style>
 </head>
 <body style="height: 4850px;">
     <header class="text-center1 animated-header">
@@ -38,6 +75,7 @@
                 <li class = 'nav-item'><a href="mailto:agneya2208@gmail.com">Contact</a></li>
                 <li class = 'nav-item'><a href="archives.html">Archives</a></li></ul>
         </nav>
+        <a href="SAVWI24 - T20.html" class="cta-button">View T20 Series Stats</a>
     </header>
     <main style="background-color: bisque;">
         <div class="table-container">

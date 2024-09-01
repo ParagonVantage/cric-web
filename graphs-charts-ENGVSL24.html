@@ -85,10 +85,10 @@
 
     <script>
         const dataBar1 = {
-            labels: ['Joe Root','Kamindu Mendis','Jamie Smith','Harry Brook','Gus Atkinson'],
+            labels: ['Joe Root','Kamindu Mendis','Jamie Smith','Dinesh Chandimal','Harry Brook',],
             datasets: [{
                 label: 'Runs Scored',
-                data: [350,199,197,158,152],
+                data: [350,203,197,177,158],
                 backgroundColor: 'rgba(0, 123, 255, 0.6)',
                 borderColor: 'rgba(0, 123, 255, 1)',
                 borderWidth: 1
@@ -96,10 +96,10 @@
         };
 
         const dataBar2 = {
-            labels: ['Gus Atkinson','Harry Brook','Jamie Smith','Joe Root','Dan Lawrence'],
+            labels: ['Gus Atkinson','Dhananjaya de Silva','Harry Brook','Dinesh Chandimal','Jamie Smith'],
             datasets: [{
                 label: 'Strike Rate',
-                data: [79,71,69,68,63],
+                data: [79,74,71,70,69],
                 backgroundColor: 'rgba(220, 53, 69, 0.6)',
                 borderColor: 'rgba(220, 53, 69, 1)',
                 borderWidth: 1
@@ -107,10 +107,10 @@
         };
 
         const dataBar3 = {
-            labels: ['Asitha Fernando','Chris Woakes','Prabath Jayasuriya','Gus Atkinson','Milan Rathnayake'],
+            labels: ['Asitha Fernando','Gus Atkinson','Chris Woakes','Prabath Jayasuriya','Milan Rathnayake'],
             datasets: [{
                 label: 'Wickets',
-                data: [14,8,8,6,6],
+                data: [14,11,10,8,6],
                 backgroundColor: 'rgba(40, 167, 69, 0.6)',
                 borderColor: 'rgba(40, 167, 69, 1)',
                 borderWidth: 1
@@ -121,7 +121,7 @@
             labels: ['Chris Woakes','Matthew Potts','Shoaib Bashir','Prabath Jayasuriya','Milan Rathnayake'],
             datasets: [{
                 label: 'Economy',
-                data: [2.4,3.1,3.1,3.7,3.9],
+                data: [2.4,3.1,3.2,3.7,3.9],
                 backgroundColor: 'rgba(255, 193, 7, 0.6)',
                 borderColor: 'rgba(255, 193, 7, 1)',
                 borderWidth: 1
@@ -277,7 +277,7 @@
             labels: ['T1IN1','T1IN2','T2IN1','T2IN2'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [12,113,74],
+                data: [12,113,74,4],
                 borderColor: 'rgba(255, 193, 7, 1)',
                 backgroundColor: 'rgba(255, 193, 7, 0.2)',
                 borderWidth: 2,
@@ -307,7 +307,7 @@
             labels: ['T1IN1','T1IN2','T2IN1','T2IN2'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [56,32,33,37],
+                data: [17,79,23,58],
                 borderColor: 'rgba(0, 123, 255, 1)',
                 backgroundColor: 'rgba(0, 123, 255, 0.2)',
                 borderWidth: 2,
@@ -322,7 +322,7 @@
             labels: ['T1IN1','T2IN1','T2IN2'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [20,118,14],
+                data: [56,32,33,37],
                 borderColor: 'rgba(40, 167, 69, 1)',
                 backgroundColor: 'rgba(40, 167, 69, 0.2)',
                 borderWidth: 2,
@@ -344,7 +344,7 @@
                     },
                     title: {
                         display: true,
-                        text: `Runs Scored by Jamie Smith (Std Dev: ${stdDev1})`,
+                        text: `Runs Scored by Joe Root (Std Dev: ${stdDev1})`,
                         color: dataLine1.datasets[0].borderColor
                     }
                 },
@@ -390,7 +390,7 @@
                     },
                     title: {
                         display: true,
-                        text: `Runs Scored by Joe Root (Std Dev: ${stdDev3})`,
+                        text: `Runs Scored by Jamie Smith (Std Dev: ${stdDev3})`,
                         color: dataLine3.datasets[0].borderColor
                     }
                 },
