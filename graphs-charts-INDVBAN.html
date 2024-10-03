@@ -84,10 +84,10 @@
 
     <script>
         const dataBar1 = {
-            labels: ['Nicholas Pooran','Quinton de Kock','Shimron Hetmeyer','Andre Fletcher','Shai Hope'],
+            labels: ['Yashasvi Jaiswal','Shubhma Gill','Rishabh Pant','Najmul Hossain Shanto','Mominul Haque'],
             datasets: [{
                 label: 'Runs Scored',
-                data: [494,438,353,309,286],
+                data: [189,164,161,152,122],
                 backgroundColor: 'rgba(0, 123, 255, 0.6)',
                 borderColor: 'rgba(0, 123, 255, 1)',
                 borderWidth: 1
@@ -95,10 +95,10 @@
         };
 
         const dataBar2 = {
-            labels: ['Shimron Hetmeyer','Rahmanullah Gurbaz','Romario Shepherd','Nicholas Pooran','Kadeem Alleyne'],
+            labels: ['Ravichandran Ashwin','Shubhman Gill','Rishabh Pant','KL Rahul','Yashasvi Jaiswal'],
             datasets: [{
-                label: 'Strike Rate',
-                data: [197,183,172,170,170],
+                label: 'Batting Average',
+                data: [57,55,54,53,47],
                 backgroundColor: 'rgba(220, 53, 69, 0.6)',
                 borderColor: 'rgba(220, 53, 69, 1)',
                 borderWidth: 1
@@ -106,10 +106,10 @@
         };
 
         const dataBar3 = {
-            labels: ['Imran Tahir','Maheesh Theekshana','Noor Ahmad','Waqar Slamkheil','Gudakesh Motie'],
+            labels: ['Jasprit Bumrah','Ravichandra Ashwin','Mehidy Hasan Miraz','Ravindra Jadeja','Hasan Mahmud'],
             datasets: [{
                 label: 'Wickets',
-                data: [17,16,15,15,14],
+                data: [11,11,9,9,6],
                 backgroundColor: 'rgba(40, 167, 69, 0.6)',
                 borderColor: 'rgba(40, 167, 69, 1)',
                 borderWidth: 1
@@ -117,10 +117,10 @@
         };
 
         const dataBar4 = {
-            labels: ['Josh Clarkson','Moeen Ali','Noor Ahmad','Sunil Narine','Maheesh Theekshana'],
+            labels: ['Jasprit Bumrah','Akash Deep','Ravindra Jadeja','Ravichandran Ashwin','Mohammad Siraj'],
             datasets: [{
                 label: 'Economy',
-                data: [2.0,5.3,5.5,5.8,6.1],
+                data: [2.9,3.0,3.3,3.3,3.7],
                 backgroundColor: 'rgba(255, 193, 7, 0.6)',
                 borderColor: 'rgba(255, 193, 7, 1)',
                 borderWidth: 1
@@ -165,7 +165,7 @@
                 },
                 title: {
                     display: true,
-                    text: 'Strike Rates of Batsmen'
+                    text: 'Batting Average of Batsmen'
             }
         },
         scales: {
@@ -258,10 +258,10 @@
         }
 
         const dataLine1 = {
-            labels: ['M1','M2','M3','M4','M5','M6','M7','M8'],
+            labels: ['T1IN1','T1IN2','T2IN1','T2IN2'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [87,19,48,39,115,59],
+                data: [171,51,29],
                 borderColor: 'rgba(23, 162, 184, 1)',
                 backgroundColor: 'rgba(23, 162, 184, 0.2)',
                 borderWidth: 2,
@@ -273,10 +273,10 @@
         const stdDev1 = calculateStandardDeviation(dataLine1.datasets[0].data);
 
         const dataLine2 = {
-            labels: ['M1','M2','M3','M4','M5','M6','M7','M8'],
+            labels: ['T1IN1','T2IN1','T2IN2'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [12,47,19,29,74],
+                data: [156,138],
                 borderColor: 'rgba(255, 193, 7, 1)',
                 backgroundColor: 'rgba(255, 193, 7, 0.2)',
                 borderWidth: 2,
@@ -288,10 +288,10 @@
         const stdDev2 = calculateStandardDeviation(dataLine2.datasets[0].data);
 
         const dataLine3 = {
-            labels: ['M1','M2','M3','M4','M5','M6','M7','M8'],
+            labels: ['T1IN1','T2IN1','T2IN2'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [25,0,1,81,0,62,32],
+                data: [191,3],
                 borderColor: 'rgba(220, 53, 69, 1)',
                 backgroundColor: 'rgba(220, 53, 69, 0.2)',
                 borderWidth: 2,
@@ -303,10 +303,10 @@
         const stdDev3 = calculateStandardDeviation(dataLine3.datasets[0].data);
 
         const dataLine4 = {
-            labels: ['M1','M2','M3','M4','M5','M6','M7','M8'],
+            labels: ['T1IN1','T1IN2','T2IN1','T2IN2'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [29,39,100,3,0,6],
+                data: [141,0,16],
                 borderColor: 'rgba(0, 123, 255, 1)',
                 backgroundColor: 'rgba(0, 123, 255, 0.2)',
                 borderWidth: 2,
@@ -318,10 +318,10 @@
         const stdDev4 = calculateStandardDeviation(dataLine4.datasets[0].data);
 
         const dataLine5 = {
-            labels: ['M1','M2','M3','M4','M5','M6','M7','M8'],
+            labels: ['T1IN1','T2IN1','T2IN2'],
             datasets: [{
                 label: 'Runs Scored per Match',
-                data: [39,6,92,28,0,19],
+                data: [77,78],
                 borderColor: 'rgba(40, 167, 69, 1)',
                 backgroundColor: 'rgba(40, 167, 69, 0.2)',
                 borderWidth: 2,
@@ -343,7 +343,7 @@
                     },
                     title: {
                         display: true,
-                        text: `Runs Scored by Evin lewis (Std Dev: ${stdDev1})`,
+                        text: `Runs Scored by Mohammad Rizwan (Std Dev: ${stdDev1})`,
                         color: dataLine1.datasets[0].borderColor
                     }
                 },
@@ -366,7 +366,7 @@
                     },
                     title: {
                         display: true,
-                        text: `Runs Scored by Kyle Lewis (Std Dev: ${stdDev2})`,
+                        text: `Runs Scored by Litton Das (Std Dev: ${stdDev2})`,
                         color: dataLine2.datasets[0].borderColor
                     }
                 },
@@ -389,7 +389,7 @@
                     },
                     title: {
                         display: true,
-                        text: `Runs Scored by Fakhar Zaman (Std Dev: ${stdDev3})`,
+                        text: `Runs Scored by Mushfiqur Rahim (Std Dev: ${stdDev3})`,
                         color: dataLine3.datasets[0].borderColor
                     }
                 },
@@ -412,7 +412,7 @@
                     },
                     title: {
                         display: true,
-                        text: `Runs Scored by Rahmanullah Gurbaz (Std Dev: ${stdDev4})`,
+                        text: `Runs Scored by Saud Shakeel (Std Dev: ${stdDev4})`,
                         color: dataLine4.datasets[0].borderColor
                     }
                 },
@@ -435,7 +435,7 @@
                     },
                     title: {
                         display: true,
-                        text: `Runs Scored by Jewel Andrew (Std Dev: ${stdDev5})`,
+                        text: `Runs Scored by Mehidy Hasan Miraz (Std Dev: ${stdDev5})`,
                         color: dataLine5.datasets[0].borderColor
                     }
                 },

@@ -15,6 +15,7 @@ header {
     z-index: 1000;
     border-bottom: 2px solid #00796b;
 }
+.table-container:first-child{position: relative; top: 100px}
 footer {
     background-color: #FF9800; /* light blue background color */
     color: #333; /* darker text color */
