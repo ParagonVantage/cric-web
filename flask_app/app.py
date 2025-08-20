@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import psycopg2
 
@@ -52,6 +52,15 @@ def get_batting_stats():
         })
 
     return jsonify(stats_list)
+
+
+@app.route('/api/financial-chatbot', methods=['POST'])
+def financial_chatbot():
+    """Simple placeholder endpoint for a financial chatbot."""
+    data = request.get_json(silent=True) or {}
+    message = data.get('message', '')
+    response_text = f"This is a placeholder financial response for: {message}"
+    return jsonify({"response": response_text})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
